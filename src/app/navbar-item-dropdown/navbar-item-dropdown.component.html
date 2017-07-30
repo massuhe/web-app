@@ -1,0 +1,10 @@
+<li [class]="'nav-item menu-item-' + itemId + ' dropdown'">
+  <div ngbDropdown>
+    <a ngbDropdownToggle class="nav-link dropdown-toggle">
+    <span [class]="'menu-item-' + itemId + '-texto'" href="#">{{nombre}}</span>
+  </a>
+    <div class="dropdown-menu">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</li>

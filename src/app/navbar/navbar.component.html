@@ -1,0 +1,13 @@
+<div class="navbar navbar-toggleable-md navbar-light navbar-personalizado">
+    <button class="navbar-toggler navbar-toggler-right" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+     type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"></a>
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse collapse-animation" id="navbarNavDropdown">
+        <div class="gym-logo"></div>
+        <ul class="navbar-nav">
+            <ng-content></ng-content>
+        </ul>
+    </div>
+</div>
