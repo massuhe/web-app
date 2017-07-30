@@ -4,3 +4,24 @@
   box-shadow: 0px 0px 2px #888888;
   min-height: 46px;
 }
+
+.collapse-animation {
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  overflow: hidden;
+  display: block;
+  visibility: hidden;
+  max-height: 40px;
+  &.show{
+    visibility: visible;
+    max-height: 900px;
+    transition: max-height 0.5s ease-in-out;
+  }
+}
+
+@media (min-width: 992px) { 
+  .collapse-animation {
+    transition: none;
+    visibility: visible;
+    overflow: visible;
+  }
+}
