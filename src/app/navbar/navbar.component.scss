@@ -2,7 +2,6 @@
   padding-bottom: 0px;
   padding-top: 3px;
   box-shadow: 0px 0px 2px #888888;
-  min-height: 46px;
 }
 
 .collapse-animation {
@@ -10,7 +9,7 @@
   overflow: hidden;
   display: block;
   visibility: hidden;
-  max-height: 40px;
+  max-height: 36px;
   &.show {
     visibility: visible;
     max-height: 900px;
@@ -23,5 +22,6 @@
     transition: none;
     visibility: visible;
     overflow: visible;
+    max-height: 46px;
   }
 }
