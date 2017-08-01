@@ -1,6 +1,6 @@
-@import '../../assets/scss/helpers/variables';
-@import '../../assets/scss/helpers/functions';
-@import '../../assets/scss/helpers/mixins';
+@import '../../../assets/scss/helpers/variables';
+@import '../../../assets/scss/helpers/functions';
+@import '../../../assets/scss/helpers/mixins';
 
 @for $i from 0 through ($cantidadMenu - 1) {
   $porcentaje: $i * (100% / ($cantidadMenu - 1));
