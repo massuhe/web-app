@@ -10,6 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class NavbarItemComponent implements OnInit {
 
   @Input() itemId: number;
+  @Input() path: string;
 
   constructor() { }
 

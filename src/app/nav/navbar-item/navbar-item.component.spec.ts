@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarItemComponent } from './navbar-item.component';
@@ -8,7 +9,8 @@ describe('NavbarItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarItemComponent ]
+      declarations: [ NavbarItemComponent ],
+      schemas:      [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));
@@ -16,6 +18,9 @@ describe('NavbarItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavbarItemComponent);
     component = fixture.componentInstance;
+
+    component.itemId = 1;
+    component.path = 'home';
     fixture.detectChanges();
   });
 

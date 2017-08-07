@@ -1,30 +1,30 @@
 <app-navbar>
-  <app-navbar-item [itemId]="1">Home</app-navbar-item>
+  <app-navbar-item [itemId]="1" path="home">Home</app-navbar-item>
   <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2">
-    <item-dropdown>Ver Perfil</item-dropdown>
-    <item-dropdown>Rutina</item-dropdown>
-    <item-dropdown>Editar Datos</item-dropdown>
-    <item-dropdown>Cambiar Contrasena</item-dropdown>
+    <app-item-dropdown>Ver Perfil</app-item-dropdown>
+    <app-item-dropdown>Rutina</app-item-dropdown>
+    <app-item-dropdown>Editar Datos</app-item-dropdown>
+    <app-item-dropdown>Cambiar Contrasena</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3">
-    <item-dropdown>Listado</item-dropdown>
-    <item-dropdown>Suspender</item-dropdown>
+    <app-item-dropdown>Listado</app-item-dropdown>
+    <app-item-dropdown>Suspender</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4">
-    <item-dropdown>Listado</item-dropdown>
-    <item-dropdown>Alta</item-dropdown>
+    <app-item-dropdown>Listado</app-item-dropdown>
+    <app-item-dropdown>Alta</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5">
-    <item-dropdown>Registrar Pago</item-dropdown>
-    <item-dropdown>Listar Pagos</item-dropdown>
-    <item-dropdown>Gestionar Movimientos de Dinero</item-dropdown>
-    <item-dropdown>Balance General</item-dropdown>
+    <app-item-dropdown>Registrar Pago</app-item-dropdown>
+    <app-item-dropdown>Listar Pagos</app-item-dropdown>
+    <app-item-dropdown>Gestionar Movimientos de Dinero</app-item-dropdown>
+    <app-item-dropdown>Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6">
-    <item-dropdown>Actividades</item-dropdown>
-    <item-dropdown>Ejercicios</item-dropdown>
-    <item-dropdown>Roles</item-dropdown>
-    <item-dropdown>Inventario</item-dropdown>
-    <item-dropdown>Novedades</item-dropdown>
+    <app-item-dropdown>Actividades</app-item-dropdown>
+    <app-item-dropdown>Ejercicios</app-item-dropdown>
+    <app-item-dropdown>Roles</app-item-dropdown>
+    <app-item-dropdown>Inventario</app-item-dropdown>
+    <app-item-dropdown>Novedades</app-item-dropdown>
   </app-navbar-item-dropdown>
 </app-navbar>
