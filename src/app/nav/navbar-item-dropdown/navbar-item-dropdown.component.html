@@ -1,8 +1,8 @@
-<li [class]="'nav-item menu-item-' + itemId + ' dropdown'">
+<li [class]="'nav-item menu-item-' + itemId + ' dropdown ' + isActive">
   <div ngbDropdown>
     <a ngbDropdownToggle class="nav-link dropdown-toggle">
-    <span [class]="'menu-item-' + itemId + '-texto'" href="#">{{nombre}}</span>
-  </a>
+      <span [class]="'menu-item-' + itemId + '-texto'" href="#">{{nombre}}</span>
+    </a>
     <div class="dropdown-menu fixMargin">
       <ng-content></ng-content>
     </div>

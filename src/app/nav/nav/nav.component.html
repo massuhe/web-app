@@ -1,30 +1,30 @@
 <app-navbar>
   <app-navbar-item [itemId]="1" path="home">Home</app-navbar-item>
   <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2">
-    <app-item-dropdown>Ver Perfil</app-item-dropdown>
-    <app-item-dropdown>Rutina</app-item-dropdown>
-    <app-item-dropdown>Editar Datos</app-item-dropdown>
-    <app-item-dropdown>Cambiar Contrasena</app-item-dropdown>
+    <app-item-dropdown path="/">Ver Perfil</app-item-dropdown>
+    <app-item-dropdown path="/">Rutina</app-item-dropdown>
+    <app-item-dropdown path="/">Editar Datos</app-item-dropdown>
+    <app-item-dropdown path="/">Cambiar Contrasena</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3">
-    <app-item-dropdown>Listado</app-item-dropdown>
-    <app-item-dropdown>Suspender</app-item-dropdown>
+    <app-item-dropdown path="/">Listado</app-item-dropdown>
+    <app-item-dropdown path="/">Suspender</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4">
-    <app-item-dropdown>Listado</app-item-dropdown>
-    <app-item-dropdown>Alta</app-item-dropdown>
+    <app-item-dropdown path="alumnos/listado">Listado</app-item-dropdown>
+    <app-item-dropdown path="/alumnos/alta">Alta</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5">
-    <app-item-dropdown>Registrar Pago</app-item-dropdown>
-    <app-item-dropdown>Listar Pagos</app-item-dropdown>
-    <app-item-dropdown>Gestionar Movimientos de Dinero</app-item-dropdown>
-    <app-item-dropdown>Balance General</app-item-dropdown>
+    <app-item-dropdown path="/">Registrar Pago</app-item-dropdown>
+    <app-item-dropdown path="/">Listar Pagos</app-item-dropdown>
+    <app-item-dropdown path="/">Gestionar Movimientos de Dinero</app-item-dropdown>
+    <app-item-dropdown path="/">Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6">
-    <app-item-dropdown>Actividades</app-item-dropdown>
-    <app-item-dropdown>Ejercicios</app-item-dropdown>
-    <app-item-dropdown>Roles</app-item-dropdown>
-    <app-item-dropdown>Inventario</app-item-dropdown>
-    <app-item-dropdown>Novedades</app-item-dropdown>
+    <app-item-dropdown path="/">Actividades</app-item-dropdown>
+    <app-item-dropdown path="/">Ejercicios</app-item-dropdown>
+    <app-item-dropdown path="/">Roles</app-item-dropdown>
+    <app-item-dropdown path="/">Inventario</app-item-dropdown>
+    <app-item-dropdown path="/">Novedades</app-item-dropdown>
   </app-navbar-item-dropdown>
 </app-navbar>

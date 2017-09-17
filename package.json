@@ -22,9 +22,11 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.29",
+    "@swimlane/ngx-datatable": "^10.2.3",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "rxjs": "^5.4.1",
+    "typescript": "^2.4.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-item-dropdown',
@@ -12,7 +13,11 @@ export class NavbarItemDropdownComponent implements OnInit {
   @Input() itemId: number;
   @Input() nombre: string;
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  get isActive() {
+    return this.router.url.toUpperCase().includes(this.nombre.toUpperCase()) ? 'active' : '';
+  }
 
   ngOnInit() {
   }

@@ -1,0 +1,53 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '../../scss/helpers/_variables.scss';
+
+.datatable-header {
+    background-color: $verdePrimario;
+    border-bottom: 2px solid #e9ecef;
+    border-top: 1px solid #e9ecef;
+}
+
+.datatable-header-cell {
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.datatable-body-row {
+    border-bottom: 1px solid #e9ecef;
+    background-color: white;
+    transition: background-color 0.2s ease-in-out;
+    &:hover {
+        background-color: floralwhite;
+    }
+}
+
+.datatable-body-cell {
+   padding: 10px;
+}
+// ngx-datatable: Master Table class
+
+// fixed-header: The header is fixed on the table
+// datatable-header: Header row class
+
+// datatable-header-cell: Header cell class
+
+// resizeable: Cell resizeable class
+// sortable: Cell drag/drop sortable class
+// longpress: Cell long-press activated
+// dragging: Cell dragging activated
+// sort-active: Sort active on column
+// sort-asc: Sort active on column with ascending applied
+// sort-desc: Sort active on column with descending applied
+// datatable-header-cell-label: Header cell text label
+
+// draggable: Header cell draggable class
+// datatable-body-row: Body row class
+
+// datatable-row-even: Odd row class
+// datatable-row-odd: Even row class
+
+// datatable-body-cell: Body cell class
+// sort-active: Sort active on column
+// sort-asc: Sort active on column with ascending applied
+// sort-desc: Sort active on column with descending applied

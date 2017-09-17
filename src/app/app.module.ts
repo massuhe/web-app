@@ -1,22 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { NavModule } from './nav/nav.module';
 import { HomeModule } from './home/home.module';
-import { HomeComponent } from './home/home/home.component';
-
-const routes: Routes = [
-    {
-    path: 'home',
-    component: HomeComponent
-  },
-  { path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  }
-];
+import { AlumnosModule } from './alumnos/alumnos.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +15,11 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    // NgxDatatableModule,
+    AppRoutingModule,
     NavModule,
-    HomeModule
+    HomeModule,
+    AlumnosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
