@@ -3,7 +3,7 @@
     <a ngbDropdownToggle class="nav-link dropdown-toggle">
       <span [class]="'menu-item-' + itemId + '-texto'" href="#">{{nombre}}</span>
     </a>
-    <div class="dropdown-menu fixMargin">
+    <div class="dropdown-menu fixMargin" ngbDropdownMenu>
       <ng-content></ng-content>
     </div>
   </div>

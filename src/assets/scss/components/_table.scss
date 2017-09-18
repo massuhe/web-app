@@ -23,7 +23,12 @@
 }
 
 .datatable-body-cell {
+    color: gray;
    padding: 10px;
+}
+
+.resize-handle {
+    background-color: lighten($verdePrimario, 10%);
 }
 // ngx-datatable: Master Table class
 

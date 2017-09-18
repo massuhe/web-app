@@ -1,0 +1,14 @@
+@import '../helpers/_variables.scss';
+
+.btn-outline-porange {
+    color: $naranjaPrimario;
+    background-color: transparent;
+    border-color: $naranjaPrimario;
+    &:hover {
+        background-color: $naranjaPrimario;
+        color: white;
+    }
+    &:focus {
+        box-shadow: 0 0 0 3px transparentize($naranjaPrimario, 0.75);
+    }
+}
