@@ -1,28 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { AlumnosService } from '../services/alumnos.service';
 
 @Component({
   selector: 'app-listado-alumnos',
   templateUrl: './listado-alumnos.component.html',
   styleUrls: [
     './listado-alumnos.component.scss',
-    '../../../assets/scss/components/_buttons.scss']
+    '../../../assets/scss/components/_buttons.scss'],
+  providers: [
+    AlumnosService
+  ]
 })
 export class ListadoAlumnosComponent implements OnInit {
 
-  rows = [
-    { id: 1, nombre: 'Cosme', apellido: 'Fulanito', activo: 'Si'}
-  ];
-  columns = [
-    { prop: 'id', name: '#'},
-    { prop: 'nombre' },
-    { prop: 'apellido' },
-    { prop: 'activo' },
-    { name: 'Acciones' }
-  ];
+  private alumnos;
+  rows;
+  columns;
 
-  constructor() { }
+  constructor(private alumnosService: AlumnosService) {
+    this.alumnos = [];
+    this.rows = [];
+    this.columns = [
+      { prop: 'id', name: '#'},
+      { prop: 'nombre' },
+      { prop: 'apellido' },
+      { prop: 'activo' },
+      { name: 'Acciones' }
+    ];
+  }
 
   ngOnInit() {
+    this.alumnosService.getAlumnos().subscribe( alumnos => {
+      this.alumnos = alumnos.usuarios;
+      this.rows = this.alumnos.slice();
+    });
   }
 
 }
