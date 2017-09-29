@@ -1,8 +1,18 @@
-<div class="titleContainer pattern insetShadow mb-4">
+<div class="titleContainer p-5 pattern insetShadow mb-4">
   <h2>Listado de Alumnos</h2>
 </div>
 <div class="container">
   <button routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
-  <ngx-datatable class="material" [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force">
+  <app-search-input></app-search-input>
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force">
   </ngx-datatable>
+  <ng-template #hdrTpl let-column="column" >
+      {{column.name}}
+    </ng-template>
+  <ng-template #editTmpl let-row="row" let-value="value">
+    <app-routine-button></app-routine-button>
+    <app-profile-button></app-profile-button>
+   <app-edit-button></app-edit-button>
+    <app-delete-button></app-delete-button>
+  </ng-template>
 </div>

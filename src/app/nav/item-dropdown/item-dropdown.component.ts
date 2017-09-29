@@ -7,7 +7,7 @@ import { NavbarItemDropdownComponent } from '../navbar-item-dropdown/navbar-item
   styleUrls: ['./item-dropdown.component.scss']
 })
 export class ItemDropdownComponent implements OnInit {
-  
+
   @Input() path: string;
   itemId: number;
 

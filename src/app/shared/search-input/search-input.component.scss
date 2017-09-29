@@ -1,0 +1,37 @@
+.searchInputWrapper {
+    display: block;
+    position:relative;
+}
+
+.searchInput {
+    width: calc(100% - 50px);
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: inline-block;
+    &:hover, &:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+    }
+}
+
+.searchIcon {
+    height: 100%;
+    position: absolute;
+    width: 50px;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/*Search icon by Icons8 */
+.icons8-Search { /* Customizes Search icon */
+    fill: rgba(0, 0, 0, 0.15);
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
+  }

@@ -1,16 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+
+import { Alumno } from '../models/alumno';
 
 @Injectable()
 export class AlumnosService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getAlumnos(): Observable<any> {
+  getAlumnos(): Observable<Alumno> {
+    const a = this.serialize({filter_groups: [{filters: [{key: 'isAlumno', value: true, operator: 'eq', not: true}]}]});
     return this.http
-      .get('http://localhost:8000/usuarios/?includes[]=alumno');
+      .get(`http://localhost:8000/usuarios?includes[]=alumno&${a}`)
+      .map((alumnos: any) =>
+        alumnos.map(alumnoJson => {
+          const alumno = new Alumno();
+          alumno.fillFromJson(alumnoJson);
+          return alumno;
+        })
+      );
   }
 
+  protected serialize(obj, prefix?) {
+    const str = [];
+    let p;
+    for (p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        const k = prefix ? prefix + '[' + p + ']' : p, v = obj[p];
+        str.push((v !== null && typeof v === 'object') ?
+          this.serialize(v, k) :
+          encodeURIComponent(k) + '=' + encodeURIComponent(v));
+      }
+    }
+    return str.join('&');
+  }
 }
