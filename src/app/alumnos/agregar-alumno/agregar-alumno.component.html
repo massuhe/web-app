@@ -1,0 +1,83 @@
+<div class="titleContainer pattern insetShadow mb-4">
+    <h2>Agregar Alumno</h2>
+</div>
+<div class="container">
+    <fieldset class="form-group">
+        <legend>Radio buttons</legend>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Nombre
+                            <input [ngClass]="{'border-error': formErrors.movil || serverErrors.movil}"
+                                   class="form-control" formControlName="nombre"/>
+                        </label>
+                        <div *ngIf="formErrors.nombre" class="alert alert-danger">
+                            {{ formErrors.nombre }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Apellido
+                            <input class="form-control" formControlName="apellido"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Domicilio
+                            <input class="form-control" formControlName="domicilio"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Correo electrónico
+                            <input class="form-control" formControlName="correoElectronico"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Número de teléfono
+                            <input class="form-control" formControlName="numeroDeTelefono"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Antecedentes deportivos
+                            <input type="checkbox" class="form-control" formControlName="antecedentesDeportivos"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Imagen de Perfil
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label>Observaciones sobre antecedentes médicos
+                            <input class="form-control" formControlName="observaciones"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary" name="enviar" [disabled]="cargando">
+                </button>
+                <span *ngIf="cargando"><img width="40" height="40" src="assets/images/loader-gif-6.gif"></span>
+            </div>
+            <div class="alert alert-danger text-center" *ngIf="error !== ''">
+                <p>{{ error }}</p>
+            </div>
+        </form>
+    </fieldset>
+</div>

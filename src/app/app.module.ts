@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavModule } from './nav/nav.module';
 import { HomeModule } from './home/home.module';
@@ -15,7 +14,7 @@ import { AlumnosModule } from './alumnos/alumnos.module';
   ],
   imports: [
     BrowserModule,
-    // NgxDatatableModule,
+    CoreModule,
     AppRoutingModule,
     NavModule,
     HomeModule,

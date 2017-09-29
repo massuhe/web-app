@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -12,7 +13,7 @@ export class AlumnosService {
   getAlumnos(): Observable<Alumno> {
     const a = this.serialize({filter_groups: [{filters: [{key: 'isAlumno', value: true, operator: 'eq', not: true}]}]});
     return this.http
-      .get(`http://localhost:8000/usuarios?includes[]=alumno&${a}`)
+      .get(`${environment.apiBaseUrl}/usuarios?includes[]=alumno&${a}`)
       .map((alumnos: any) =>
         alumnos.map(alumnoJson => {
           const alumno = new Alumno();
@@ -20,6 +21,10 @@ export class AlumnosService {
           return alumno;
         })
       );
+  }
+
+  borrarAlumno(id) {
+    return this.http.delete(`${environment.apiBaseUrl}/usuarios/${id}`);
   }
 
   protected serialize(obj, prefix?) {
