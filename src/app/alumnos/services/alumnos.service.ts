@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { Alumno } from '../models/alumno';
 
@@ -20,6 +21,14 @@ export class AlumnosService {
           return alumno;
         })
       );
+  }
+
+  post(data) {
+    return this.http.post(`http://localhost:8000/usuarios`, data);
+  }
+
+  put(id: number, data) {
+    return this.http.put(`http://localhost:8000/usuarios/${id}`, data);
   }
 
   protected serialize(obj, prefix?) {
