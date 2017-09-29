@@ -15,7 +15,6 @@ import { AppRoutingModule } from '../app-routing.module';
     HttpClientModule,
     SharedModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
