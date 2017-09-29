@@ -2,15 +2,15 @@
     <h2>Agregar Alumno</h2>
 </div>
 <div class="container">
-    <fieldset class="form-group">
-        <legend>Radio buttons</legend>
+    <fieldset class="form-group px-4">
+        <legend class="px-3 ml-1">Datos Personales</legend>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Nombre
-                            <input [ngClass]="{'border-error': formErrors.movil || serverErrors.movil}"
-                                   class="form-control" formControlName="nombre"/>
+                            <input [ngClass]="{'border-error': formErrors.nombre}" class="form-control"
+                                   formControlName="nombre"/>
                         </label>
                         <div *ngIf="formErrors.nombre" class="alert alert-danger">
                             {{ formErrors.nombre }}
@@ -20,15 +20,23 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Apellido
-                            <input class="form-control" formControlName="apellido"/>
+                            <input [ngClass]="{'border-error': formErrors.apellido}" class="form-control"
+                                   formControlName="apellido"/>
                         </label>
+                        <div *ngIf="formErrors.apellido" class="alert alert-danger">
+                            {{ formErrors.apellido }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Domicilio
-                            <input class="form-control" formControlName="domicilio"/>
+                            <input [ngClass]="{'border-error': formErrors.domicilio}" class="form-control"
+                                   formControlName="domicilio"/>
                         </label>
+                        <div *ngIf="formErrors.domicilio" class="alert alert-danger">
+                            {{ formErrors.domicilio }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -36,22 +44,35 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Correo electrónico
-                            <input class="form-control" formControlName="correoElectronico"/>
+                            <input type="email" [ngClass]="{'border-error': formErrors.email}" class="form-control"
+                                   formControlName="email"/>
                         </label>
+                        <div *ngIf="formErrors.email" class="alert alert-danger">
+                            {{ formErrors.email }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Número de teléfono
-                            <input class="form-control" formControlName="numeroDeTelefono"/>
+                            <input type="number" [ngClass]="{'border-error': formErrors.telefono}" class="form-control"
+                                   formControlName="telefono"/>
                         </label>
+                        <div *ngIf="formErrors.telefono" class="alert alert-danger">
+                            {{ formErrors.telefono }}
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Antecedentes deportivos
-                            <input type="checkbox" class="form-control" formControlName="antecedentesDeportivos"/>
-                        </label>
+                <div class="col-sm-4 align-self-center">
+                    <div class="form-group mb-0">
+                        <input id="myCheckbox" type="checkbox"
+                               [ngClass]="{'border-error': formErrors.tieneAntecDeportivos}"
+                               style="text-align: left;width: auto;display: inline-block;" class="form-control"
+                               formControlName="tieneAntecDeportivos"/>
+                        <label for="myCheckbox" class="mb-0" style="display: inline-block;">Antecedentes deportivos</label>
+                        <div *ngIf="formErrors.tieneAntecDeportivos" class="alert alert-danger">
+                            {{ formErrors.tieneAntecDeportivos }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,15 +86,20 @@
                 <div class="col-sm-8">
                     <div class="form-group">
                         <label>Observaciones sobre antecedentes médicos
-                            <input class="form-control" formControlName="observaciones"/>
+                            <input [ngClass]="{'border-error': formErrors.observaciones}" class="form-control"
+                                   formControlName="observaciones"/>
                         </label>
+                        <div *ngIf="formErrors.observaciones" class="alert alert-danger">
+                            {{ formErrors.observaciones }}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary" name="enviar" [disabled]="cargando">
+                    Guardar
                 </button>
-                <span *ngIf="cargando"><img width="40" height="40" src="assets/images/loader-gif-6.gif"></span>
+                <span *ngIf="cargando"><img width="40" height="40" src="../../../assets/images/loader-gif-6.gif"></span>
             </div>
             <div class="alert alert-danger text-center" *ngIf="error !== ''">
                 <p>{{ error }}</p>
