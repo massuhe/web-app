@@ -18,7 +18,7 @@
     background-color: white;
     transition: background-color 0.2s ease-in-out;
     &:hover {
-        background-color: floralwhite;
+        background-color: #f9f9f9;
     }
 }
 
@@ -28,31 +28,5 @@
 }
 
 .resize-handle {
-    background-color: lighten($verdePrimario, 10%);
+    border-left: solid 1px lighten($verdePrimario, 10%);
 }
-// ngx-datatable: Master Table class
-
-// fixed-header: The header is fixed on the table
-// datatable-header: Header row class
-
-// datatable-header-cell: Header cell class
-
-// resizeable: Cell resizeable class
-// sortable: Cell drag/drop sortable class
-// longpress: Cell long-press activated
-// dragging: Cell dragging activated
-// sort-active: Sort active on column
-// sort-asc: Sort active on column with ascending applied
-// sort-desc: Sort active on column with descending applied
-// datatable-header-cell-label: Header cell text label
-
-// draggable: Header cell draggable class
-// datatable-body-row: Body row class
-
-// datatable-row-even: Odd row class
-// datatable-row-odd: Even row class
-
-// datatable-body-cell: Body cell class
-// sort-active: Sort active on column
-// sort-asc: Sort active on column with ascending applied
-// sort-desc: Sort active on column with descending applied

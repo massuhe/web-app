@@ -1,0 +1,15 @@
+@import '../../../assets/scss/helpers/_variables.scss';
+/*Gym icon by Icons8 */
+.icons8-Gym { /* Customizes Gym icon */
+    fill: gray;
+    border: solid 1px gray;
+    border-radius: 5px;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+        background: gray;
+        fill: white;
+    }  
+}
