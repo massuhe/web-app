@@ -1,32 +1,62 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '../../scss/helpers/_variables.scss';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
 
 .datatable-header {
-    background-color: $verdePrimario;
-    border-bottom: 2px solid #e9ecef;
-    border-top: 1px solid #e9ecef;
+  background-color: $verdePrimario;
+  border-bottom: 2px solid #e9ecef;
+  border-top: 1px solid #e9ecef;
 }
 
 .datatable-header-cell {
-    color: white;
-    font-weight: bold;
-    padding: 10px;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
 }
 
 .datatable-body-row {
-    border-bottom: 1px solid #e9ecef;
-    background-color: white;
-    transition: background-color 0.2s ease-in-out;
-    &:hover {
-        background-color: #f9f9f9;
-    }
+  border-bottom: 1px solid #e9ecef;
+  background-color: white;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #f9f9f9;
+  }
 }
 
 .datatable-body-cell {
-    color: gray;
-   padding: 10px;
+  color: gray;
+  padding: 10px;
 }
 
 .resize-handle {
-    border-left: solid 1px lighten($verdePrimario, 10%);
+  border-left: solid 1px lighten($verdePrimario, 10%);
+}
+
+.page-count {
+    color: gray;
+}
+
+.pager {
+  li a {
+    color: gray;
+    text-decoration: none;
+  }
+  .pages {
+    border: solid 1px #e9ecef;
+    border-radius: 5px;
+    margin: 0 0.25em !important;
+    transition: all 0.1s ease-in-out;
+    a {
+      padding: 0.25em 0.75em !important;
+      color: gray;
+    }
+    &:hover,
+    &.active {
+      background-color: $verdePrimario;
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
 }

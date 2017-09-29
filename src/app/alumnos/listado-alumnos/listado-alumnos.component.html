@@ -3,16 +3,17 @@
 </div>
 <div class="container">
   <button type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
-  <app-search-input></app-search-input>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force">
+  <app-search-input (input)="filterData($event)"></app-search-input>
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+    footerHeight="75">
   </ngx-datatable>
-  <ng-template #hdrTpl let-column="column" >
-      {{column.name}}
-    </ng-template>
+  <ng-template #hdrTpl let-column="column">
+    {{column.name}}
+  </ng-template>
   <ng-template #editTmpl let-row="row" let-value="value">
     <app-routine-button></app-routine-button>
     <app-profile-button></app-profile-button>
-   <app-edit-button></app-edit-button>
+    <app-edit-button></app-edit-button>
     <app-delete-button></app-delete-button>
   </ng-template>
 </div>

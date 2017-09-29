@@ -15,13 +15,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'alumnos/listado',
-    component: ListadoAlumnosComponent
-  },
-  {
     path: 'alumnos',
-    redirectTo: '/alumnos/listado',
-    pathMatch: 'full'
+    component: ListadoAlumnosComponent
   }
 ];
 
