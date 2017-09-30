@@ -31,6 +31,7 @@ export class ListadoAlumnosComponent implements OnInit {
   private alumnos;
   rows;
   columns;
+  showLoader;
 
   constructor(
     private alumnosService: AlumnosService,
@@ -52,12 +53,15 @@ export class ListadoAlumnosComponent implements OnInit {
         maxWidth: 160
       }
     ];
+    this.showLoader = true;
     this.alumnosService.getAlumnos().subscribe(
       alumnos => {
         this.alumnos = alumnos;
         this.fillRows();
+        this.showLoader = false;
       },
       error => {
+        this.showLoader = false;
         this.dialogService.error('Se ha producido un error inesperado');
       }
     );
@@ -84,13 +88,16 @@ export class ListadoAlumnosComponent implements OnInit {
       .confirm('¿Está seguro que quiere borrar el alumno?')
       .then(
         () => {
+          this.showLoader = true;
           this.alumnosService.borrarAlumno(idAlumno).subscribe(() => {
+            this.showLoader = false;
             const indiceBorrar = this.alumnos.findIndex(a => a.id === idAlumno);
             this.alumnos = [...this.alumnos.slice(0, indiceBorrar), ...this.alumnos.slice(indiceBorrar + 1)];
             this.fillRows();
             this.dialogService.success('El alumno ha sido borrado correctamente');
           },
           () => {
+            this.showLoader = false;
             this.dialogService.error('Se ha producido un error inesperado');
           });
         },
