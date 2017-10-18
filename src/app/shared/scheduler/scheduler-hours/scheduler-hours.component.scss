@@ -1,0 +1,17 @@
+@import '../../../../assets/scss/helpers/_variables.scss';
+
+.scheduler-hour-column {
+    flex-grow: 0;
+}
+
+.hour-cell {
+    background: lighten($verdePrimario, 5%);
+    padding: 1em;
+    color: white;
+}
+
+.corner-hour-cell {
+    background: lighten($verdePrimario, 5%);
+    border-top-left-radius: 10px;
+    min-height: 3em;
+}

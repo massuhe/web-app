@@ -1,0 +1,9 @@
+<div class="scheduler-column d-flex flex-column">
+    <div class="header-cell d-flex align-items-center justify-content-center" (click)="toggle()">
+        <span>{{this.date | date:'EEEE'}}</span>
+        <span class="ml-2">{{this.date | date:'dd/MM'}}</span>
+    </div>
+    <div class="content" *ngIf="shouldShow">
+        <ng-content></ng-content>
+    </div>
+</div>

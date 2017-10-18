@@ -1,4 +1,6 @@
-@import '../../../assets/scss/helpers/_variables.scss';
+:host(:focus) {
+    outline: none;
+}
 /*Gym icon by Icons8 */
 .icons8-Gym { /* Customizes Gym icon */
     fill: gray;
@@ -11,5 +13,5 @@
     &:hover {
         background: gray;
         fill: white;
-    }  
+    }
 }

@@ -8,6 +8,10 @@ import { EditButtonComponent } from './edit-button/edit-button.component';
 import { RoutineButtonComponent } from './routine-button/routine-button.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
+import { SchedulerHoursComponent } from './scheduler/scheduler-hours/scheduler-hours.component';
+import { SchedulerColumnComponent } from './scheduler/scheduler-column/scheduler-column.component';
+import { SchedulerCellComponent } from './scheduler/scheduler-cell/scheduler-cell.component';
 
 @NgModule({
   imports: [
@@ -20,7 +24,11 @@ import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
     EditButtonComponent,
     RoutineButtonComponent,
     SearchInputComponent,
-    ScreenLoaderComponent
+    ScreenLoaderComponent,
+    SchedulerComponent,
+    SchedulerHoursComponent,
+    SchedulerColumnComponent,
+    SchedulerCellComponent
   ],
   exports: [
     DeleteButtonComponent,
@@ -28,7 +36,11 @@ import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
     EditButtonComponent,
     RoutineButtonComponent,
     SearchInputComponent,
-    ScreenLoaderComponent
+    ScreenLoaderComponent,
+    SchedulerComponent,
+    SchedulerHoursComponent,
+    SchedulerColumnComponent,
+    SchedulerCellComponent
   ]
 })
 export class SharedModule { }

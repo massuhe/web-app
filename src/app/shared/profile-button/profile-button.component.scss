@@ -1,4 +1,6 @@
-@import '../../../assets/scss/helpers/_variables.scss';
+:host(:focus) {
+    outline: none;
+}
 /*Delete icon by Icons8 */
 .icons8-User { /* Customizes Delete icon */
     fill: gray;
@@ -12,5 +14,8 @@
     &:hover {
         background: gray;
         fill: white;
-    } 
+    }
+    &:focus {
+        outline: none;
+    }
 }

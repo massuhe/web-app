@@ -14,7 +14,7 @@
   <ng-template #editTmpl let-row="row" let-value="value">
     <app-routine-button></app-routine-button>
     <app-profile-button></app-profile-button>
-    <app-edit-button routerLink="agregar"></app-edit-button>
+    <app-edit-button [routerLink]="'editar/' + row.id"></app-edit-button>
     <app-delete-button (click)="borrarAlumno(row.id)"></app-delete-button>
   </ng-template>
 </div>

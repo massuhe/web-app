@@ -1,0 +1,14 @@
+@import '../../../../assets/scss/helpers/_variables.scss';
+
+:host {
+    flex-grow: 1;
+}
+
+.header-cell {
+    min-height: 3em;
+    background: $verdePrimario;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border-bottom: solid 1px lighten($verdePrimario, 10%);
+}

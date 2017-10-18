@@ -1,0 +1,26 @@
+:host {
+    display: block;
+}
+
+.content-cell {
+    min-height: 3em;
+    padding: 1em;
+    color: gray;
+    border-right: solid 1px cornsilk;
+    border-bottom: solid 1px cornsilk;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover{
+        background-color: cornsilk;
+    }
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: lightgray;
+    display: none;
+    @media (min-width: 768px) {
+        display: block;
+    }
+}
