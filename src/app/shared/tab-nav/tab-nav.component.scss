@@ -1,0 +1,15 @@
+@import '../../../assets/scss/helpers/_variables.scss';
+
+li.nav-item {
+    cursor: pointer;
+}
+
+a.nav-link {
+    color: $naranjaPrimario;
+    &:hover {
+        color: $naranjaPrimario;
+    }
+    &.active {
+        pointer-events: none;
+    }
+}

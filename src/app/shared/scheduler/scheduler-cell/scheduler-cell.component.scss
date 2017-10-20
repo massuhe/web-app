@@ -9,10 +9,13 @@
     border-right: solid 1px cornsilk;
     border-bottom: solid 1px cornsilk;
     text-align: center;
-    transition: all 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
     cursor: pointer;
     &:hover{
         background-color: cornsilk;
+    }
+    @media (max-width: 768px) {
+        height: auto !important;
     }
 }
 
@@ -22,5 +25,17 @@
     display: none;
     @media (min-width: 768px) {
         display: block;
+    }
+}
+
+.suspended {
+    background-color: lighten(coral, 20%);
+    pointer-events: none;
+}
+
+.marked {
+    background-color: lighten(yellow, 30%);
+    &:hover {
+        background-color: lighten(yellow, 30%);
     }
 }

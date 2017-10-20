@@ -1,0 +1,9 @@
+.week-selector {
+    border-bottom: none
+}
+
+@media (min-width: 768px) {
+    .week-selector {
+        border-bottom: solid 1px #ddd;
+    }
+}

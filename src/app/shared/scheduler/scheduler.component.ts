@@ -115,10 +115,10 @@ export class SchedulerComponent
     Array.from(this.hours.nativeElement.children[0].children)
     .forEach((c, i) => {
       /* Actualizo las celdas de aquellas columnas de clases que no tienen la altura maxima */
-      this.columns.forEach((col, indiceColumna) => {
-        col.cells.forEach(cell => {
+      this.columns.forEach((col) => {
+        col.cells.forEach((cell, indiceColumna) => {
           const celdaActualizar = cell.nativeElement.children[0];
-          if (celdaActualizar.offsetHeight !== maxHeights[i]) {
+          if (celdaActualizar.offsetHeight !== maxHeights[indiceColumna]) {
             this.renderer.setStyle(celdaActualizar, 'height', maxHeights[i] + 'px');
           }
         });

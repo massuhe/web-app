@@ -1,0 +1,5 @@
+<div class="week-selector">
+    <i class="datatable-icon-left" (click)="changeWeeksToAdd(-1)"></i>
+    <span class="selector-text">Semana del {{week | date}}</span>
+    <i class="datatable-icon-right" (click)="changeWeeksToAdd(1)" *ngIf="weeksToAdd < 1 "></i>
+</div>

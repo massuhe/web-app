@@ -74,8 +74,8 @@ export class ListadoAlumnosComponent implements OnInit {
     });
   }
 
-  filterData(event) {
-    const filterText = event.srcElement.value.toUpperCase();
+  filterData(value) {
+    const filterText = value.toUpperCase();
     this.rows = this.alumnos.filter(
       a =>
         a.nombre.toUpperCase().includes(filterText) ||

@@ -2,29 +2,28 @@
     <h2>Listado de Clases</h2>
 </div>
 <div class="container">
-    <ul class="nav nav-tabs mb-4">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Musculaci&oacute;n</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Pilates</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Boxeo</a>
-        </li>
-    </ul>
-    <div class="mb-4">
-        <i class="datatable-icon-left"></i><span>Semana del </span><i class="datatable-icon-right"></i>
+    <div class="d-block d-md-flex">
+        <app-tab-nav [items]="actividades" [active]="1"></app-tab-nav>
+        <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
     </div>
-    <app-search-input></app-search-input>
+    <app-search-input (inputDebounced)="handleInput($event)"></app-search-input>
     <app-scheduler #sched>
         <app-scheduler-hours [rows]="horas"></app-scheduler-hours>
         <app-scheduler-column *ngFor="let dia of dias" [date]="dia.fecha" [smallScreen]="sched.smallScreen">
-            <app-scheduler-cell *ngFor="let horaClase of horas; let i = index" [enabled]="situacionClase(dia,horaClase) !== 'disabled'">
-                <span *ngIf="getClase(dia,horaClase); let clase">
-                    <span class="d-md-none">{{horaClase}} - </span>
-                    {{calcularLugaresDisponibles(clase)}} lugares disponibles
-                </span>
+            <app-scheduler-cell *ngFor="let clase of dia.clases" 
+                [enabled]="!clase.disabled"
+                [marked]="clase.incluyeAlumno"
+                [suspended]="clase.suspendida">
+                <div *ngIf="!clase.disabled">
+                    <span *ngIf="!clase.suspendida">
+                        <span class="d-md-none">{{clase.horaInicio}} - </span>
+                        {{clase.lugaresDisponibles}} lugares disponibles
+                    </span>
+                    <span *ngIf="clase.suspendida">
+                        <p class="mb-0 font-weight-bold">Suspendida</p>
+                        <p class="mb-0">{{clase.motivo}}</p>
+                    </span>
+                </div>
             </app-scheduler-cell>
         </app-scheduler-column>
     </app-scheduler>

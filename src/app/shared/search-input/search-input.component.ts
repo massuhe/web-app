@@ -1,21 +1,26 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss']
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent implements AfterViewInit {
 
-  @Output() input = new EventEmitter<string>();
+  @Output() inputDebounced = new EventEmitter<any>();
+  @ViewChild('input') input;
 
   constructor() { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    const keyups = Observable
+      .fromEvent(this.input.nativeElement, 'keyup')
+      .debounceTime(500)
+      .map((event: KeyboardEvent) => event.srcElement['value'])
+      .subscribe(val => this.inputDebounced.emit(val));
   }
 
-  handleInput(e) {
-    this.input.emit(e.data);
-  }
 
 }

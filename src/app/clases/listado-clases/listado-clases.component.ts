@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import * as compareAsc from 'date-fns/compare_asc';
 import * as addMinutes from 'date-fns/add_minutes';
 import * as format from 'date-fns/format';
+
+import { Dia } from '../models/dia';
 
 const mockedData = {
   cantidadAlumnosPorClase: 7,
@@ -13,16 +15,18 @@ const mockedData = {
       fecha: '10-16-2017',
       clases: [
         {
+          id: 1,
           horaInicio: '08:00',
-          alumnos: [],
+          alumnos: [{nombre: 'Esteban', apellido: 'Massuh'}],
           suspendida: false,
           motivo: ''
         },
         {
+          id: 2,
           horaInicio: '09:00',
           alumnos: [],
-          suspendida: false,
-          motivo: ''
+          suspendida: true,
+          motivo: 'Se rompio la puerta'
         },
       ]
     },
@@ -30,14 +34,16 @@ const mockedData = {
       fecha: '10-17-2017',
       clases: [
         {
+          id: 3,
           horaInicio: '08:00',
           alumnos: [],
           suspendida: false,
           motivo: ''
         },
         {
+          id: 4,
           horaInicio: '09:00',
-          alumnos: [],
+          alumnos: [{nombre: 'Juan', apellido: 'Perez'}],
           suspendida: false,
           motivo: ''
         },
@@ -47,29 +53,33 @@ const mockedData = {
       fecha: '10-18-2017',
       clases: [
         {
+          id: 5,
           horaInicio: '08:00',
           alumnos: [],
           suspendida: false,
           motivo: ''
         },
-        {
-          horaInicio: '09:00',
-          alumnos: [],
-          suspendida: false,
-          motivo: ''
-        },
+        // {
+        //   id: 6,
+        //   horaInicio: '09:00',
+        //   alumnos: [],
+        //   suspendida: false,
+        //   motivo: ''
+        // },
       ]
     },
     {
       fecha: '10-19-2017',
       clases: [
         {
+          id: 7,
           horaInicio: '08:00',
           alumnos: [],
           suspendida: false,
           motivo: ''
         },
         {
+          id: 8,
           horaInicio: '09:00',
           alumnos: [],
           suspendida: false,
@@ -81,12 +91,14 @@ const mockedData = {
       fecha: '10-20-2017',
       clases: [
         {
+          id: 9,
           horaInicio: '08:00',
           alumnos: [],
           suspendida: false,
           motivo: ''
         },
         {
+          id: 10,
           horaInicio: '09:00',
           alumnos: [],
           suspendida: false,
@@ -97,6 +109,21 @@ const mockedData = {
   ]
 };
 
+const mockedActivities = [
+  {
+    name: 'Musculación',
+    id: 1
+  },
+  {
+    name: 'Pilates',
+    id: 2
+  },
+  {
+    name: 'Boxeo',
+    id: 3
+  }
+];
+
 @Component({
   selector: 'app-listado-clases',
   templateUrl: './listado-clases.component.html',
@@ -106,12 +133,28 @@ export class ListadoClasesComponent implements OnInit {
 
   horas;
   dias;
+  actividades;
+  week;
+  busquedaAlumno;
 
   constructor() { }
 
   ngOnInit() {
     this.cargarHoras();
-    this.dias = mockedData.dias;
+    this.dias = this.cargarDias(mockedData.dias, this.horas);
+    this.actividades = mockedActivities;
+    this.week = new Date();
+    this.busquedaAlumno = '';
+  }
+
+  cargarDias(diasJson, horas) {
+    const diasArray = [];
+    diasJson.forEach(d => {
+      const dia = new Dia();
+      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: mockedData.cantidadAlumnosPorClase});
+      diasArray.push(dia);
+    });
+    return diasArray;
   }
 
   cargarHoras() {
@@ -126,19 +169,17 @@ export class ListadoClasesComponent implements OnInit {
     }
   }
 
-  getClase(dia, horaClase) {
-    return dia.clases.find(c => c.horaInicio === horaClase);
+  handleInput(value) {
+    this.busquedaAlumno = value.toUpperCase();
+    this.dias.forEach(d => {
+      d.clases.forEach(c => {
+        c.checkIncluyeAlumno(value);
+      });
+    });
   }
 
-  situacionClase(dia, horaClase) {
-    const clase = this.getClase(dia, horaClase);
-    if (!clase) {
-      return 'disabled';
-    }
-    return clase.suspendida ? 'suspendida' : 'normal';
+  handleWeekChange(week: Date) {
+    this.week = week;
   }
 
-  calcularLugaresDisponibles(clase) {
-    return mockedData.cantidadAlumnosPorClase - clase.alumnos.length;
-  }
 }

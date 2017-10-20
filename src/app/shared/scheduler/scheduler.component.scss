@@ -1,3 +1,12 @@
+@import '../../../assets/scss/helpers/_variables.scss';
+
 .scheduler {
     width: 100%;
+}
+
+.scheduler-footer {
+    height: 1rem;
+    position: relative;
+    top: -1px;
+    background: darken($verdePrimario, 10%);
 }

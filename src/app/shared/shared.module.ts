@@ -12,6 +12,7 @@ import { SchedulerComponent } from './scheduler/scheduler.component';
 import { SchedulerHoursComponent } from './scheduler/scheduler-hours/scheduler-hours.component';
 import { SchedulerColumnComponent } from './scheduler/scheduler-column/scheduler-column.component';
 import { SchedulerCellComponent } from './scheduler/scheduler-cell/scheduler-cell.component';
+import { TabNavComponent } from './tab-nav/tab-nav.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { SchedulerCellComponent } from './scheduler/scheduler-cell/scheduler-cel
     SchedulerComponent,
     SchedulerHoursComponent,
     SchedulerColumnComponent,
-    SchedulerCellComponent
+    SchedulerCellComponent,
+    TabNavComponent
   ],
   exports: [
     DeleteButtonComponent,
@@ -40,7 +42,8 @@ import { SchedulerCellComponent } from './scheduler/scheduler-cell/scheduler-cel
     SchedulerComponent,
     SchedulerHoursComponent,
     SchedulerColumnComponent,
-    SchedulerCellComponent
+    SchedulerCellComponent,
+    TabNavComponent
   ]
 })
 export class SharedModule { }

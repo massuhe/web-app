@@ -39,3 +39,7 @@ fieldset {
 .border-error {
     border-color: red;
 }
+
+@for $i from 1 through 5 {
+    .f-grow#{$i} { flex-grow: $i; }
+}
