@@ -44,6 +44,9 @@ export class SchedulerComponent
     if (!this.smallScreen) {
       this.adjustHeight();
     }
+    // this.columns.changes.subscribe(e => {
+    //   setTimeout(() => this.adjustHeight());
+    // });
     this.ngzone.runOutsideAngular(() =>
       Observable.fromEvent(window, 'resize')
         .subscribe(event => {

@@ -10,6 +10,6 @@ a.nav-link {
         color: $naranjaPrimario;
     }
     &.active {
-        pointer-events: none;
+        color: #212529;
     }
 }

@@ -2,6 +2,18 @@
     color: gray;
 }
 
+.week-selector-input {
+    display: inline-block;
+    width: 5rem;
+    border: none;
+    text-align: center;
+    padding: 0;
+    color: gray;
+    position: relative;
+    top: -0.15rem;
+    cursor: pointer;
+}
+
 .selector-text {
     position: relative;
     top: -0.175rem;

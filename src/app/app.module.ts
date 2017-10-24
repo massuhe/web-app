@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
+import { ClasesResolver } from './resolvers/ClasesResolver';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -22,7 +23,7 @@ import { ClasesModule } from './clases/clases.module';
     AlumnosModule,
     ClasesModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }, ClasesResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import * as compareAsc from 'date-fns/compare_asc';
-import * as addMinutes from 'date-fns/add_minutes';
-import * as format from 'date-fns/format';
+import { ClasesService } from '../services/clases.service';
+import { DialogService } from '../../core/dialog.service';
+import * as startOfWeek from 'date-fns/start_of_week';
 
 import { Dia } from '../models/dia';
 
@@ -136,37 +136,18 @@ export class ListadoClasesComponent implements OnInit {
   actividades;
   week;
   busquedaAlumno;
+  actividadSeleccionada;
+  showScheduler;
+  showLoader;
 
-  constructor() { }
+  constructor(private clasesService: ClasesService, private dialogService: DialogService) { }
 
   ngOnInit() {
-    this.cargarHoras();
-    this.dias = this.cargarDias(mockedData.dias, this.horas);
     this.actividades = mockedActivities;
-    this.week = new Date();
+    this.actividadSeleccionada = this.actividades[0].id;
+    this.week = startOfWeek(new Date(), {weekStartsOn: 1});
     this.busquedaAlumno = '';
-  }
-
-  cargarDias(diasJson, horas) {
-    const diasArray = [];
-    diasJson.forEach(d => {
-      const dia = new Dia();
-      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: mockedData.cantidadAlumnosPorClase});
-      diasArray.push(dia);
-    });
-    return diasArray;
-  }
-
-  cargarHoras() {
-    this.horas = [];
-    const horaMinima = mockedData.horaMinima.split(':');
-    const horaMaxima = mockedData.horaMaxima.split(':');
-    let inicio = new Date(1990, 1, 1, parseInt(horaMinima[0], 10), parseInt(horaMinima[1], 10));
-    const fin = new Date(1990, 1, 1, parseInt(horaMaxima[0], 10), parseInt(horaMaxima[1], 10));
-    while (compareAsc(inicio, fin) < 0) {
-      this.horas.push(format(inicio, 'HH:mm'));
-      inicio = addMinutes(inicio, mockedData.duracionActividad);
-    }
+    this.populateScheduler();
   }
 
   handleInput(value) {
@@ -180,6 +161,31 @@ export class ListadoClasesComponent implements OnInit {
 
   handleWeekChange(week: Date) {
     this.week = week;
+    this.populateScheduler();
+  }
+
+  handleActivityChange(actividadId: number) {
+    this.actividadSeleccionada = actividadId;
+    this.populateScheduler();
+  }
+
+  private populateScheduler() {
+    this.showLoader = true;
+    this.showScheduler = false;
+    this.clasesService.getListadoClases(this.week, this.actividadSeleccionada)
+      .subscribe(res => {
+        if (res.dias.length > 0) {
+          this.horas = res.horas;
+          this.dias = res.dias;
+          this.showScheduler = true;
+        }
+        this.showLoader = false;
+      },
+      err => {
+        this.showLoader = false;
+        this.dialogService.error('Se ha producido un error inesperado');
+      }
+    );
   }
 
 }

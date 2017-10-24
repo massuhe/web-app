@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClasesResolver } from './resolvers/ClasesResolver';
 
 import { HomeComponent } from './home/home/home.component';
 import { ListadoAlumnosComponent } from './alumnos/listado-alumnos/listado-alumnos.component';
@@ -26,8 +27,19 @@ const routes: Routes = [
   },
   {
     path: 'clases',
-    component: ListadoClasesComponent
-  }
+    component: ListadoClasesComponent,
+    resolve: {
+      clasesResolver: ClasesResolver
+    }
+  },
+  {
+    path: 'clases/alumno',
+    component: HomeComponent
+  },
+  // {
+  //   path: 'clases/alumno',
+  //   component: ListadoClasesAlumnoComponent
+  // }
 ];
 
 @NgModule({

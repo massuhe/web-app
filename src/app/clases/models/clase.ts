@@ -18,7 +18,7 @@ export class Clase {
 
     fillFromJson(json, paramsObj) {
         this.id = json.id;
-        this.horaInicio = json.horaInicio;
+        this.horaInicio = json.hora_inicio;
         this.alumnos = json.alumnos;
         this.suspendida = json.suspendida;
         this.motivo = json.motivo;

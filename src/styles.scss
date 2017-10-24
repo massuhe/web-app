@@ -14,7 +14,9 @@ body, html, * {
     background-color: white;
     padding: 50px;
     h2 {
-        color: gray;
+        color: rgb(82, 90, 95);
+        letter-spacing: 0.02em;
+        text-shadow: 0 0px 0.5px rgba(107, 107, 107, 0.5), 0 0px 1px rgba(107, 107, 107, 0.22);
     }
 }
 

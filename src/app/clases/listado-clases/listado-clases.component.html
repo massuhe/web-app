@@ -1,13 +1,14 @@
 <div class="titleContainer p-5 pattern insetShadow mb-4">
     <h2>Listado de Clases</h2>
 </div>
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
 <div class="container">
     <div class="d-block d-md-flex">
-        <app-tab-nav [items]="actividades" [active]="1"></app-tab-nav>
+        <app-tab-nav [items]="actividades" [active]="actividadSeleccionada" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
         <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
     </div>
     <app-search-input (inputDebounced)="handleInput($event)"></app-search-input>
-    <app-scheduler #sched>
+    <app-scheduler #sched *ngIf="showScheduler">
         <app-scheduler-hours [rows]="horas"></app-scheduler-hours>
         <app-scheduler-column *ngFor="let dia of dias" [date]="dia.fecha" [smallScreen]="sched.smallScreen">
             <app-scheduler-cell *ngFor="let clase of dia.clases" 
@@ -16,7 +17,7 @@
                 [suspended]="clase.suspendida">
                 <div *ngIf="!clase.disabled">
                     <span *ngIf="!clase.suspendida">
-                        <span class="d-md-none">{{clase.horaInicio}} - </span>
+                        <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
                         {{clase.lugaresDisponibles}} lugares disponibles
                     </span>
                     <span *ngIf="clase.suspendida">
@@ -27,4 +28,5 @@
             </app-scheduler-cell>
         </app-scheduler-column>
     </app-scheduler>
+    <p *ngIf="!isFetching && !showScheduler">No se han encontrado clases</p>
 </div>

@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs mb-4">
-  <li class="nav-item" *ngFor="let item of items">
-      <a [class]="'nav-link' + (item.id === active ? ' active' : '')">{{item.name}}</a>
+  <li class="nav-item" *ngFor="let item of items" (click)="handleClick($event, item.id)">
+      <a class="nav-link" [ngClass]="{active: item.id === active}">{{item.name}}</a>
   </li>
 </ul>

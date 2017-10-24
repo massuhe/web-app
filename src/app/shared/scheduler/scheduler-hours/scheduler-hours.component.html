@@ -1,4 +1,4 @@
 <div class="scheduler-hour-column d-md-flex flex-column d-none" #hours>
     <div class="corner-hour-cell"></div>
-    <div class="hour-cell" *ngFor="let row of rows">{{row}}</div>
+    <div class="hour-cell" *ngFor="let row of rows">{{row | slice:0:5}}</div>
 </div>

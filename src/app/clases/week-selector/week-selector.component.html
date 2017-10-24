@@ -1,5 +1,13 @@
 <div class="week-selector">
-    <i class="datatable-icon-left" (click)="changeWeeksToAdd(-1)"></i>
-    <span class="selector-text">Semana del {{week | date}}</span>
-    <i class="datatable-icon-right" (click)="changeWeeksToAdd(1)" *ngIf="weeksToAdd < 1 "></i>
+    <i class="datatable-icon-left" (click)="handleArrowNavigation(-1)"></i>
+    <span class="selector-text">Semana del </span>
+    <input class="form-control week-selector-input"
+        (click)="d.toggle()" 
+        placement="bottom" 
+        [maxDate]="maxDate"
+        [ngModel]="model"
+        (ngModelChange)="handleCalendarNavigation($event)"
+        name="dp"
+        ngbDatepicker #d="ngbDatepicker">
+    <i class="datatable-icon-right" (click)="handleArrowNavigation(1)" *ngIf="disableAddWeek"></i>
 </div>
