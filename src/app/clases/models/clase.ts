@@ -10,6 +10,7 @@ export class Clase {
     disabled: boolean;
     lugaresDisponibles: number;
     incluyeAlumno: boolean;
+    asiste: boolean;
 
     constructor() {
         this.disabled = true;
@@ -23,7 +24,7 @@ export class Clase {
         this.suspendida = json.suspendida;
         this.motivo = json.motivo;
         this.disabled = false;
-        this.lugaresDisponibles = paramsObj.cantidadAlumnosPorClase - json.alumnos.length;
+        this.lugaresDisponibles = paramsObj.cantidadAlumnosPorClase - (json.alumnos.length || json.alumnos);
     }
 
     checkIncluyeAlumno(text) {
@@ -40,5 +41,13 @@ export class Clase {
             }
         });
         this.incluyeAlumno = included;
+    }
+
+    checkAsisteClase(clases) {
+        if (clases.includes(this.id)) {
+            this.asiste = true;
+        } else {
+            this.asiste = false;
+        }
     }
 }

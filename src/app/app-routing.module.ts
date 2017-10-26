@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home/home.component';
 import { ListadoAlumnosComponent } from './alumnos/listado-alumnos/listado-alumnos.component';
 import { AgregarAlumnoComponent } from './alumnos/agregar-alumno/agregar-alumno.component';
 import { ListadoClasesComponent } from './clases/listado-clases/listado-clases.component';
+import { ListadoClasesAlumnoComponent } from './clases/listado-clases-alumno/listado-clases-alumno.component';
 
 const routes: Routes = [
   {
@@ -34,12 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'clases/alumno',
-    component: HomeComponent
-  },
-  // {
-  //   path: 'clases/alumno',
-  //   component: ListadoClasesAlumnoComponent
-  // }
+    component: ListadoClasesAlumnoComponent
+  }
 ];
 
 @NgModule({

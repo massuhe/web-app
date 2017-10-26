@@ -36,8 +36,8 @@ export class WeekSelectorComponent implements OnInit, OnChanges {
         const el = this.datepickerRef.nativeElement.nextSibling;
         if (
           !this.isInside(
-            event.x,
-            event.y,
+            event.pageX,
+            event.pageY,
             el.offsetHeight,
             el.offsetWidth,
             el.offsetTop,

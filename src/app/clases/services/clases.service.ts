@@ -21,7 +21,8 @@ export class ClasesService {
       .map(json => {
         const horas = this.cargarHoras(json);
         const dias = this.cargarDias(json, horas);
-        return {horas, dias};
+        const alumno = json['alumno'];
+        return {horas, dias, alumno};
       });
   }
 
@@ -43,7 +44,7 @@ export class ClasesService {
     const diasJson = json.dias;
     diasJson.forEach(d => {
       const dia = new Dia();
-      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: json.cantidad_alumnos_por_clase});
+      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: json.cantidad_alumnos_por_clase, });
       diasArray.push(dia);
     });
     return diasArray;

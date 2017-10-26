@@ -11,6 +11,7 @@ export class SchedulerCellComponent implements OnInit {
   @Input() enabled;
   @Input() marked;
   @Input() suspended;
+  @Input() assist;
 
   constructor() { }
 

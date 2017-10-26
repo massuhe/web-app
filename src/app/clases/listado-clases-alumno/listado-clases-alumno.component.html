@@ -1,0 +1,44 @@
+<div class="titleContainer p-5 pattern insetShadow mb-4">
+  <h2>Listado de Clases</h2>
+</div>
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="container">
+  <div class="d-block d-md-flex">
+      <app-tab-nav [items]="actividades" [active]="actividadSeleccionada" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
+      <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
+  </div>
+  <div class="d-flex justify-content-center justify-content-sm-between align-items-center flex-wrap" *ngIf="showScheduler">
+        <p class="contentFont">Pod&eacute;s recuperar <strong>{{puedeRecuperar}}</strong> clases</p>
+        <span>
+            <button type="button" class="btn btn-outline-porange mb-4">Guardar</button>
+            <button type="button" class="btn btn-outline-porange mb-4">Cancelar</button>
+        </span>
+  </div>
+  <app-scheduler #sched *ngIf="showScheduler">
+      <app-scheduler-hours [rows]="horas"></app-scheduler-hours>
+      <app-scheduler-column *ngFor="let dia of dias" [date]="dia.fecha" [smallScreen]="sched.smallScreen">
+          <app-scheduler-cell *ngFor="let clase of dia.clases" 
+              [enabled]="!clase.disabled || clase.lugaresDisponibles === 0"
+              [assist]="clase.asiste"
+              [suspended]="clase.suspendida">
+              <div *ngIf="!clase.disabled">
+                  <span *ngIf="!clase.suspendida && !clase.asiste">
+                      <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
+                      <span class="mb-1 d-block">{{clase.lugaresDisponibles}} lugares disponibles</span>
+                      <button type="button" class="btn btn-outline-secondary" *ngIf="puedeRecuperar > 0">Recuperar</button>
+                  </span>
+                  <span *ngIf="!clase.suspendida && clase.asiste">
+                    <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
+                    <span class="mb-1 d-block">Asignado</span>
+                    <button type="button" class="btn btn-outline-danger">Cancelar</button>
+                </span>
+                  <span *ngIf="clase.suspendida">
+                      <p class="mb-0 font-weight-bold">Suspendida</p>
+                      <p class="mb-0">{{clase.motivo}}</p>
+                  </span>
+              </div>
+          </app-scheduler-cell>
+      </app-scheduler-column>
+  </app-scheduler>
+  <p *ngIf="!showLoader && !showScheduler">No se han encontrado clases</p>
+</div>
