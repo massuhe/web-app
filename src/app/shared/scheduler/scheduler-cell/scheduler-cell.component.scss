@@ -5,7 +5,7 @@
 }
 
 .content-cell {
-    min-height: 3em;
+    min-height: 4.5em;
     padding: 1em;
     color: gray;
     border-right: solid 1px cornsilk;
@@ -17,7 +17,7 @@
         background-color: cornsilk;
     }
     @media (max-width: 768px) {
-        height: auto !important;
+        height: auto;
     }
 }
 

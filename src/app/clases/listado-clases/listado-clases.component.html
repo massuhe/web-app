@@ -2,9 +2,9 @@
     <h2>Listado de Clases</h2>
 </div>
 <app-screen-loader *ngIf="showLoader"></app-screen-loader>
-<div class="container">
+<div class="container" *ngIf="showScreen">
     <div class="d-block d-md-flex">
-        <app-tab-nav [items]="actividades" [active]="actividadSeleccionada" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
+        <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
         <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
     </div>
     <app-search-input (inputDebounced)="handleInput($event)"></app-search-input>
@@ -28,5 +28,5 @@
             </app-scheduler-cell>
         </app-scheduler-column>
     </app-scheduler>
-    <p *ngIf="!isFetching && !showScheduler">No se han encontrado clases</p>
+    <p *ngIf="!showLoader && dias.length === 0">No se han encontrado clases</p>
 </div>

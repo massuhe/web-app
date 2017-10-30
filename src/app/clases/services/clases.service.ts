@@ -17,34 +17,34 @@ export class ClasesService {
   getListadoClases(semana, actividad) {
     const formattedDate = format(semana, 'MM-DD-YYYY');
     return this.http
-      .get(`${environment.apiBaseUrl}/clases/especificas?semana=${formattedDate}&actividad=${actividad}`)
+      .get(`${environment.apiBaseUrl}/clases/especificas?semana=${formattedDate}&actividad=${actividad.id}`)
       .map(json => {
-        const horas = this.cargarHoras(json);
-        const dias = this.cargarDias(json, horas);
+        const horas = this.cargarHoras(json, actividad);
+        const dias = this.cargarDias(json, actividad, horas);
         const alumno = json['alumno'];
         return {horas, dias, alumno};
       });
   }
 
-  private cargarHoras(json) {
+  private cargarHoras(json, actividad) {
     const horas = [];
-    const horaMinima = json.hora_minima.split(':');
-    const horaMaxima = json.hora_maxima.split(':');
+    const horaMinima = actividad.horaMinima.split(':');
+    const horaMaxima = actividad.horaMaxima.split(':');
     let inicio = new Date(1990, 1, 1, parseInt(horaMinima[0], 10), parseInt(horaMinima[1], 10), parseInt(horaMinima[2], 10));
     const fin = new Date(1990, 1, 1, parseInt(horaMaxima[0], 10), parseInt(horaMaxima[1], 10), parseInt(horaMaxima[2], 10));
-    while (compareAsc(inicio, fin) < 0) {
+    while (compareAsc(inicio, fin) <= 0) {
       horas.push(format(inicio, 'HH:mm:ss'));
-      inicio = addMinutes(inicio, json.duracion_actividad);
+      inicio = addMinutes(inicio, actividad.duracion);
     }
     return horas;
   }
 
-  private cargarDias(json, horas) {
+  private cargarDias(json, actividad, horas) {
     const diasArray = [];
     const diasJson = json.dias;
     diasJson.forEach(d => {
       const dia = new Dia();
-      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: json.cantidad_alumnos_por_clase, });
+      dia.fillFromJson(d, {horas, cantidadAlumnosPorClase: actividad.cantidadAlumnosPorClase, });
       diasArray.push(dia);
     });
     return diasArray;

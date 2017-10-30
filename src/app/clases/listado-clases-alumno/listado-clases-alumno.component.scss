@@ -1,9 +1,45 @@
 .week-selector {
-    border-bottom: none
+  border-bottom: none;
 }
 
 @media (min-width: 768px) {
-    .week-selector {
-        border-bottom: solid 1px #ddd;
+  .week-selector {
+    border-bottom: solid 1px #ddd;
+  }
+  .cell {
+    position: relative;
+    .recuperaLugares {
+        display: block !important;
     }
+    .recuperaBoton {
+        position: absolute !important;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        opacity: 0;
+      }
+      &:hover {
+        .recuperaLugares {
+            display: block !important;
+            visibility: hidden;
+        }
+        .recuperaBoton {
+            opacity: 1;
+        }
+    }
+  }
+}
+
+.cell {
+  position: relative;
+  .recuperaBoton {
+    // opacity: 0;
+    position: relative;
+    display: none;
+  }
+  &:hover {
+    .recuperaBoton {
+      display: initial;
+    }
+  }
 }

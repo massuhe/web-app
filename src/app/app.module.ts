@@ -9,6 +9,7 @@ import { NavModule } from './nav/nav.module';
 import { HomeModule } from './home/home.module';
 import { AlumnosModule } from './alumnos/alumnos.module';
 import { ClasesModule } from './clases/clases.module';
+import { ActividadesModule } from './actividades/actividades.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ClasesModule } from './clases/clases.module';
     NavModule,
     HomeModule,
     AlumnosModule,
-    ClasesModule
+    ClasesModule,
+    ActividadesModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }, ClasesResolver],
   bootstrap: [AppComponent]
