@@ -17,7 +17,7 @@ export class ClasesService {
   getListadoClases(semana, actividad) {
     const formattedDate = format(semana, 'MM-DD-YYYY');
     return this.http
-      .get(`${environment.apiBaseUrl}/clases/especificas?semana=${formattedDate}&actividad=${actividad.id}`)
+      .get(`${environment.apiBaseUrl}/clasesEspecificas/listado?semana=${formattedDate}&actividad=${actividad.id}`)
       .map(json => {
         const horas = this.cargarHoras(json, actividad);
         const dias = this.cargarDias(json, actividad, horas);
