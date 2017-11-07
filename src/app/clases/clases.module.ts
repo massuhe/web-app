@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { ListadoClasesComponent } from './listado-clases/listado-clases.component';
 import { ListadoClasesAlumnoComponent } from './listado-clases-alumno/listado-clases-alumno.component';
+import { GestionClasesComponent } from './gestion-clases/gestion-clases.component';
 import { WeekSelectorComponent } from './week-selector/week-selector.component';
 import { ClasesService } from './services/clases.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,7 +19,8 @@ import { NgbDateFRParserFormatter } from './../core/ngb-date-fr-parser-formatter
     NgbModule.forRoot(),
     FormsModule
   ],
-  declarations: [ListadoClasesComponent, WeekSelectorComponent, ListadoClasesAlumnoComponent],
-  providers: [ClasesService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
+  declarations: [ListadoClasesComponent, WeekSelectorComponent, ListadoClasesAlumnoComponent, GestionClasesComponent],
+  providers: [ClasesService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}],
+  exports: [GestionClasesComponent]
 })
 export class ClasesModule { }

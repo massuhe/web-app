@@ -1,6 +1,12 @@
 .searchInputWrapper {
     display: block;
     position:relative;
+    border-radius: 0.25rem;
+    transition: box-shadow 0.2s ease-in-out;
+    &:focus-within {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
 }
 
 .searchInput {
@@ -11,6 +17,7 @@
     display: inline-block;
     &:hover, &:focus {
         border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: none;
     }
 }
 

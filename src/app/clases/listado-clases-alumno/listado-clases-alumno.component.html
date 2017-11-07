@@ -8,19 +8,12 @@
       <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
       <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
   </div>
-  <!-- <div class="d-flex justify-content-center justify-content-sm-between align-items-center flex-wrap" *ngIf="showScheduler">
-        <p class="contentFont">Pod&eacute;s recuperar <strong>{{puedeRecuperar}}</strong> clases</p>
-        <span>
-            <button type="button" class="btn btn-outline-porange mb-4">Guardar</button>
-            <button type="button" class="btn btn-outline-porange mb-4">Cancelar</button>
-        </span>
-  </div> -->
   <app-scheduler #sched *ngIf="showScheduler">
       <app-scheduler-hours [rows]="horas"></app-scheduler-hours>
       <app-scheduler-column *ngFor="let dia of dias" [date]="dia.fecha" [smallScreen]="sched.smallScreen">
           <app-scheduler-cell *ngFor="let clase of dia.clases" class="cell"
               [enabled]="!clase.disabled || clase.lugaresDisponibles === 0"
-              [assist]="clase.asiste"
+              [assist]="!clase.suspendida && clase.asiste"
               [suspended]="clase.suspendida">
               <div *ngIf="!clase.disabled">
                   <span *ngIf="!clase.suspendida && !clase.asiste">

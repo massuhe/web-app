@@ -2,8 +2,9 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/catch';
 import * as compareAsc from 'date-fns/compare_asc';
 import * as addMinutes from 'date-fns/add_minutes';
 import * as format from 'date-fns/format';
@@ -18,12 +19,13 @@ export class ClasesService {
     const formattedDate = format(semana, 'MM-DD-YYYY');
     return this.http
       .get(`${environment.apiBaseUrl}/clasesEspecificas/listado?semana=${formattedDate}&actividad=${actividad.id}`)
-      .map(json => {
+      .pipe(
+        map(json => {
         const horas = this.cargarHoras(json, actividad);
         const dias = this.cargarDias(json, actividad, horas);
         const alumno = json['alumno'];
         return {horas, dias, alumno};
-      });
+      }));
   }
 
   private cargarHoras(json, actividad) {

@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+// import { Observable } from 'rxjs/Observable';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { debounceTime, map } from 'rxjs/operators';
+// import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-search-input',
@@ -15,10 +17,13 @@ export class SearchInputComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-    const keyups = Observable
-      .fromEvent(this.input.nativeElement, 'keyup')
-      .debounceTime(500)
-      .map((event: KeyboardEvent) => event.srcElement['value'])
+    const keyups = fromEvent(this.input.nativeElement, 'keyup')
+    .pipe(
+      debounceTime(500),
+      map((event: KeyboardEvent) => event.srcElement['value'])
+    )
+      // .debounceTime(500)
+      // .map((event: KeyboardEvent) => event.srcElement['value'])
       .subscribe(val => this.inputDebounced.emit(val));
   }
 

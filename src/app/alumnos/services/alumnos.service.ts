@@ -2,8 +2,9 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { map, catchError } from 'rxjs/operators';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/catch';
 
 import { Alumno } from '../models/alumno';
 
@@ -12,16 +13,32 @@ export class AlumnosService {
   constructor(private http: HttpClient) {}
 
   getAlumnos(): Observable<Alumno> {
-    const a = this.serialize({filter_groups: [{filters: [{key: 'isAlumno', value: true, operator: 'eq', not: true}]}]});
+    const a = this.serialize({
+      filter_groups: [
+        {
+          filters: [{ key: 'isAlumno', value: true, operator: 'eq', not: true }]
+        }
+      ]
+    });
     return this.http
       .get(`${environment.apiBaseUrl}/usuarios?includes[]=alumno&${a}`)
-      .map((alumnos: any) =>
-        alumnos.map(alumnoJson => {
-          const alumno = new Alumno();
-          alumno.fillFromJson(alumnoJson);
-          return alumno;
-        })
-      );
+      .pipe(
+        map(this.toAlumno)
+          // (alumnos: any) =>
+          // alumnos.map(alumnoJson => {
+          //   const alumno = new Alumno();
+          //   alumno.fillFromJson(alumnoJson);
+          //   return alumno;
+          // })
+        );
+
+    // .map((alumnos: any) =>
+    //   alumnos.map(alumnoJson => {
+    //     const alumno = new Alumno();
+    //     alumno.fillFromJson(alumnoJson);
+    //     return alumno;
+    //   })
+    // );
   }
 
   borrarAlumno(id) {
@@ -36,15 +53,26 @@ export class AlumnosService {
     return this.http.put(`${environment.apiBaseUrl}/usuarios/${id}`, data);
   }
 
+  protected toAlumno(alumnos: any) {
+    return alumnos.map(alumnoJson => {
+      const alumno = new Alumno();
+      alumno.fillFromJson(alumnoJson);
+      return alumno;
+    });
+  }
+
   protected serialize(obj, prefix?) {
     const str = [];
     let p;
     for (p in obj) {
       if (obj.hasOwnProperty(p)) {
-        const k = prefix ? prefix + '[' + p + ']' : p, v = obj[p];
-        str.push((v !== null && typeof v === 'object') ?
-          this.serialize(v, k) :
-          encodeURIComponent(k) + '=' + encodeURIComponent(v));
+        const k = prefix ? prefix + '[' + p + ']' : p,
+          v = obj[p];
+        str.push(
+          v !== null && typeof v === 'object'
+            ? this.serialize(v, k)
+            : encodeURIComponent(k) + '=' + encodeURIComponent(v)
+        );
       }
     }
     return str.join('&');

@@ -3,7 +3,7 @@ import { ClasesService } from '../services/clases.service';
 import { ActividadesService } from '../../actividades/services/actividades.service';
 import { DialogService } from '../../core/dialog.service';
 import * as startOfWeek from 'date-fns/start_of_week';
-
+import { tap, mergeMap } from 'rxjs/operators';
 import { Dia } from '../models/dia';
 
 @Component({
@@ -35,8 +35,12 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     this.week = startOfWeek(new Date(), { weekStartsOn: 1 });
     this.actividadesService
       .getActividadesHoraLimite()
-      .do(acts => this.setActividades(acts))
-      .mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
+      .pipe(
+        tap(acts => this.setActividades(acts)),
+        mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
+      )
+      // .do(acts => this.setActividades(acts))
+      // .mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
       .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
   }
 
