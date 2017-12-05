@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class SerializeService {
+
+  constructor() { }
+
+  public serialize(obj, prefix?) {
+    const str = [];
+    let p;
+    for (p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        const k = prefix ? prefix + '[' + p + ']' : p,
+          v = obj[p];
+        str.push(
+          v !== null && typeof v === 'object'
+            ? this.serialize(v, k)
+            : encodeURIComponent(k) + '=' + encodeURIComponent(v)
+        );
+      }
+    }
+    return str.join('&');
+  }
+
+}

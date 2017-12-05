@@ -1,4 +1,4 @@
-<li [class]="'nav-item menu-item-' + itemId + ' dropdown ' + isActive">
+<li [class]="'nav-item menu-item-' + itemId + ' dropdown'" [ngClass]="{active: isActive}">
   <div ngbDropdown>
     <a ngbDropdownToggle class="nav-link dropdown-toggle">
       <span [class]="'menu-item-' + itemId + '-texto'" href="#">{{nombre}}</span>

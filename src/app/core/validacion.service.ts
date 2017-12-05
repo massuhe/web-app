@@ -1,12 +1,16 @@
-import {Injectable} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, ValidationErrors, AbstractControl, FormArray } from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ValidacionService {
     private estructuraSubject;
     private estructura;
     private mensajes;
+    private errorsSubject;
+    private subscriptions;
+    private errors;
 
     constructor() {
         this.estructuraSubject = new Subject();
@@ -48,4 +52,43 @@ export class ValidacionService {
             }
         });
     }
+
+    getErrorsObservable(form: FormGroup) {
+        const err = this.errors = this.initErrors(form);
+        this.errorsSubject = new BehaviorSubject<any>(err);
+        const controls = Object.keys(form.controls).map(cKey => ({ key: cKey, control: form.get(cKey) }));
+        this.subscriptions = controls.map((c: { key: string, control: AbstractControl }) =>
+            c.control.statusChanges.subscribe(_ => {
+                this.errors[c.key] = this.checkErrors(c.key, c.control.errors);
+                this.errorsSubject.next({ ...this.errors });
+            }));
+        return this.errorsSubject.asObservable();
+    }
+
+    initErrors(form: FormGroup) {
+        return Object.keys(form.controls).reduce((pv: any, cv) => ({ ...pv, [cv]: [] }), {});
+    }
+
+    showErrors(form: FormGroup) {
+        const controls = Object.keys(form.controls).map(c => form.get(c));
+        controls.forEach(con => {
+            this.markIfDirty(con);
+        });
+    }
+
+    private checkErrors(fieldKey: string, errors: ValidationErrors) {
+        return errors ? Object.keys(errors).map(e => this.mensajes[fieldKey][e]) : [];
+    }
+
+    private markIfDirty(control: AbstractControl) {
+        control.markAsDirty();
+        if (control instanceof FormControl) {
+            control.updateValueAndValidity();
+        } else if (control instanceof FormArray) {
+            control.controls.forEach(controlGroup => this.markIfDirty(controlGroup));
+        } else if (control instanceof FormGroup) {
+            Object.keys(control.controls).map(c => control.get(c)).forEach(con => this.markIfDirty(con));
+        }
+    }
+
 }

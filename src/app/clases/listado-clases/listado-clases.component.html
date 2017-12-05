@@ -12,17 +12,20 @@
         <app-scheduler-hours [rows]="horas"></app-scheduler-hours>
         <app-scheduler-column *ngFor="let dia of dias" [date]="dia.fecha" [smallScreen]="sched.smallScreen">
             <app-scheduler-cell *ngFor="let clase of dia.clases" 
+                [full]="clase.lugaresDisponibles === 0"
                 [enabled]="!clase.disabled"
                 [marked]="clase.incluyeAlumno"
-                [suspended]="clase.suspendida">
+                [suspended]="clase.suspendida"
+                (click)="show(dia, clase)">
                 <div *ngIf="!clase.disabled">
                     <span *ngIf="!clase.suspendida">
                         <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
                         {{clase.lugaresDisponibles}} lugares disponibles
                     </span>
                     <span *ngIf="clase.suspendida">
-                        <p class="mb-0 font-weight-bold">Suspendida</p>
-                        <p class="mb-0">{{clase.motivo}}</p>
+                        <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
+                        <p class="mb-0 font-weight-bold d-inline-block">Suspendida</p>
+                        <p class="mb-0 text-truncate motivo">{{clase.motivo}}</p>
                     </span>
                 </div>
             </app-scheduler-cell>
@@ -30,3 +33,6 @@
     </app-scheduler>
     <p *ngIf="!showLoader && dias.length === 0">No se han encontrado clases</p>
 </div>
+<app-gestion-clases [idClase]="claseSeleccionada" [fecha]="fechaModal"
+ [hora]="horaModal" (onGuardarStart)="handleSaveClase($event)"
+  [alumnosMax]="actividadSeleccionada?.cantidadAlumnosPorClase"></app-gestion-clases>

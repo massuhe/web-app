@@ -1,0 +1,10 @@
+.toggle {
+    transition: width 0.5s ease-out, opacity 0.25s ease-out;
+    width: 100%;
+    opacity: 1;
+    &.off {
+        transition: width 0.25s ease-out, opacity 0.3s ease-in;
+        width: 0;
+        opacity: 0;
+    }
+}

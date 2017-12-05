@@ -76,11 +76,13 @@ export class SchedulerComponent
     }
   }
 
-  adjustHeight() {
+  adjustHeight(reset = true) {
     if (!this.columns.reduce((pv: any, cr) => pv && cr.cells, true)) {
       return;
     }
-    this.resetHeights();
+    if (reset) {
+      this.resetHeights();
+    }
     const maxHeights = this.lastMaxHeights = this.getMaxHeights();
     this.updateCellHeights(maxHeights);
   }
@@ -122,7 +124,7 @@ export class SchedulerComponent
         col.cells.forEach((cell, indiceColumna) => {
           const celdaActualizar = cell.nativeElement.children[0];
           if (celdaActualizar.offsetHeight !== maxHeights[indiceColumna]) {
-            this.renderer.setStyle(celdaActualizar, 'height', maxHeights[i] + 'px');
+            this.renderer.setStyle(celdaActualizar, 'height', maxHeights[indiceColumna] + 'px');
           }
         });
       });

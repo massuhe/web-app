@@ -1,3 +1,20 @@
-<h2>
-  {{actividad}}
-</h2>
+<app-modal #modal (onVisibilityChange)="handleVisibilityChange($event)">
+  <div class="app-modal-header contentSecundaryFont w-100">
+    <app-gestion-clase-header [fecha]=fecha [hora]="hora" actividad="Musculacion"></app-gestion-clase-header>
+  </div>
+  <div class="app-modal-body">
+    <app-content-loader *ngIf="showLoader"></app-content-loader>
+    <app-gestion-clase-body [clase]="clase" *ngIf="!showLoader"
+      [deshabilitarAgregar]="alumnosMax === clase?.asistencias?.length"
+      (onChangeSuspendida)="handleSuspenderClase($event)"
+      (onChangeMotivo)="handleChangeMotivo($event)"
+      (onChangeAsistencia)="handleChangeAsistencia($event)"
+      (onRemoveItem)="removeItem($event)"
+      (onAddAsistente)="addAsistente($event)">
+    </app-gestion-clase-body>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" [disabled]="showLoader" class="btn btn-outline-porange mr-2" (click)="handleGuardar()">Guardar</button>
+    <button type="button" class="btn btn-outline-porange" (click)="close()">Cerrar</button>
+  </div>
+</app-modal>

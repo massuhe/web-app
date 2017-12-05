@@ -1,3 +1,10 @@
 label {
   display: block;
 }
+
+.ng-invalid.ng-dirty {
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+    border-color: red;
+  }
+}

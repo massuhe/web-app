@@ -1,0 +1,14 @@
+<h4 class="mb-3">Asistentes</h4>
+<h6 *ngIf="clase?.asistencias?.length === 0">No hay asistentes</h6>
+<ul class="list-group mb-3">
+  <app-asistencia-alumno-item *ngFor="let asistente of clase.asistencias" class="list-group-item list-group-item-light animate-shine indicator pointer" [class.notAssist]="!asistente.asistio"
+    [asistente]="asistente" (click)="changeAsistencia(asistente.id)" (onDelete)="removeItem(asistente.id)"></app-asistencia-alumno-item>
+</ul>
+<app-agregar-alumno-clase (onAddAlumno)="addAlumno($event)" [deshabilitarAgregar]="deshabilitarAgregar"></app-agregar-alumno-clase>
+<div class="mb-3">
+  <label class="form-check-label d-block mb-3">
+    <input type="checkbox" class="form-check-input" (change)="changeSuspendida($event)" [checked]="clase.suspendida"> Suspender Clase
+  </label>
+  <textarea *ngIf="clase.suspendida" class="form-control" [value]="clase.motivo"
+     id="exampleFormControlTextarea1" rows="3" placeholder="Motivo" (blur)="changeMotivo($event)"></textarea>
+</div> 

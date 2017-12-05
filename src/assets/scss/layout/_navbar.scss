@@ -12,18 +12,18 @@
     cursor: pointer;
     margin-right: 3px;
     margin-left: 3px;
-    display: inline-block;
+    // display: inline-block;
     position: relative;
     &:hover {
       .menu-item-#{$i + 1}-texto, .dropdown-toggle:after {
         color: $colorItem;
       }
     }
-    &:after {
-      content: '';
-      @include borde-menu(transparent, 0);
-      transition: width .2s ease, background-color .2s ease;
-    }
+    // &:after {
+    //   content: '';
+    //   @include borde-menu(transparent, 0);
+    //   transition: width .2s ease, background-color .2s ease;
+    // }
     &:hover:after {
       width: 100%;
       background: $colorItem;
@@ -36,7 +36,29 @@
       .menu-item-#{$i + 1}-texto, .dropdown-toggle:after {
         color: $colorItem;
       }
+      // &:after {
+      //   content: '';
+      //   @include borde-menu($colorItem, 100%);
+      //   transition: width .2s ease, background-color .2s ease;
+      // }
+    }
+  }
+}
+
+@for $i from 0 through ($cantidadMenu - 1) {
+  $porcentaje: $i * (100% / ($cantidadMenu - 1));
+  $colorItem: gradient-color-at($naranjaPrimario, $verdePrimario, $porcentaje);
+  @media (min-width: 992px) {
+
+    .menu-item-#{$i + 1} {
+      display: inline-block;
       &:after {
+        content: '';
+        @include borde-menu(transparent, 0);
+        transition: width .2s ease, background-color .2s ease;
+      }
+
+      &.active:after {
         content: '';
         @include borde-menu($colorItem, 100%);
         transition: width .2s ease, background-color .2s ease;

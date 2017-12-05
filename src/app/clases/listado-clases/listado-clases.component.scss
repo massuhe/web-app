@@ -2,8 +2,16 @@
     border-bottom: none
 }
 
+.motivo {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .week-selector {
         border-bottom: solid 1px #ddd;
+    }
+    .motivo {
+        max-width: 10rem;
+        width: initial;
     }
 }

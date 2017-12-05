@@ -7,6 +7,8 @@ import { ListadoAlumnosComponent } from './alumnos/listado-alumnos/listado-alumn
 import { AgregarAlumnoComponent } from './alumnos/agregar-alumno/agregar-alumno.component';
 import { ListadoClasesComponent } from './clases/listado-clases/listado-clases.component';
 import { ListadoClasesAlumnoComponent } from './clases/listado-clases-alumno/listado-clases-alumno.component';
+import { ListadoActividadesComponent } from './actividades/listado-actividades/listado-actividades.component';
+import { AgregarActividadComponent } from './actividades/agregar-actividad/agregar-actividad.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,18 @@ const routes: Routes = [
   {
     path: 'clases/alumno',
     component: ListadoClasesAlumnoComponent
+  },
+  {
+    path: 'actividades',
+    component: ListadoActividadesComponent
+  },
+  {
+    path: 'actividades/agregar',
+    component: AgregarActividadComponent
+  },
+  {
+    path: 'actividades/editar/:idActividad',
+    component: AgregarActividadComponent
   }
 ];
 

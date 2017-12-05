@@ -3,42 +3,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
 
 import { Alumno } from '../models/alumno';
+import { SerializeService } from '../../core/serialize.service';
 
 @Injectable()
 export class AlumnosService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private serializeService: SerializeService) {}
 
-  getAlumnos(): Observable<Alumno> {
-    const a = this.serialize({
-      filter_groups: [
-        {
-          filters: [{ key: 'isAlumno', value: true, operator: 'eq', not: true }]
-        }
-      ]
-    });
+  getAlumnos(search?: string, useAlumnoId?: boolean): Observable<Alumno[]> {
+    const f = this.getFilterGroups(search);
     return this.http
-      .get(`${environment.apiBaseUrl}/usuarios?includes[]=alumno&${a}`)
-      .pipe(
-        map(this.toAlumno)
-          // (alumnos: any) =>
-          // alumnos.map(alumnoJson => {
-          //   const alumno = new Alumno();
-          //   alumno.fillFromJson(alumnoJson);
-          //   return alumno;
-          // })
-        );
-
-    // .map((alumnos: any) =>
-    //   alumnos.map(alumnoJson => {
-    //     const alumno = new Alumno();
-    //     alumno.fillFromJson(alumnoJson);
-    //     return alumno;
-    //   })
-    // );
+      .get(
+        `${environment.apiBaseUrl}/usuarios?includes[]=alumno&${this.serializeService.serialize(f)}`
+      )
+      .pipe(map(al => this.toAlumno(al, useAlumnoId)));
   }
 
   borrarAlumno(id) {
@@ -53,28 +32,46 @@ export class AlumnosService {
     return this.http.put(`${environment.apiBaseUrl}/usuarios/${id}`, data);
   }
 
-  protected toAlumno(alumnos: any) {
+  protected toAlumno(alumnos: any, useAlumnoId: boolean) {
     return alumnos.map(alumnoJson => {
       const alumno = new Alumno();
-      alumno.fillFromJson(alumnoJson);
+      alumno.fillFromJson(alumnoJson, {useAlumnoId});
       return alumno;
     });
   }
 
-  protected serialize(obj, prefix?) {
-    const str = [];
-    let p;
-    for (p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        const k = prefix ? prefix + '[' + p + ']' : p,
-          v = obj[p];
-        str.push(
-          v !== null && typeof v === 'object'
-            ? this.serialize(v, k)
-            : encodeURIComponent(k) + '=' + encodeURIComponent(v)
-        );
-      }
+  // protected serialize(obj, prefix?) {
+  //   const str = [];
+  //   let p;
+  //   for (p in obj) {
+  //     if (obj.hasOwnProperty(p)) {
+  //       const k = prefix ? prefix + '[' + p + ']' : p,
+  //         v = obj[p];
+  //       str.push(
+  //         v !== null && typeof v === 'object'
+  //           ? this.serialize(v, k)
+  //           : encodeURIComponent(k) + '=' + encodeURIComponent(v)
+  //       );
+  //     }
+  //   }
+  //   return str.join('&');
+  // }
+
+  protected getFilterGroups(search) {
+    const f = {
+      filter_groups: [
+        {
+          filters: [{ key: 'isAlumno', value: true, operator: 'eq', not: true }]
+        }
+      ]
+    };
+    if (search) {
+      f.filter_groups.push({
+        filters: [
+          { key: 'nombreApellido', value: search, operator: 'eq', not: true }
+        ]
+      });
     }
-    return str.join('&');
+    return f;
   }
 }

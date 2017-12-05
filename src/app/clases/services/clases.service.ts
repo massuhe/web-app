@@ -2,18 +2,19 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
+import { map, catchError, debounceTime, delay } from 'rxjs/operators';
 import * as compareAsc from 'date-fns/compare_asc';
 import * as addMinutes from 'date-fns/add_minutes';
 import * as format from 'date-fns/format';
 import { Dia } from '../models/dia';
+import { Clase } from '../models/clase';
+import { of } from 'rxjs/observable/of';
+import { SerializeService } from '../../core/serialize.service';
 
 @Injectable()
 export class ClasesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private serializeService: SerializeService) { }
 
   getListadoClases(semana, actividad) {
     const formattedDate = format(semana, 'MM-DD-YYYY');
@@ -26,6 +27,30 @@ export class ClasesService {
         const alumno = json['alumno'];
         return {horas, dias, alumno};
       }));
+  }
+
+  getDetalleClases(idClase: number): Observable<Clase> {
+    const parametros = {
+      includes: ['descripcionClase', 'alumnos.usuario'],
+      select: ['id', 'suspendida', 'motivo', 'alumnos.id', 'alumnos.asistencia', 'alumnos.usuario', 'descripcion_clase.hora_inicio']
+    };
+    return this.http
+    .get(`${environment.apiBaseUrl}/clasesEspecificas/${idClase}?${this.serializeService.serialize(parametros)}`)
+    .pipe(
+      map(this.toClase),
+      delay(1000)
+    );
+  }
+
+  guardarClase(clase: Clase): Observable<any> {
+    return this.http
+      .put(`${environment.apiBaseUrl}/clasesEspecificas/${clase.id}`, clase);
+  }
+
+  private toClase(c) {
+    const clase = new Clase();
+    clase.fillFromJsonClaseEspecifica(c);
+    return clase;
   }
 
   private cargarHoras(json, actividad) {

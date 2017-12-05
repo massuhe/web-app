@@ -1,0 +1,40 @@
+@mixin assist-indicator($bgcolor, $isFirst, $isLast) {
+    content: '';
+    position: absolute;
+    width: 0.75em;
+    background-color: $bgcolor;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    @if $isFirst {
+        top: -1px;
+        bottom: -0.5px;
+        border-top-left-radius: .25rem;
+    }
+    @if $isLast {
+        bottom: -1px;
+        border-bottom-left-radius: .25rem;
+    }
+    transition: background-color 0.2s ease-in-out;
+}
+
+@mixin assist-status($color) {
+    &::before {
+        @include assist-indicator($color, false, false);        
+    }
+    &:first-child::before {
+        @include assist-indicator($color, true, false);
+    }
+    &:last-child::before {
+        @include assist-indicator($color, false, true);
+    }
+}
+
+.indicator {
+    @include assist-status(limegreen);
+
+}
+
+.notAssist::before {
+    background-color: indianred !important;
+}

@@ -31,8 +31,11 @@
 }
 
 .suspended {
-    background-color: lighten(coral, 20%);
-    pointer-events: none;
+    $color: lighten(coral, 20%);
+    background-color: $color;
+    &:hover {
+        background-color: $color;
+    }
 }
 
 .assist {
@@ -46,5 +49,12 @@
     background-color: lighten(yellow, 30%);
     &:hover {
         background-color: lighten(yellow, 30%);
+    }
+}
+
+.full {
+    background-color: lightgray;
+    &:hover {
+        background-color: lightgray;
     }
 }

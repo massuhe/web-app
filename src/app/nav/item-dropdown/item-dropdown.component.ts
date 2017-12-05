@@ -11,10 +11,10 @@ export class ItemDropdownComponent implements OnInit {
   @Input() path: string;
   itemId: number;
 
-  constructor(private parent: NavbarItemDropdownComponent) { }
+  constructor() { } // private parent: NavbarItemDropdownComponent
 
   ngOnInit() {
-    this.itemId = this.parent.itemId;
+    // this.itemId = this.parent.itemId;
   }
 
 }

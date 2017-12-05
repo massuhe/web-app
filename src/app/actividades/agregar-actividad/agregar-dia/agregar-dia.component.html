@@ -1,0 +1,22 @@
+<form [formGroup]="agregarDiaForm" novalidate (ngSubmit)="handleSubmit()">
+  <app-modal #modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
+    <div class="app-modal-body">
+      <label>D&iacute;a de la semana</label>
+      <select class="form-control" formControlName="diaSemana">
+        <option *ngFor="let dia of dias" [value]="dia.id">{{dia.nombre}}</option>
+      </select>
+      <div class="invalidControl" *ngIf="diaSemana.invalid && diaSemana.dirty">
+        El d&iacute;a ya ha sido incluido
+      </div>
+      <app-rango-horario-input *ngFor="let rangoHorario of rangosHorarios.controls; let i = index" (onDelete)="deleteItem(i)" [item]="rangoHorario"></app-rango-horario-input>
+      <button class="btn btn-outline-pgreen mt-3" type="button" (click)="addItem()">Agregar Rango</button>
+      <div class="invalidControl" *ngIf="emptyHorarios && rangosHorarios.dirty">
+        Se debe agregar al menos 1 rango
+      </div>
+    </div>
+    <div class="app-modal-footer">
+      <button type="submit" class="btn btn-outline-porange mr-2">Agregar</button>
+      <button type="button" class="btn btn-outline-porange" (click)="modal.hide()">Cancelar</button>
+    </div>
+  </app-modal>
+</form>

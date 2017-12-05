@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="mr-3">
+    <app-add-button (click)="handleClick($event)"></app-add-button>
+  </div>
+  <div class="f-grow1">
+    <div class="toggle" [ngClass]="{off: !toggle}">
+      <input class="w-100 form-control" auto-complete [(ngModel)]="myData" [value-formatter]="formatList"
+        [source]="observableSource.bind(this)" [list-formatter]="formatList" #inputAutoComplete
+        (valueChanged)="addAlumno($event)" no-match-found-text="No se han encontrado resultados"
+        [open-on-focus]="false" loading-text="Buscando..." [disabled]="deshabilitarAgregar"/>
+    </div>
+  </div>
+</div>

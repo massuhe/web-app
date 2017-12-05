@@ -8,33 +8,33 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Nombre
+                        <label>Nombre </label>
                             <input [ngClass]="{'border-error': formErrors.nombre}" class="form-control"
                                    formControlName="nombre"/>
-                        </label>
-                        <div *ngIf="formErrors.nombre" class="alert alert-danger">
+                       
+                        <div *ngIf="formErrors.nombre" class="invalidControl">
                             {{ formErrors.nombre }}
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Apellido
+                        <label>Apellido</label>
                             <input [ngClass]="{'border-error': formErrors.apellido}" class="form-control"
                                    formControlName="apellido"/>
-                        </label>
-                        <div *ngIf="formErrors.apellido" class="alert alert-danger">
+                        
+                        <div *ngIf="formErrors.apellido" class="invalidControl">
                             {{ formErrors.apellido }}
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Domicilio
+                        <label>Domicilio</label>
                             <input [ngClass]="{'border-error': formErrors.domicilio}" class="form-control"
                                    formControlName="domicilio"/>
-                        </label>
-                        <div *ngIf="formErrors.domicilio" class="alert alert-danger">
+                        
+                        <div *ngIf="formErrors.domicilio" class="invalidControl">
                             {{ formErrors.domicilio }}
                         </div>
                     </div>
@@ -43,22 +43,22 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Correo electrónico
+                        <label>Correo electrónico</label>
                             <input type="email" [ngClass]="{'border-error': formErrors.email}" class="form-control"
                                    formControlName="email"/>
-                        </label>
-                        <div *ngIf="formErrors.email" class="alert alert-danger">
+                        
+                        <div *ngIf="formErrors.email" class="invalidControl">
                             {{ formErrors.email }}
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Número de teléfono
+                        <label>Número de teléfono</label>
                             <input type="number" [ngClass]="{'border-error': formErrors.telefono}" class="form-control"
                                    formControlName="telefono"/>
-                        </label>
-                        <div *ngIf="formErrors.telefono" class="alert alert-danger">
+                        
+                        <div *ngIf="formErrors.telefono" class="invalidControl">
                             {{ formErrors.telefono }}
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                style="text-align: left;width: auto;display: inline-block;" class="form-control"
                                formControlName="tieneAntecDeportivos"/>
                         <label for="myCheckbox" class="mb-0" style="display: inline-block;">Antecedentes deportivos</label>
-                        <div *ngIf="formErrors.tieneAntecDeportivos" class="alert alert-danger">
+                        <div *ngIf="formErrors.tieneAntecDeportivos" class="invalidControl">
                             {{ formErrors.tieneAntecDeportivos }}
                         </div>
                     </div>
@@ -85,11 +85,11 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <label>Observaciones sobre antecedentes médicos
+                        <label>Observaciones sobre antecedentes médicos</label>
                             <input [ngClass]="{'border-error': formErrors.observaciones}" class="form-control"
                                    formControlName="observaciones"/>
-                        </label>
-                        <div *ngIf="formErrors.observaciones" class="alert alert-danger">
+                        
+                        <div *ngIf="formErrors.observaciones" class="invalidControl">
                             {{ formErrors.observaciones }}
                         </div>
                     </div>

@@ -10,8 +10,8 @@ export class Alumno {
     activo: boolean;
     tieneAntecDeportivos: boolean;
 
-    fillFromJson(json)  {
-        this.id = json.id;
+    fillFromJson(json, opt)  {
+        this.id = opt.useAlumnoId ? json.alumno.id : json.id;
         this.email = json.email;
         this.nombre = json.nombre;
         this.apellido = json.apellido;

@@ -1,0 +1,44 @@
+<form [formGroup]="form" novalidate>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label>Nombre <span class="required">*</span></label>
+        <input class="form-control" formControlName="nombre" />
+        <div class="invalidControl" *ngIf="errors.nombre.length !== 0 && form.get('nombre').dirty">
+          {{errors.nombre.join(' ')}}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 text-truncate">
+      <div class="form-group">
+        <label>Duraci&oacute;n (minutos) <span class="required">*</span></label>
+        <input class="form-control" formControlName="duracion" />
+        <div class="invalidControl" *ngIf="errors.duracion.length !== 0 && form.get('duracion').dirty">
+          {{errors.duracion.join(' ')}}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 text-truncate">
+      <div class="form-group">
+        <label>Cantidad de alumnos por clase <span class="required">*</span></label>
+        <input class="form-control" formControlName="cantidadAlumnosPorClase" />
+        <div class="invalidControl" *ngIf="errors.cantidadAlumnosPorClase.length !== 0 && form.get('cantidadAlumnosPorClase').dirty">
+          {{errors.cantidadAlumnosPorClase.join(' ')}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <label>Descripci&oacute;n</label>
+      <textarea class="form-control" formControlName="descripcion">{{actividad?.descripcion}}</textarea>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-xl-12">
+      <app-dia-horario-form [diasHorarios]="actividad?.diasHorarios || []" 
+        (onChangeDiasHorarios)="handleDiasHorariosChange($event)"></app-dia-horario-form>
+    </div>
+  </div>
+</form>

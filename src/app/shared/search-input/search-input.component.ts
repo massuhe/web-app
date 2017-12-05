@@ -1,8 +1,6 @@
 import { Component, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
-// import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { debounceTime, map } from 'rxjs/operators';
-// import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-search-input',

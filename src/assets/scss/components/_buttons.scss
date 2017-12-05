@@ -12,3 +12,16 @@
         box-shadow: 0 0 0 3px transparentize($naranjaPrimario, 0.75);
     }
 }
+
+.btn-outline-pgreen {
+    color: $verdePrimario;
+    background-color: transparent;
+    border-color: $verdePrimario;
+    &:hover {
+        background-color: $verdePrimario;
+        color: white;
+    }
+    &:focus {
+        box-shadow: 0 0 0 3px transparentize($verdePrimario, 0.75);
+    }
+}

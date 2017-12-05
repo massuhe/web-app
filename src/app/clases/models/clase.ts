@@ -11,6 +11,7 @@ export class Clase {
     lugaresDisponibles: number;
     incluyeAlumno: boolean;
     asiste: boolean;
+    asistencias: {id: number, nombre: string, asistio: boolean}[];
 
     constructor() {
         this.disabled = true;
@@ -25,6 +26,17 @@ export class Clase {
         this.motivo = json.motivo;
         this.disabled = false;
         this.lugaresDisponibles = paramsObj.cantidadAlumnosPorClase - (json.alumnos.length || json.alumnos);
+    }
+
+    fillFromJsonClaseEspecifica(json) {
+        this.id = json.id;
+        this.suspendida = json.suspendida;
+        this.motivo = json.motivo;
+        this.asistencias = json.alumnos.map(a => ({
+            id: a.id,
+            nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
+            asistio: !!+a.asistencia.asistio
+        }));
     }
 
     checkIncluyeAlumno(text) {

@@ -1,3 +1,5 @@
-<div class="content-cell" [ngClass]="{disabled: !enabled, marked: marked, suspended: suspended, assist: assist}">
+<div class="content-cell" 
+  [ngClass]="{disabled: !enabled, marked: marked,
+     suspended: suspended && !marked, assist: assist, full: full && !suspended && !marked}">
   <ng-content></ng-content>
 </div>

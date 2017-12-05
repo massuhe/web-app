@@ -1,0 +1,14 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>{{editar ? 'Editar' : 'Agregar'}} Actividad</h2>
+</div>
+<div class="container">
+  <fieldset class="form-group px-4">
+    <legend class="px-3 ml-1">Datos de la Actividad</legend>
+    <app-agregar-actividad-form #form [actividad]="actividad" 
+      (onChangeActividad)="handleActividadChange($event)"></app-agregar-actividad-form>
+  </fieldset>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-outline-porange" (click)="submitForm(form.form)">Guardar</button>
+  </div>
+</div>

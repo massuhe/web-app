@@ -1,25 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  Input,
+  ContentChildren,
+  QueryList,
+  AfterContentInit
+} from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { ItemDropdownComponent } from '../item-dropdown/item-dropdown.component';
 
 @Component({
   selector: 'app-navbar-item-dropdown',
   templateUrl: './navbar-item-dropdown.component.html',
-  styleUrls: ['./navbar-item-dropdown.component.scss',
-              '../../../assets/scss/layout/_navbar.scss'
+  styleUrls: [
+    './navbar-item-dropdown.component.scss',
+    '../../../assets/scss/layout/_navbar.scss'
   ]
 })
-export class NavbarItemDropdownComponent implements OnInit {
-
+export class NavbarItemDropdownComponent implements OnInit, AfterContentInit {
+  @ContentChildren(ItemDropdownComponent)
+  itemDropdowns: QueryList<ItemDropdownComponent>;
   @Input() itemId: number;
   @Input() nombre: string;
 
-  constructor(private router: Router) { }
+  isActive: boolean;
 
-  get isActive() {
-    return this.router.url.toUpperCase().includes(this.nombre.toUpperCase()) ? 'active' : '';
-  }
+  constructor(private router: Router) {}
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const paths = this.itemDropdowns.map(i => i.path);
+        this.isActive = paths.reduce(
+          (previous, current) =>
+            previous ||
+            (this.router.url.substr(1).includes(current) && current !== '/'),
+          false
+        );
+      }
+    });
   }
 
+  ngAfterContentInit() {
+    this.itemDropdowns.forEach(items => {
+      items.itemId = this.itemId;
+    });
+  }
 }
