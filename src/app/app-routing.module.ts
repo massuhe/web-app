@@ -22,11 +22,13 @@ const routes: Routes = [
   },
   {
     path: 'alumnos',
-    component: ListadoAlumnosComponent
+    component: ListadoAlumnosComponent,
+    pathMatch: 'full'
   },
   {
     path: 'alumnos/agregar',
-    component: AgregarAlumnoComponent
+    component: AgregarAlumnoComponent,
+    pathMatch: 'full'
   },
   {
     path: 'clases',
