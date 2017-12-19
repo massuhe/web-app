@@ -25,7 +25,7 @@ export class AgregarActividadComponent implements OnInit, OnDestroy {
   editar: boolean;
 
   constructor(private actividadesService: ActividadesService,
-    private validationService: ValidacionService, private dialogService: DialogService, private route: ActivatedRoute) { }
+    public validationService: ValidacionService, private dialogService: DialogService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.showLoader = true;

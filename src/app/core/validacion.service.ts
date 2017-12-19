@@ -10,7 +10,7 @@ export class ValidacionService {
     private mensajes;
     private errorsSubject;
     private subscriptions;
-    private errors;
+    public errors;
 
     constructor() {
         this.estructuraSubject = new Subject();
@@ -65,8 +65,17 @@ export class ValidacionService {
         return this.errorsSubject.asObservable();
     }
 
-    initErrors(form: FormGroup) {
-        return Object.keys(form.controls).reduce((pv: any, cv) => ({ ...pv, [cv]: [] }), {});
+    initErrors(form: AbstractControl) {
+        return Object.keys((<FormGroup>form).controls).reduce((pv: any, cv: any) => {
+            const currVal = form.get(cv);
+            if (currVal instanceof FormControl) {
+                return {...pv, [cv]: []};
+            } else if (currVal instanceof FormGroup) {
+                return {...pv, [cv]: this.initErrors(currVal)};
+            } else if (currVal instanceof FormArray) {
+                return {...pv, [cv]: currVal.controls.map(c => c instanceof FormControl ? [] : this.initErrors(c))};
+            }
+        }, {});
     }
 
     showErrors(form: FormGroup) {

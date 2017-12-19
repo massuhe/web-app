@@ -16,6 +16,8 @@ import { TabNavComponent } from './tab-nav/tab-nav.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { ModalComponent } from './modal/modal.component';
 import { ContentLoaderComponent } from './content-loader/content-loader.component';
+import { RemoveButtonComponent } from './remove-button/remove-button.component';
+import { PermissionDirective } from './permission.directive';
 
 @NgModule({
   imports: [
@@ -37,7 +39,9 @@ import { ContentLoaderComponent } from './content-loader/content-loader.componen
     TabNavComponent,
     AddButtonComponent,
     ModalComponent,
-    ContentLoaderComponent
+    ContentLoaderComponent,
+    RemoveButtonComponent,
+    PermissionDirective
   ],
   exports: [
     DeleteButtonComponent,
@@ -53,7 +57,9 @@ import { ContentLoaderComponent } from './content-loader/content-loader.componen
     TabNavComponent,
     AddButtonComponent,
     ModalComponent,
-    ContentLoaderComponent
+    ContentLoaderComponent,
+    RemoveButtonComponent,
+    PermissionDirective
   ]
 })
 export class SharedModule { }

@@ -30,13 +30,7 @@ export class NavbarItemDropdownComponent implements OnInit, AfterContentInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const paths = this.itemDropdowns.map(i => i.path);
-        this.isActive = paths.reduce(
-          (previous, current) =>
-            previous ||
-            (this.router.url.substr(1).includes(current) && current !== '/'),
-          false
-        );
+        this.setActive();
       }
     });
   }
@@ -45,5 +39,16 @@ export class NavbarItemDropdownComponent implements OnInit, AfterContentInit {
     this.itemDropdowns.forEach(items => {
       items.itemId = this.itemId;
     });
+    this.setActive();
+  }
+
+  private setActive() {
+    const paths = this.itemDropdowns.map(i => i.path);
+    this.isActive = paths.reduce(
+      (previous, current) =>
+        previous ||
+        (this.router.url.substr(1).includes(current) && current !== '/'),
+      false
+    );
   }
 }

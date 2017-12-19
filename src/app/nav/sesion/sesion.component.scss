@@ -1,0 +1,28 @@
+@import '../../../assets/scss/helpers/_variables.scss';
+
+.sesionPane {
+    position: absolute;
+    visibility: visible;
+    top: 0.8rem;
+    right: 1rem;
+    a {
+        text-decoration: none;
+    }
+}
+
+.sesionTxt {
+    color: gray;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        color: $verdePrimario;
+    }
+    &.logout {
+        margin-top: -0.35rem;
+    }
+}
+
+@media (min-width: 992px) { 
+    .sesionPane {
+        top: 0.45rem;
+    }
+}

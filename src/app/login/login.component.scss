@@ -1,0 +1,83 @@
+.login-bg {
+    position: absolute;
+    background: url('./../../assets/images/loginBg.png');
+    background-repeat: no-repeat;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.login {
+    width: 100%;
+    max-width: 40rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.login-header {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 2rem;
+}
+
+.login-body {
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 1.3rem;
+}
+
+.login-button {
+    background: darkcyan;
+    border: solid 2px rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: white;
+    transition: all 0.4s ease-in-out;
+}
+
+.login-error {
+    background: rgba(255, 0, 0, 0.4);
+    color: white;
+    padding: 0.25rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: red;
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+    }
+  }
+
+.rolling {
+    width: 31px;
+    height: 31px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    transition: opacity 0.0s;
+}
+
+.login-text {
+    opacity: 1;
+    transition: opacity 0.2s 0.2s ease, transform 0s 0.19s ease;
+    transform: scaleX(1);
+}
+
+.loggin-in {
+    width: 10% !important;
+    .login-text {
+        opacity: 0;
+        transform: scaleX(0);
+        transition: opacity 0.2s ease-out, transform 0s 0.2s ease;
+    }
+    .rolling {
+        opacity: 1;
+        transition: opacity 0.2s 0.25s ease-in;
+    }
+}

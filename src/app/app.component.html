@@ -1,2 +1,3 @@
-<app-nav></app-nav>
-<router-outlet></router-outlet>
+<!-- <app-nav></app-nav> -->
+<!-- <app-screen-loader *ngIf="!appDidInit"></app-screen-loader> -->
+<router-outlet *ngIf="appDidInit"></router-outlet>

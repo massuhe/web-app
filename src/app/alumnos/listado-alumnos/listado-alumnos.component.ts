@@ -60,10 +60,7 @@ export class ListadoAlumnosComponent implements OnInit {
         this.fillRows();
         this.showLoader = false;
       },
-      error => {
-        this.showLoader = false;
-        this.dialogService.error('Se ha producido un error inesperado');
-      }
+      this.handleErrors
     );
   }
 
@@ -96,12 +93,20 @@ export class ListadoAlumnosComponent implements OnInit {
             this.fillRows();
             this.dialogService.success('El alumno ha sido borrado correctamente');
           },
-          () => {
+          err => {
             this.showLoader = false;
-            this.dialogService.error('Se ha producido un error inesperado');
+            this.dialogService.error(err.error || 'Se ha producido un error inesperado');
           });
         },
         () => {}
       );
+  }
+
+  private handleErrors(error) {
+    if (error.status === 401) {
+      return ;
+    }
+      this.showLoader = false;
+      this.dialogService.error(error || 'Se ha producido un error inesperado');
   }
 }

@@ -39,8 +39,6 @@ export class ListadoClasesAlumnoComponent implements OnInit {
         tap(acts => this.setActividades(acts)),
         mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
       )
-      // .do(acts => this.setActividades(acts))
-      // .mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
       .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
   }
 

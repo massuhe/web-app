@@ -1,0 +1,13 @@
+<div class="sesionPane">
+  <a routerLink="/login" class="d-flex align-items-center" *ngIf="!isLogged; else logout" aria-label="Iniciar Sesión">
+    <span class="mr-2 sesionTxt">Iniciar Sesi&oacute;n</span>
+    <app-login-button></app-login-button>
+  </a>
+</div>
+
+<ng-template #logout>
+  <div class="d-flex align-items-center" aria-label="Cerrar Sesión">
+  <span class="mr-2 sesionTxt logout">{{usuario}}</span>
+  <app-logout-button (click)="emitLogout()"></app-logout-button>
+</div>
+</ng-template>

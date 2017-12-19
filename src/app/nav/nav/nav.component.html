@@ -1,30 +1,31 @@
 <app-navbar>
   <app-navbar-item [itemId]="1" path="home">Home</app-navbar-item>
-  <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2">
-    <app-item-dropdown path="/">Ver Perfil</app-item-dropdown>
-    <app-item-dropdown path="/">Rutina</app-item-dropdown>
-    <app-item-dropdown path="/">Editar Datos</app-item-dropdown>
-    <app-item-dropdown path="/">Cambiar Contrasena</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2" [permisos]="['VER_PERFIL', 'GESTIONAR_RUTINA', 'EDITAR_PERFIL', 'CAMBIAR_CONTRASENA']">
+    <app-item-dropdown path="/" [permisos]="['VER_PERFIL']">Ver Perfil</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_RUTINA']">Rutina</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['EDITAR_PERFIL']">Editar Datos</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['CAMBIAR_CONTRASENA']">Cambiar Contrasena</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3">
-    <app-item-dropdown path="clases">Listado</app-item-dropdown>
-    <app-item-dropdown path="/">Suspender</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO', 'SUSPENDER_CLASES']">
+    <app-item-dropdown path="clases" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO']">Listado</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['SUSPENDER_CLASES']">Suspender</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4">
-    <app-item-dropdown path="alumnos">Listado</app-item-dropdown>
-    <app-item-dropdown path="alumnos/agregar">Alta</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4" [permisos]="['VER_USUARIOS', 'CREAR_USUARIO']">
+    <app-item-dropdown path="alumnos" [permisos]="['VER_USUARIOS']">Listado</app-item-dropdown>
+    <app-item-dropdown path="alumnos/agregar" [permisos]="['CREAR_USUARIOS']">Alta</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5">
-    <app-item-dropdown path="/">Registrar Pago</app-item-dropdown>
-    <app-item-dropdown path="/">Listar Pagos</app-item-dropdown>
-    <app-item-dropdown path="/">Gestionar Movimientos de Dinero</app-item-dropdown>
-    <app-item-dropdown path="/">Balance General</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['REGISTRAR_PAGO', 'VER_PAGOS', 'GESTIONAR_MOVIMIENTOS_DINERO', 'BALANCE_GENERAL']">
+    <app-item-dropdown path="/" [permisos]="['REGISTRAR_PAGO']">Registrar Pago</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['LISTAR_PAGOS']">Listar Pagos</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_MOVIMIENTOS_DINERO']">Gestionar Movimientos de Dinero</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['BALANCE_GENERAL']">Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6">
-    <app-item-dropdown path="actividades">Actividades</app-item-dropdown>
-    <app-item-dropdown path="/">Ejercicios</app-item-dropdown>
-    <app-item-dropdown path="/">Roles</app-item-dropdown>
-    <app-item-dropdown path="/">Inventario</app-item-dropdown>
-    <app-item-dropdown path="/">Novedades</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6" [permisos]="['VER_ACTIVIDADES', 'GESTIONAR_EJERCICIOS', 'GESTIONAR_ROLES', 'GESTIONAR_INVENTARIO', 'GESTIONAR_NOVEDADES']">
+    <app-item-dropdown path="actividades" [permisos]="['VER_ACTIVIDADES']">Actividades</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_EJERCICIOS']">Ejercicios</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_ROLES']">Roles</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_INVENTARIO']">Inventario</app-item-dropdown>
+    <app-item-dropdown path="/" [permisos]="['GESTIONAR_NOVEDADES']">Novedades</app-item-dropdown>
   </app-navbar-item-dropdown>
+  <app-sesion [isLogged]="isLogged" [usuario]="usuario" (onLogout)="handleLogout()"></app-sesion>
 </app-navbar>

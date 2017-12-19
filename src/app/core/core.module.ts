@@ -1,9 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import {ValidacionService} from './validacion.service';
-import {DialogService} from './dialog.service';
+import { ValidacionService } from './validacion.service';
+import { DialogService } from './dialog.service';
 import { SerializeService } from './serialize.service';
+import { AuthenticationService } from './authentication.service';
 
 @NgModule({
     imports: [
@@ -11,7 +12,7 @@ import { SerializeService } from './serialize.service';
     ],
     exports: [],
     declarations: [],
-    providers: [ValidacionService, DialogService, SerializeService]
+    providers: [ValidacionService, DialogService, SerializeService, AuthenticationService]
 })
 export class CoreModule {
 }
