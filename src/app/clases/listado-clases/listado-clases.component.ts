@@ -43,7 +43,7 @@ export class ListadoClasesComponent implements OnInit {
     private dialogService: DialogService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.showLoader = true;
     this.week = startOfWeek(new Date(), { weekStartsOn: 1 });
     this.busquedaAlumno = '';
@@ -64,7 +64,7 @@ export class ListadoClasesComponent implements OnInit {
       );
   }
 
-  handleInput(value) {
+  handleInput(value): void {
     this.busquedaAlumno = value.toUpperCase();
     this.dias.forEach(d => {
       d.clases.forEach(c => {
@@ -73,13 +73,13 @@ export class ListadoClasesComponent implements OnInit {
     });
   }
 
-  handleWeekChange(week: Date) {
+  handleWeekChange(week: Date): void {
     this.week = week;
     this.showLoader = true;
     this.getClases();
   }
 
-  handleActivityChange(actividadId: number) {
+  handleActivityChange(actividadId: number): void {
     this.actividadSeleccionada = this.actividades.find(
       a => a.id === actividadId
     );
@@ -87,7 +87,7 @@ export class ListadoClasesComponent implements OnInit {
     this.getClases();
   }
 
-  show(dia: Dia, clase: Clase) {
+  show(dia: Dia, clase: Clase): void {
     if (!clase.disabled) {
       this.fechaModal = dia.fecha;
       this.horaModal = clase.horaInicio;
@@ -96,16 +96,16 @@ export class ListadoClasesComponent implements OnInit {
     }
   }
 
-  handleSaveClase(updateStart) {
+  handleSaveClase(updateStart): void {
     if (updateStart) {
       this.showLoader = true;
     } else {
       this.showLoader = false;
-      this.getClases(true);
+      this.getClases();
     }
   }
 
-  private populateScheduler(res, background = false) {
+  private populateScheduler(res): void {
     if (res.dias.length > 0) {
       this.horas = res.horas;
       this.dias = res.dias;
@@ -117,26 +117,28 @@ export class ListadoClasesComponent implements OnInit {
     }
     this.showLoader = false;
     this.showScreen = true;
-    if (background) {
-      setTimeout(() => this.scheduler.adjustHeight(false));
-    }
+    this.refreshTable();
   }
 
-  private handleErrors(err) {
+  private refreshTable(): void {
+    setTimeout(() => this.scheduler.adjustHeight(false));
+  }
+
+  private handleErrors(err): void {
     this.showLoader = false;
     this.dialogService.error('Se ha producido un error inesperado');
   }
 
-  private getClases(background = false) {
+  private getClases(): void {
     this.clasesService
       .getListadoClases(this.week, this.actividadSeleccionada)
       .subscribe(
-        res => this.populateScheduler(res, background),
+        res => this.populateScheduler(res),
         err => this.handleErrors(err)
       );
   }
 
-  private setActividades(a) {
+  private setActividades(a): void {
     this.actividades = a;
     this.actividadSeleccionada = a[0];
   }

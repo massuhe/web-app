@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClasesService } from '../services/clases.service';
 import { ActividadesService } from '../../actividades/services/actividades.service';
 import { DialogService } from '../../core/dialog.service';
 import * as startOfWeek from 'date-fns/start_of_week';
-import { tap, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap, switchMap } from 'rxjs/operators';
 import { Dia } from '../models/dia';
+import { Clase } from '../models/clase';
 
 @Component({
   selector: 'app-listado-clases-alumno',
@@ -12,6 +13,8 @@ import { Dia } from '../models/dia';
   styleUrls: ['./listado-clases-alumno.component.scss']
 })
 export class ListadoClasesAlumnoComponent implements OnInit {
+
+  @ViewChild('sched') scheduler;
 
   horas;
   dias;
@@ -54,6 +57,18 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     this.getClases();
   }
 
+  cancelarClase(dia: Dia, clase: Clase) {
+    this.dialogService.confirm(`Está por cancelar su asistencia a la clase del ${dia.fecha} ${clase.horaInicio}. ¿Desea continuar?`)
+      .then( _ => {
+        this.showLoader = true;
+        this.clasesService.cancelarClase(clase.id).pipe(
+          tap(_r => this.handleCancelarResponse(clase)),
+          switchMap(__ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
+        )
+        .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
+      });
+  }
+
   private populateScheduler(res) {
     if (res.dias.length > 0) {
       this.handleResponse(res);
@@ -68,7 +83,7 @@ export class ListadoClasesAlumnoComponent implements OnInit {
 
   private handleErrors(err) {
     this.showLoader = false;
-    this.dialogService.error('Se ha producido un error inesperado');
+    this.dialogService.error(err.error.message || 'Se ha producido un error inesperado');
   }
 
   private getClases() {
@@ -89,14 +104,27 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     this.clases = res.alumno.clases;
     this.puedeRecuperar = res.alumno.puede_recuperar;
     this.checkClasesAlumno();
+    this.refreshScheduler();
+  }
+
+  private handleCancelarResponse(clase: Clase) {
+    clase.asiste = false;
+    clase.lugaresDisponibles++;
+    this.showLoader = false;
+    this.dialogService.success('La asistencia ha sido cancelada correctamente');
   }
 
   private checkClasesAlumno() {
     this.dias.forEach(d =>
       d.clases.forEach(c => {
         c.checkAsisteClase(this.clases);
+        c.checkVencida(d.fecha);
       })
     );
+  }
+
+  private refreshScheduler() {
+    setTimeout(() => this.scheduler.adjustHeight(false));
   }
 
 }

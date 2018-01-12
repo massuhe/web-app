@@ -47,6 +47,10 @@ export class ClasesService {
       .put(`${environment.apiBaseUrl}/clasesEspecificas/${clase.id}`, clase);
   }
 
+  cancelarClase(idClase: number): Observable<any> {
+    return this.http.patch(`${environment.apiBaseUrl}/clasesEspecificas/cancelar`, {idClase});
+  }
+
   private toClase(c) {
     const clase = new Clase();
     clase.fillFromJsonClaseEspecifica(c);

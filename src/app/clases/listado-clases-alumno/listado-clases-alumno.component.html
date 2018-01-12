@@ -18,13 +18,13 @@
               <div *ngIf="!clase.disabled">
                   <span *ngIf="!clase.suspendida && !clase.asiste">
                       <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
-                      <span class="mb-1 d-block" [ngClass]="{recuperaLugares: puedeRecuperar}">{{clase.lugaresDisponibles}} lugares disponibles</span>
-                      <button type="button" [ngClass]="{recuperaBoton: puedeRecuperar}" class="btn btn-outline-secondary" *ngIf="puedeRecuperar > 0">Recuperar</button>
+                      <span class="mb-1 d-block" [ngClass]="{recuperaLugares: puedeRecuperar && !clase.vencida}">{{clase.lugaresDisponibles}} lugares disponibles</span>
+                      <button type="button" [ngClass]="{recuperaBoton: puedeRecuperar && !clase.vencida}" class="btn btn-outline-secondary" *ngIf="puedeRecuperar > 0 && !clase.vencida">Recuperar</button>
                   </span>
                   <span *ngIf="!clase.suspendida && clase.asiste" id="asiste">
                     <span class="d-md-none">{{clase.horaInicio | slice:0:5}} - </span>
                     <span class="mb-1 d-block">Asignado</span>
-                    <button type="button" class="btn btn-outline-danger">Cancelar</button>
+                    <button type="button" class="btn btn-outline-danger" *ngIf="!clase.vencida" (click)="cancelarClase(dia, clase)">Cancelar</button>
                 </span>
                   <span *ngIf="clase.suspendida">
                       <p class="mb-0 font-weight-bold">Suspendida</p>

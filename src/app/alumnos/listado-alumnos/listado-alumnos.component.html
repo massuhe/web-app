@@ -3,7 +3,7 @@
   <h2>Listado de Alumnos</h2>
 </div>
 <div class="container">
-  <button routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
+  <button [permisos]="['CREAR_USUARIO']" routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
   <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
   <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
     footerHeight="75">

@@ -1,0 +1,1 @@
+export const MINUTOS_LIMITES_CONFIRMACION = 60;
