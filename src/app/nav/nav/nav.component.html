@@ -8,11 +8,11 @@
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO', 'SUSPENDER_CLASES']">
     <app-item-dropdown path="clases" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO']">Listado</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['SUSPENDER_CLASES']">Suspender</app-item-dropdown>
+    <app-item-dropdown path="clases/suspender" [permisos]="['SUSPENDER_CLASES']">Suspender</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4" [permisos]="['VER_USUARIOS', 'CREAR_USUARIO']">
     <app-item-dropdown path="alumnos" [permisos]="['VER_USUARIOS']">Listado</app-item-dropdown>
-    <app-item-dropdown path="alumnos/agregar" [permisos]="['CREAR_USUARIOS']">Alta</app-item-dropdown>
+    <app-item-dropdown path="alumnos/agregar" [permisos]="['CREAR_USUARIO']">Alta</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['REGISTRAR_PAGO', 'VER_PAGOS', 'GESTIONAR_MOVIMIENTOS_DINERO', 'BALANCE_GENERAL']">
     <app-item-dropdown path="/" [permisos]="['REGISTRAR_PAGO']">Registrar Pago</app-item-dropdown>

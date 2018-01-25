@@ -51,6 +51,10 @@ export class ClasesService {
     return this.http.patch(`${environment.apiBaseUrl}/clasesEspecificas/cancelar`, {idClase});
   }
 
+  suspenderClases(parametros: any): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/clases/suspender`, parametros);
+  }
+
   private toClase(c) {
     const clase = new Clase();
     clase.fillFromJsonClaseEspecifica(c);

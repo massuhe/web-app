@@ -1,9 +1,10 @@
 import { ViewChild, Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { FormGroup, FormBuilder, FormArray, AbstractControl, Validators, FormControl } from '@angular/forms';
-import ActividadesValidators from '../../validators/ActividadesValidators';
+
 import { DIAS_SEMANA } from '../../constants';
 import DiaActividad from '../../models/DiaActividad';
+import DiaHorariosValidators from '../../../shared/_validators/DiaHorariosValidators';
 
 @Component({
   selector: 'app-agregar-dia',
@@ -55,9 +56,9 @@ export class AgregarDiaComponent implements OnInit {
     if (isVisible) {
       this.agregarDiaForm = new FormGroup({
         diaSemana: new FormControl('0', {updateOn: 'change',
-          validators: [ActividadesValidators.diaRepetidoValidator(this.diasNoDisponibles)]}),
+          validators: [DiaHorariosValidators.diaRepetidoValidator(this.diasNoDisponibles)]}),
         horarios: new FormArray([])
-      }, {updateOn: 'submit', validators: [ActividadesValidators.tieneHorarios]});
+      }, {updateOn: 'submit', validators: [DiaHorariosValidators.tieneHorarios]});
     }
   }
 

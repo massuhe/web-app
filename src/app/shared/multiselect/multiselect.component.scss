@@ -1,0 +1,10 @@
+.ng-invalid.ng-dirty > #multiselect > .dropdown button {
+    border: solid 1px red;
+    &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+    }
+}
+
+.ng-valid.ng-dirty #multiselect .dropdown button {
+    border: 1px solid #ced4da;
+}

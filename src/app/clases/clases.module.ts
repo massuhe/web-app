@@ -7,7 +7,7 @@ import { GestionClasesComponent } from './gestion-clases/gestion-clases.componen
 import { WeekSelectorComponent } from './week-selector/week-selector.component';
 import { ClasesService } from './services/clases.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
@@ -17,6 +17,11 @@ import { AgregarAlumnoClaseComponent } from './gestion-clases/agregar-alumno-cla
 import { GestionClaseHeaderComponent } from './gestion-clases/gestion-clase-header/gestion-clase-header.component';
 import { GestionClaseBodyComponent } from './gestion-clases/gestion-clase-body/gestion-clase-body.component';
 import { AlumnosService } from '../alumnos/services/alumnos.service';
+import { SuspenderClasesComponent } from './suspender-clases/suspender-clases.component';
+import { AgregarSetFormComponent } from './suspender-clases/agregar-set-form/agregar-set-form.component';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { AgregarDiaSuspensionFormComponent } from './suspender-clases/agregar-dia-suspension-form/agregar-dia-suspension-form.component';
+import { AgregarDiaFormComponent } from './suspender-clases/agregar-dia-form/agregar-dia-form.component';
 
 @NgModule({
   imports: [
@@ -24,12 +29,14 @@ import { AlumnosService } from '../alumnos/services/alumnos.service';
     SharedModule,
     NgbModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     NguiAutoCompleteModule
   ],
   declarations: [ListadoClasesComponent, WeekSelectorComponent, ListadoClasesAlumnoComponent,
     GestionClasesComponent, AsistenciaAlumnoItemComponent, AgregarAlumnoClaseComponent,
-    GestionClaseHeaderComponent, GestionClaseBodyComponent],
+    GestionClaseHeaderComponent, GestionClaseBodyComponent, SuspenderClasesComponent, AgregarSetFormComponent, 
+    AgregarDiaSuspensionFormComponent, AgregarDiaFormComponent],
   providers: [ClasesService, AlumnosService, {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}],
-  exports: [/*GestionClasesComponent, AsistenciaAlumnoItemComponent, AgregarAlumnoClaseComponent*/]
+  exports: []
 })
 export class ClasesModule { }

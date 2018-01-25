@@ -1,0 +1,53 @@
+.datepickerWrapper {
+    display: block;
+    position:relative;
+    border-radius: 0.25rem;
+    transition: box-shadow 0.2s ease-in-out;
+    border: solid 1px #ced4da;
+    &:focus-within {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    input {
+        border: none;
+    }
+}
+
+.datepicker {
+    width: calc(100% - 50px);
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: inline-block;
+    &:hover, &:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: none;
+    }
+}
+
+.calendarIconWrapper {
+    height: 100%;
+    position: absolute;
+    width: 50px;
+    display: inline-block;
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.calendarIcon {
+    width: 25px;
+    height: 25px;
+    margin-left: 12px;
+    margin-top: 5px;
+}
+
+:host.ng-invalid.ng-touched {
+
+    .datepickerWrapper{
+        border: solid 1px red;
+        &:focus-within {
+            border-color: red;
+            box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+        }
+    }
+} 

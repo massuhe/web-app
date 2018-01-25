@@ -1,0 +1,47 @@
+<fieldset class="form-group px-4" [formGroup]="form">
+  <legend class="px-3 ml-1">Par&aacute;metros de la Acci&oacute;n</legend>
+  <div class="row">
+    <div class="col-lg-4 form-group">
+      <label for="accion">Acci&oacute;n <span class="required">*</span></label>
+      <select class="form-control app-select" id="accion" formControlName="accion">
+        <option [value]="1">Suspender</option>
+        <option [value]="0">Habilitar</option>
+      </select>
+    </div>
+    <div class="col-lg-8 form-group">
+      <label for="motivo">Motivo</label>
+      <input class="form-control" id="motivo" formControlName="motivo">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 form-group">
+      <label for="actividades">Actividades <span class="required">*</span></label>
+      <app-multiselect [options]="options" formControlName="actividades"></app-multiselect>
+      <div class="invalidControl" *ngIf="errors.actividades.length !== 0 && form.get('actividades').dirty">
+        {{errors.actividades.join(' ')}}
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 form-group">
+      <label>Fecha Desde <span class="required">*</span></label>
+      <app-datepicker dpName="fechaDesde" formControlName="fechaDesde"></app-datepicker>
+      <div class="invalidControl" *ngIf="errors.fechaDesde.length !== 0 && form.get('fechaDesde').touched">
+        {{errors.fechaDesde.join(' ')}}
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4 form-group">
+      <div class="d-flex justify-content-between">
+        <label>Fecha Hasta <span class="required">*</span></label>
+        <div>
+          <input class="form-check-input" type="checkbox" id="indefinido" formControlName="indefinido">
+          <label for="indefinido">Indefinido</label>
+        </div>
+      </div>
+      <app-datepicker dpName="fechaHasta" formControlName="fechaHasta"></app-datepicker>
+      <div class="invalidControl" *ngIf="errors.fechaHasta.length !== 0 && form.get('fechaHasta').touched">
+        {{errors.fechaHasta.join(' ')}}
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <app-agregar-dia-suspension-form [dias]="dias" (onAddDia)="handleAddDia($event)" (onDeleteDia)="handleDeleteDia($event)"></app-agregar-dia-suspension-form>
+</fieldset>

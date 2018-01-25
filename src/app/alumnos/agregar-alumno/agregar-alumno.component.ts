@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlumnosService} from '../services/alumnos.service';
 import {ValidacionService} from '../../core/validacion.service';
-import {ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO} from '../services/estructura-validation';
+import {ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO} from '../_constants/agregar-alumno';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-agregar-alumno',
@@ -14,82 +15,77 @@ import {ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO} from '../services/es
         ValidacionService
     ]
 })
-export class AgregarAlumnoComponent implements OnInit {
+export class AgregarAlumnoComponent implements OnInit, OnDestroy {
 
     form: FormGroup;
     cargando = false;
-    error = '';
-    public formErrors = ESTRUCTURA_AGREGAR_ALUMNO;
-    mensajes = MENSAJES_AGREGAR_ALUMNO;
+    errors: any;
+    subscriptions: Subscription[] = [];
 
-    constructor(private formBuilder: FormBuilder,
-                private alumnosService: AlumnosService,
-                private validacionService: ValidacionService) {
-        this.validacionService.inicializa(this.formErrors, this.mensajes);
-        this.validacionService.getEstructura().subscribe(
-            estructura => {
-                this.formErrors = estructura;
-            }
-        );
+    constructor (
+        private formBuilder: FormBuilder,
+        private alumnosService: AlumnosService,
+        private validacionService: ValidacionService
+    ) {
     }
 
     ngOnInit() {
         this.createForm();
-    }
-
-    onValueChanged() {
-        this.validacionService.verificarCampos(this.form);
+        this.initializeValidationService();
+        this.subscribeToValueChanges();
     }
 
     createForm() {
         this.form = this.formBuilder.group({
             'id': [0],
-            'nombre': ['', [Validators.required]],
-            'apellido': ['', [Validators.required]],
-            'domicilio': ['', [Validators.required]],
-            'email': ['', [Validators.required, Validators.email]],
-            'telefono': ['', [Validators.required]],
-            'tieneAntecDeportivos': [false, [Validators.required]],
-            'observaciones': [''],
+            'email': ['', { updateOn: 'blur', validators: [Validators.required, Validators.email] }],
+            'nombre': ['', { updateOn: 'blur', validators: [Validators.required] }],
+            'apellido': ['', { updateOn: 'blur', validators: [Validators.required] }],
+            'domicilio': ['', { updateOn: 'blur', validators: [Validators.required] }],
+            'tieneAntecDeportivos': [false],
+            'observacionesAntecDeportivos': [{value: '', disabled: true}],
+            'telefono': ['', { updateOn: 'blur', validators: [Validators.required, Validators.pattern(/^\d+$/)] }],
+            'tieneAntecMedicos': [false],
+            'observacionesAntecMedicos': [{value: '', disabled: true}]
         });
-        this.form.valueChanges
-            .subscribe(data => this.onValueChanged());
-        this.onValueChanged(); // (re)set validation messages now
     }
 
-    onSubmit() {
-        this.error = ''; // Para que quite el error si lo mostró previamente.
-        if (this.form.status === 'VALID') {
-            this.cargando = true;
-
-            let alumno: any = {};
-            alumno = Object.assign(alumno, this.form.value);
-            delete alumno['id'];
-            delete alumno['tieneAntecDeportivos'];
-            alumno['alumno'] = {
-                'tieneAntecDeportivos': this.form.value.tieneAntecDeportivos,
-            };
-
-            let objeto;
-            if (this.form.value.id) {
-                objeto = this.alumnosService.put(alumno, this.form.value.id);
-            } else {
-                objeto = this.alumnosService.post(alumno);
-            }
-
-            objeto.subscribe(
-                resultado => {
-                    this.cargando = false;
-                    // todo rutear a alumnos/listado
-                },
-                error => {
-                    this.cargando = false;
-                    this.error = error.message;
-                }
-            );
+    handleSubmit() {
+        if (this.form.valid) {
+            console.log('Se ha enviao');
         } else {
-            this.validacionService.validateAllFormFields(this.form);
-            this.validacionService.verificarCampos(this.form);
+            this.validacionService.showErrors(this.form);
         }
+    }
+
+    private initializeValidationService() {
+        this.validacionService.inicializa(ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO);
+        this.subscriptions.push(this.validacionService.getErrorsObservable(this.form)
+          .subscribe(newErrors => {
+            this.errors = newErrors;
+        }));
+    }
+
+    private subscribeToValueChanges(): void {
+        const s1 = this.form.get('tieneAntecDeportivos').valueChanges.subscribe(val => {
+          this.enableOrDisable(val, 'observacionesAntecDeportivos', false);
+        });
+        const s2 = this.form.get('tieneAntecMedicos').valueChanges.subscribe(val => {
+          this.enableOrDisable(val, 'observacionesAntecMedicos', false);
+        });
+        this.subscriptions = [...this.subscriptions, s1, s2];
+      }
+
+      enableOrDisable(val, formName, disableValue): void {
+        if (val === disableValue) {
+          this.form.controls[formName].disable();
+          this.form.patchValue({[formName]: ''});
+        } else {
+          this.form.controls[formName].enable();
+        }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 }

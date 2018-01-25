@@ -47,6 +47,7 @@ export class ValidacionService {
             const control = formGroup.get(field);
             if (control instanceof FormControl) {
                 control.markAsDirty();
+                control.markAsTouched();
             } else if (control instanceof FormGroup) {
                 this.validateAllFormFields(control);
             }
@@ -91,6 +92,7 @@ export class ValidacionService {
 
     private markIfDirty(control: AbstractControl) {
         control.markAsDirty();
+        control.markAsTouched();
         if (control instanceof FormControl) {
             control.updateValueAndValidity();
         } else if (control instanceof FormArray) {

@@ -1,0 +1,27 @@
+<p>D&iacute;as y Horarios</p>
+<ul class="list-group">
+  <li class="list-group-item list-group-item-alice" *ngFor="let dia of dias; let i = index">
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-0">{{dia.diaSemana.join(', ')}}:
+        <span *ngFor="let horario of dia.rangosHorarios">{{horario.horaDesde | slice:0:5}} a {{horario.horaHasta | slice:0:5}}; </span>
+      </p>
+      <app-remove-button (click)="handleDeleteDia(i)"></app-remove-button>
+    </div>
+  </li>
+</ul>
+<button type="button" class="btn btn-outline-pgreen my-4" (click)="agregarDia.modal.show()">Agregar D&iacute;a</button>
+<app-agregar-dia-form #agregarDia (onAddDia)="handleAddDia($event)"></app-agregar-dia-form>
+
+<!--<p>D&iacute;as y Horarios</p>
+<ul class="list-group">
+  <li class="list-group-item list-group-item-alice" *ngFor="let diaHorario of diasHorarios; let i = index">
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-0">{{diaHorario.diaSemana}}:
+        <span *ngFor="let horario of diaHorario.horarios">{{horario.horaDesde | slice:0:5}} a {{horario.horaHasta | slice:0:5}}; </span>
+      </p>
+      <app-remove-button (click)="deleteDia(i)"></app-remove-button>
+    </div>
+  </li>
+</ul>
+<button type="button" class="btn btn-outline-pgreen my-4" (click)="agregarDia.modal.show()">Agregar D&iacute;a</button>
+<app-agregar-dia #agregarDia [diasNoDisponibles]="diasNoDisponibles" (onSubmit)="addDia($event)"></app-agregar-dia>-->

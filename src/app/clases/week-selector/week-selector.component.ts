@@ -26,8 +26,7 @@ export class WeekSelectorComponent implements OnInit, OnChanges {
   model;
   maxDate;
   disableAddWeek;
-  @ViewChild('d', { read: ElementRef })
-  datepickerRef;
+  @ViewChild('d', { read: ElementRef }) datepickerRef;
   @ViewChild('d') datepicker;
   @HostListener('document:click', ['$event'])
   clickout(event) {

@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { AgregarAlumnoComponent } from './agregar-alumno/agregar-alumno.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
+import { AgregarClasesComponent } from './agregar-alumno/agregar-clases/agregar-clases.component';
+import { SeleccionarClaseComponent } from './agregar-alumno/seleccionar-clase/seleccionar-clase.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { AppRoutingModule } from '../app-routing.module';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [ListadoAlumnosComponent, AgregarAlumnoComponent]
+  declarations: [ListadoAlumnosComponent, AgregarAlumnoComponent, AgregarClasesComponent, SeleccionarClaseComponent]
 })
 export class AlumnosModule { }

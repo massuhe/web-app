@@ -1,0 +1,17 @@
+<form [formGroup]="agregarDiaForm" novalidate (ngSubmit)="handleSubmit()">
+  <app-modal #modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
+    <div class="app-modal-body">
+      <label>D&iacute;as de la semana</label>
+      <app-multiselect formControlName="diaSemana" [options]="diasSemana"></app-multiselect>
+      <div class="invalidControl" *ngIf="agregarDiaForm.get('diaSemana').invalid && agregarDiaForm.get('diaSemana').dirty">
+        El campo es requerido
+      </div>
+      <app-rango-horario-input *ngFor="let rangoHorario of rangosHorarios.controls; let i = index" (onDelete)="deleteItem(i)" [item]="rangoHorario"></app-rango-horario-input>
+      <button class="btn btn-outline-pgreen mt-3" type="button" (click)="addItem()">Agregar Rango</button>
+    </div>
+    <div class="app-modal-footer">
+      <button type="submit" class="btn btn-outline-porange mr-2">Agregar</button>
+      <button type="button" class="btn btn-outline-porange" (click)="modal.hide()">Cancelar</button>
+    </div>
+  </app-modal>
+</form>

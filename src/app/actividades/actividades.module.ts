@@ -11,7 +11,6 @@ import { AgregarActividadFormComponent } from './agregar-actividad/agregar-activ
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DiaHorarioFormComponent } from './agregar-actividad/dia-horario-form/dia-horario-form.component';
 import { AgregarDiaComponent } from './agregar-actividad/agregar-dia/agregar-dia.component';
-import { RangoHorarioInputComponent } from './agregar-actividad/rango-horario-input/rango-horario-input.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -25,7 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule.forRoot(),
   ],
   declarations: [ListadoActividadesComponent, AgregarActividadComponent, AgregarActividadFormComponent,
-    DiaHorarioFormComponent, AgregarDiaComponent, RangoHorarioInputComponent],
+    DiaHorarioFormComponent, AgregarDiaComponent],
   providers: [ActividadesService],
   exports: []
 })

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Clase } from '../../models/clase';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { Asistente } from '../../interfaces/asistente';
+import { IAsistente } from '../../interfaces/IAsistente';
 import { Alumno } from '../../../alumnos/models/alumno';
 
 @Component({
@@ -27,32 +27,32 @@ export class GestionClaseBodyComponent implements OnInit {
   @Output() onRemoveItem = new EventEmitter<number>();
   @Output() onChangeSuspendida = new EventEmitter<boolean>();
   @Output() onChangeMotivo = new EventEmitter<string>();
-  @Output() onAddAsistente = new EventEmitter<Asistente>();
+  @Output() onAddAsistente = new EventEmitter<IAsistente>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  changeAsistencia(idAsistente: number) {
+  changeAsistencia(idAsistente: number): void {
     this.onChangeAsistencia.emit(idAsistente);
   }
 
-  changeSuspendida(event: Event) {
+  changeSuspendida(event: Event): void {
     const suspendida = (<HTMLInputElement>event.target).checked;
     this.onChangeSuspendida.emit(suspendida);
   }
 
-  changeMotivo(event: FocusEvent) {
+  changeMotivo(event: FocusEvent): void {
     const motivo = (<HTMLInputElement>event.target).value;
     this.onChangeMotivo.emit(motivo);
   }
 
-  removeItem(idAsistente: number) {
+  removeItem(idAsistente: number): void {
     this.onRemoveItem.emit(idAsistente);
   }
 
-  addAlumno(alumno: Alumno) {
-    const asistente: Asistente = {
+  addAlumno(alumno: Alumno): void {
+    const asistente: IAsistente = {
       id: alumno.id,
       nombre: `${alumno.nombre} ${alumno.apellido}`,
       asistio: true

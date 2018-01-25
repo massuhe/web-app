@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { ProfileButtonComponent } from './profile-button/profile-button.component';
@@ -18,12 +19,18 @@ import { ModalComponent } from './modal/modal.component';
 import { ContentLoaderComponent } from './content-loader/content-loader.component';
 import { RemoveButtonComponent } from './remove-button/remove-button.component';
 import { PermissionDirective } from './permission.directive';
+import { DatepickerComponent } from './datepicker/datepicker.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MultiselectComponent } from './multiselect/multiselect.component';
+import { RangoHorarioInputComponent } from './rango-horario-input/rango-horario-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
+    MultiselectDropdownModule
   ],
   declarations: [
     DeleteButtonComponent,
@@ -41,7 +48,10 @@ import { PermissionDirective } from './permission.directive';
     ModalComponent,
     ContentLoaderComponent,
     RemoveButtonComponent,
-    PermissionDirective
+    PermissionDirective,
+    DatepickerComponent,
+    MultiselectComponent,
+    RangoHorarioInputComponent
   ],
   exports: [
     DeleteButtonComponent,
@@ -59,7 +69,10 @@ import { PermissionDirective } from './permission.directive';
     ModalComponent,
     ContentLoaderComponent,
     RemoveButtonComponent,
-    PermissionDirective
+    PermissionDirective,
+    DatepickerComponent,
+    MultiselectComponent,
+    RangoHorarioInputComponent
   ]
 })
 export class SharedModule { }

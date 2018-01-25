@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-agregar-actividad',
@@ -21,7 +22,7 @@ export class AgregarActividadComponent implements OnInit, OnDestroy {
 
   actividad: Actividad;
   showLoader: boolean;
-  sub;
+  sub: Subscription;
   editar: boolean;
 
   constructor(private actividadesService: ActividadesService,
@@ -40,10 +41,10 @@ export class AgregarActividadComponent implements OnInit, OnDestroy {
   submitForm(form: FormGroup) {
     if (form.valid) {
       this.dialogService.confirm('La actividad será guardada. ¿Desea continuar?')
-        .then(_ => {
+        .then(res => {
           this.showLoader = true;
           this.editar ? this.updateActividad(form) : this.storeActividad(form);
-        });
+        }, cancel => {});
     } else {
       this.validationService.showErrors(form);
     }

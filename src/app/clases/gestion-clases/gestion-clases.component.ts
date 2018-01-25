@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Clase } from '../models/clase';
 import { ClasesService } from '../services/clases.service';
-import { Asistente } from '../interfaces/asistente';
+import { IAsistente } from '../interfaces/IAsistente';
 import { DialogService } from '../../core/dialog.service';
 import { finalize } from 'rxjs/operators/finalize';
 
@@ -73,10 +73,10 @@ export class GestionClasesComponent implements OnInit {
     this.clase = { ...this.clase, asistencias: asistencias } as Clase;
   }
 
-  addAsistente(asistente: Asistente) {
+  addAsistente(asistente: IAsistente) {
     const existeAsistente =
       this.clase.asistencias.findIndex(
-        (a: Asistente) => a.id === asistente.id
+        (a: IAsistente) => a.id === asistente.id
       ) > -1;
     if (!existeAsistente) {
       this.clase = {

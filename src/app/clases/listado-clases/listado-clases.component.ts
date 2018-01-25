@@ -121,7 +121,7 @@ export class ListadoClasesComponent implements OnInit {
   }
 
   private refreshTable(): void {
-    setTimeout(() => this.scheduler.adjustHeight(false));
+    setTimeout(() => this.scheduler && this.scheduler.adjustHeight(false));
   }
 
   private handleErrors(err): void {

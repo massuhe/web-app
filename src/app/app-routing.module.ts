@@ -15,6 +15,7 @@ import { CanActivateAuthGuard } from './_guards/CanActivateAuth';
 import { CanActivateLoginGuard } from './_guards/CanActivateLogin';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { CanActivateClassGuard } from './_guards/CanActivateClass';
+import { SuspenderClasesComponent } from './clases/suspender-clases/suspender-clases.component';
 
 const routes: Routes = [
   {
@@ -43,7 +44,9 @@ const routes: Routes = [
       },
       {
         path: 'alumnos/agregar',
-        component: AgregarAlumnoComponent
+        component: AgregarAlumnoComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['CREAR_USUARIO']}
       },
       {
         path: 'clases',
@@ -55,6 +58,12 @@ const routes: Routes = [
         component: ListadoClasesAlumnoComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO']}
+      },
+      {
+        path: 'clases/suspender',
+        component: SuspenderClasesComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['SUSPENDER_CLASES']}
       },
       {
         path: 'actividades',

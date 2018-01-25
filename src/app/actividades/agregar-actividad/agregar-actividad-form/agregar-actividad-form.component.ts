@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Actividad } from '../../models/Actividad';
-import { ESTRUCTURA_AGREGAR_ACTIVIDAD, MENSAJES_AGREGAR_ACTIVIDAD } from '../../services/estructura-validation';
+import { ESTRUCTURA_AGREGAR_ACTIVIDAD, MENSAJES_AGREGAR_ACTIVIDAD } from '../../_constants/agregar-actividad';
 import { ValidacionService } from '../../../core/validacion.service';
 import DiaActividad from '../../models/DiaActividad';
 

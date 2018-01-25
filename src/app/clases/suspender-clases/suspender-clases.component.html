@@ -1,0 +1,11 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>Suspender/Habilitar Clases</h2>
+</div>
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+    <app-agregar-set-form [form]="form" [dias]="dias" [errors]="errors" [options]="options"
+      (onAddDia)="handleAddDia($event)" (onDeleteDia)="handleDeleteDia($event)"></app-agregar-set-form>
+    <button class="btn btn-outline-porange mb-4">Confirmar Acci&oacute;n</button>
+  </form>
+</div>

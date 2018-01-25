@@ -2,108 +2,92 @@
     <h2>Agregar Alumno</h2>
 </div>
 <div class="container">
-    <fieldset class="form-group px-4">
-        <legend class="px-3 ml-1">Datos Personales</legend>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Nombre </label>
-                            <input [ngClass]="{'border-error': formErrors.nombre}" class="form-control"
-                                   formControlName="nombre"/>
-                       
-                        <div *ngIf="formErrors.nombre" class="invalidControl">
-                            {{ formErrors.nombre }}
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()" novalidate>
+        <fieldset class="form-group px-4">
+            <legend class="px-3 ml-1">Datos Personales</legend>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Correo electrónico <span class="required">*</span></label>
+                            <input type="email" class="form-control" formControlName="email"/>
+                            <div class="invalidControl" *ngIf="errors.email.length !== 0 && form.get('email').dirty">
+                                {{ errors.email.join('. ') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Nombre <span class="required">*</span></label>
+                            <input class="form-control" formControlName="nombre"/>
+                            <div class="invalidControl" *ngIf="errors.nombre.length !== 0 && form.get('nombre').dirty">
+                                {{ errors.nombre }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                        <label>Apellido <span class="required">*</span></label>
+                        <input class="form-control" formControlName="apellido"/>
+                        <div class="invalidControl" *ngIf="errors.apellido.length !== 0 && form.get('apellido').dirty">
+                            {{ errors.apellido }}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Domicilio <span class="required">*</span></label>
+                            <input class="form-control" formControlName="domicilio"/>
+                            <div class="invalidControl" *ngIf="errors.domicilio.length !== 0 && form.get('domicilio').dirty">
+                                {{ errors.domicilio }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label>Antecedentes deportivos</label>
+                                <input class="mt-2 ml-2" type="checkbox" formControlName="tieneAntecDeportivos">
+                            </div>
+                            <input class="form-control" formControlName="observacionesAntecDeportivos"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Apellido</label>
-                            <input [ngClass]="{'border-error': formErrors.apellido}" class="form-control"
-                                   formControlName="apellido"/>
-                        
-                        <div *ngIf="formErrors.apellido" class="invalidControl">
-                            {{ formErrors.apellido }}
+                <div class="row">
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Número de teléfono <span class="required">*</span></label>
+                            <input type="number" class="form-control" formControlName="telefono"/>
+                            <div class="invalidControl" *ngIf="errors.telefono.length !== 0 && form.get('telefono').dirty">
+                                {{ errors.telefono.join('. ') }}
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-8">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label>Antecedentes m&eacute;dicos</label>
+                                    <input class="mt-2 ml-2" type="checkbox" formControlName="tieneAntecMedicos">
+                                </div>
+                                <input class="form-control" formControlName="observacionesAntecMedicos"/>
+                            </div>
+                        </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Domicilio</label>
-                            <input [ngClass]="{'border-error': formErrors.domicilio}" class="form-control"
-                                   formControlName="domicilio"/>
-                        
-                        <div *ngIf="formErrors.domicilio" class="invalidControl">
-                            {{ formErrors.domicilio }}
+                <!-- <div class="row">
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Imagen de Perfil</label>
+                            <input type="file" class="form-control">
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <hr/>
+                <p>Clases</p>
+                <app-agregar-clases></app-agregar-clases>
+            </fieldset>
+            <div class="d-flex justify-content-end mb-4">
+                <button type="submit" class="btn btn-outline-porange" name="enviar">Guardar</button>
             </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Correo electrónico</label>
-                            <input type="email" [ngClass]="{'border-error': formErrors.email}" class="form-control"
-                                   formControlName="email"/>
-                        
-                        <div *ngIf="formErrors.email" class="invalidControl">
-                            {{ formErrors.email }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Número de teléfono</label>
-                            <input type="number" [ngClass]="{'border-error': formErrors.telefono}" class="form-control"
-                                   formControlName="telefono"/>
-                        
-                        <div *ngIf="formErrors.telefono" class="invalidControl">
-                            {{ formErrors.telefono }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 align-self-center">
-                    <div class="form-group mb-0">
-                        <input id="myCheckbox" type="checkbox"
-                               [ngClass]="{'border-error': formErrors.tieneAntecDeportivos}"
-                               style="text-align: left;width: auto;display: inline-block;" class="form-control"
-                               formControlName="tieneAntecDeportivos"/>
-                        <label for="myCheckbox" class="mb-0" style="display: inline-block;">Antecedentes deportivos</label>
-                        <div *ngIf="formErrors.tieneAntecDeportivos" class="invalidControl">
-                            {{ formErrors.tieneAntecDeportivos }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Imagen de Perfil
-                        </label>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <label>Observaciones sobre antecedentes médicos</label>
-                            <input [ngClass]="{'border-error': formErrors.observaciones}" class="form-control"
-                                   formControlName="observaciones"/>
-                        
-                        <div *ngIf="formErrors.observaciones" class="invalidControl">
-                            {{ formErrors.observaciones }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary" name="enviar" [disabled]="cargando">
-                    Guardar
-                </button>
-                <span *ngIf="cargando"><img width="40" height="40" src="../../../assets/images/loader-gif-6.gif"></span>
-            </div>
-            <div class="alert alert-danger text-center" *ngIf="error !== ''">
-                <p>{{ error }}</p>
-            </div>
-        </form>
-    </fieldset>
+    </form>
 </div>
