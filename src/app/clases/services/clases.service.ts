@@ -10,6 +10,7 @@ import { Dia } from '../models/dia';
 import { Clase } from '../models/clase';
 import { of } from 'rxjs/observable/of';
 import { SerializeService } from '../../core/serialize.service';
+import { Actividad } from '../../actividades/models/Actividad';
 
 @Injectable()
 export class ClasesService {
@@ -55,6 +56,13 @@ export class ClasesService {
     return this.http.post(`${environment.apiBaseUrl}/clases/suspender`, parametros);
   }
 
+  getClasesWithAsistencias(): Observable<Actividad[]> {
+    return this.http.get(`${environment.apiBaseUrl}/clases/conAsistencias`).map((clases: any[]) => {
+      const actividades = this.formatClasesWithAsistencias(clases);
+      return actividades;
+    });
+  }
+
   private toClase(c) {
     const clase = new Clase();
     clase.fillFromJsonClaseEspecifica(c);
@@ -83,6 +91,34 @@ export class ClasesService {
       diasArray.push(dia);
     });
     return diasArray;
+  }
+
+  private formatClasesWithAsistencias(jsonClases: any): Actividad[] {
+    const actividades = [];
+    jsonClases.forEach(clase => {
+      let actividad = actividades.find(a => a.id === clase.actividad_id);
+      if (!actividad) {
+        actividad = new Actividad();
+        actividad.fillFromJson({
+          id: clase.actividad_id,
+          nombre: clase.actividad_nombre,
+          cantidad_alumnos_por_clase: clase.cantidad_alumnos_por_clase,
+          dias_clases: []
+        });
+        actividades.push(actividad);
+      }
+      let dia = actividad.diasClases.find(d => d.diaSemana === clase.dia_semana);
+      if (!dia) {
+        dia = new Dia();
+        dia.fillFromJson({dia_semana: clase.dia_semana, clases: []});
+        actividad.diasClases.push(dia);
+      }
+      const claseAdd = new Clase();
+      claseAdd.fillFromJson(clase);
+      claseAdd.calculateEstadoClaseFija(actividad.cantidadAlumnosPorClase);
+      dia.clases.push(claseAdd);
+    });
+    return actividades;
   }
 
 }

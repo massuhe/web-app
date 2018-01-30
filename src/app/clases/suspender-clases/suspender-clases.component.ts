@@ -94,7 +94,7 @@ export class SuspenderClasesComponent implements OnInit, OnDestroy {
   }
 
   private onError(res: any): void {
-    this.dialogService.error(res.error.message || 'Se ha producido un error inesperado');
+    this.dialogService.error(res.error.clientMessage || 'Se ha producido un error inesperado');
   }
 
   private initializeValidationService() {

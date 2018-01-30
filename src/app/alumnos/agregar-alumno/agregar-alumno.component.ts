@@ -3,7 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlumnosService} from '../services/alumnos.service';
 import {ValidacionService} from '../../core/validacion.service';
 import {ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO} from '../_constants/agregar-alumno';
-import { Subscription } from 'rxjs/Subscription';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
+import { Clase } from '../../clases/models/clase';
 
 @Component({
     selector: 'app-agregar-alumno',
@@ -20,7 +22,8 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
     form: FormGroup;
     cargando = false;
     errors: any;
-    subscriptions: Subscription[] = [];
+    $destroy: Subject<boolean>;
+    clases: Clase[];
 
     constructor (
         private formBuilder: FormBuilder,
@@ -30,6 +33,7 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.clases = [];
         this.createForm();
         this.initializeValidationService();
         this.subscribeToValueChanges();
@@ -37,7 +41,6 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
 
     createForm() {
         this.form = this.formBuilder.group({
-            'id': [0],
             'email': ['', { updateOn: 'blur', validators: [Validators.required, Validators.email] }],
             'nombre': ['', { updateOn: 'blur', validators: [Validators.required] }],
             'apellido': ['', { updateOn: 'blur', validators: [Validators.required] }],
@@ -52,28 +55,40 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
 
     handleSubmit() {
         if (this.form.valid) {
-            console.log('Se ha enviao');
+            const value = {...this.form.getRawValue(), clases: this.clases.map(c => c.id)};
+            console.log(value);
         } else {
             this.validacionService.showErrors(this.form);
         }
     }
 
+    handleSelectClase(clase: Clase) {
+        const existeClase = !!this.clases.find(c => clase.id === c.id);
+        if (!existeClase) {
+            this.clases = [...this.clases, clase];
+        }
+    }
+
+    handleDeleteClase(indexDelete: number) {
+        this.clases = [...this.clases.slice(0, indexDelete), ...this.clases.slice(indexDelete + 1)];
+    }
+
     private initializeValidationService() {
         this.validacionService.inicializa(ESTRUCTURA_AGREGAR_ALUMNO, MENSAJES_AGREGAR_ALUMNO);
-        this.subscriptions.push(this.validacionService.getErrorsObservable(this.form)
+        this.validacionService.getErrorsObservable(this.form)
           .subscribe(newErrors => {
             this.errors = newErrors;
-        }));
+        });
     }
 
     private subscribeToValueChanges(): void {
-        const s1 = this.form.get('tieneAntecDeportivos').valueChanges.subscribe(val => {
+        this.$destroy = new Subject<boolean>();
+        this.form.get('tieneAntecDeportivos').valueChanges.takeUntil(this.$destroy).subscribe(val => {
           this.enableOrDisable(val, 'observacionesAntecDeportivos', false);
         });
-        const s2 = this.form.get('tieneAntecMedicos').valueChanges.subscribe(val => {
+        this.form.get('tieneAntecMedicos').valueChanges.takeUntil(this.$destroy).subscribe(val => {
           this.enableOrDisable(val, 'observacionesAntecMedicos', false);
         });
-        this.subscriptions = [...this.subscriptions, s1, s2];
       }
 
       enableOrDisable(val, formName, disableValue): void {
@@ -86,6 +101,7 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this.$destroy.next(true);
+        this.$destroy.unsubscribe();
     }
 }

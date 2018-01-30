@@ -84,7 +84,8 @@
                 </div> -->
                 <hr/>
                 <p>Clases</p>
-                <app-agregar-clases></app-agregar-clases>
+                <app-agregar-clases [clases]="clases" (onSelectClase)="handleSelectClase($event)" 
+                    (onDeleteClase)="handleDeleteClase($event)"></app-agregar-clases>
             </fieldset>
             <div class="d-flex justify-content-end mb-4">
                 <button type="submit" class="btn btn-outline-porange" name="enviar">Guardar</button>

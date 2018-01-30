@@ -1,0 +1,33 @@
+.clasepicker-header {
+    padding: 5px;
+    border-top: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;
+    background-color: #fbfbfb;
+    margin-bottom: 5px;
+}
+
+.clasepicker-content {
+    padding: 5px;
+    border-bottom: solid 2px white;
+    border-right: solid 2px white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.disponible {
+    background-color: palegreen;
+    &.selected {
+        background-color: darken(palegreen, 15);
+    }
+}
+
+.semiDisponible {
+    background-color: khaki;
+    &.selected {
+        background-color: darken(khaki, 15);
+    }
+}
+
+.noDisponible {
+    background-color: lightcoral;
+}

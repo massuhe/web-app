@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Clase } from '../../../clases/models/clase';
 
 @Component({
   selector: 'app-agregar-clases',
@@ -8,13 +9,21 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class AgregarClasesComponent implements OnInit {
 
+  @Input() clases: Clase[];
+  @Output() onSelectClase = new EventEmitter<Clase>();
+  @Output() onDeleteClase = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  open(a) {
-    console.log(a);
+  handleSelectClase(clase: Clase) {
+    this.onSelectClase.emit(clase);
+  }
+
+  deleteClase(indexClase: number) {
+    this.onDeleteClase.emit(indexClase);
   }
 
 }

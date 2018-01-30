@@ -1,12 +1,12 @@
 <div class="mb-4">
     <ul class="list-group mb-4">
-        <li class="list-group-item list-group-item-alice">
+        <li class="list-group-item list-group-item-alice" *ngFor="let clase of clases, let i = index">
           <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0">Mi&eacute;rcoles 18:00 hs</p>
-            <app-remove-button (click)="deleteDia(i)"></app-remove-button>
+            <p class="mb-0">{{clase.dia.actividad.nombre}} - {{clase.dia.diaSemana}} {{clase.horaInicio|slice:0:5}} hs</p>
+            <app-remove-button (click)="deleteClase(i)"></app-remove-button>
           </div>
         </li>
       </ul>
-    <button class="btn btn-outline-pgreen" (click)="$event.preventDefault(); a.modal.show()">Agregar Clase</button>
+    <button type="button" class="btn btn-outline-pgreen" (click)="a.modal.show()">Agregar Clase</button>
 </div>
-<app-seleccionar-clase #a></app-seleccionar-clase>
+<app-seleccionar-clase #a (onSelectClase)="handleSelectClase($event)"></app-seleccionar-clase>

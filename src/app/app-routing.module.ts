@@ -67,15 +67,21 @@ const routes: Routes = [
       },
       {
         path: 'actividades',
-        component: ListadoActividadesComponent
+        component: ListadoActividadesComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_ACTIVIDADES']}
       },
       {
         path: 'actividades/agregar',
-        component: AgregarActividadComponent
+        component: AgregarActividadComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['CREAR_ACTIVIDAD']}
       },
       {
         path: 'actividades/editar/:idActividad',
-        component: AgregarActividadComponent
+        component: AgregarActividadComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['MODIFICAR_ACTIVIDAD']}
       }
     ]
   },

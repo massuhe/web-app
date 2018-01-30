@@ -1,3 +1,39 @@
 <app-modal #modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
-  <p>sdjfhasfh</p>
+  <div class="app-modal-body">
+    <app-content-loader *ngIf="showLoader"></app-content-loader>
+    <div *ngIf="!showLoader">
+      <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleChangeActividad($event)"></app-tab-nav>
+      <!-- <ul class="nav nav-tabs mb-3">
+        <li class="nav-item" *ngFor="let actividad of actividades">
+          <a class="nav-link active" (click)="handleChangeActividad(actividad)">{{actividad.nombre}}</a>
+        </li>
+      </ul> -->
+      <div class="d-flex flex-column flex-sm-row">
+        <div class="d-flex flex-column w-100 text-center" *ngFor="let dia of actividadSeleccionada?.diasClases">
+          <div class="clasepicker-header">{{dia.diaSemana}}</div>
+          <div class="clasepicker-content" *ngFor="let clase of dia.clases" [ngClass]="{
+          disponible: clase.estadoClaseFija === 'disponible',
+          noDisponible: clase.estadoClaseFija === 'no-disponible',
+          semiDisponible: clase.estadoClaseFija === 'semi-disponible',
+          selected: clase.id === claseSeleccionada?.id
+        }" (click)="handleChangeClase(clase, dia)">
+            {{clase.horaInicio | slice:0:5}}
+          </div>
+        </div>
+      </div>
+      <div class="mt-2">
+        <p class="mb-0">Seleccionada:
+          <span class="font-weight-normal" *ngIf="claseSeleccionada">
+            {{claseSeleccionada.dia.actividad.nombre}} - {{claseSeleccionada.dia.diaSemana}} {{claseSeleccionada.horaInicio|slice:0:5}}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleAgregar()">
+      Aceptar
+    </button>
+    <button type="button" class="btn btn-outline-porange" (click)="modal.hide()">Cancelar</button>
+  </div>
 </app-modal>

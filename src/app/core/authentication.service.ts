@@ -8,6 +8,7 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { ILoginResponse } from './_interfaces/ILoginResponse';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as localforage from 'localforage';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthenticationService {
@@ -63,7 +64,7 @@ export class AuthenticationService {
       );
   }
 
-  logout() {
+  logout(): Observable<void> {
     return fromPromise(localforage.removeItem('token').then(_ => {
       this.isLoggedIn = false;
     }));

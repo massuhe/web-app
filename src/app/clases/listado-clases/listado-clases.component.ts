@@ -126,7 +126,7 @@ export class ListadoClasesComponent implements OnInit {
 
   private handleErrors(err): void {
     this.showLoader = false;
-    this.dialogService.error('Se ha producido un error inesperado');
+    this.dialogService.error(err.error.clientMessage || 'Se ha producido un error inesperado');
   }
 
   private getClases(): void {

@@ -1,4 +1,5 @@
 import DiaActividad from './DiaActividad';
+import { Dia } from '../../clases/models/dia';
 
 export class Actividad {
 
@@ -11,13 +12,16 @@ export class Actividad {
     horaMaxima?: number;
     totalAlumnos?: number;
     diasHorarios: DiaActividad[];
+    diasClases?: Dia[];
 
-    constructor(diasHorarios: DiaActividad[] = []) {
-        this.diasHorarios = diasHorarios;
+    constructor(props: Partial<Actividad> = {}) {
+        this.diasHorarios = props.diasHorarios || [];
+        this.nombre = props.nombre;
     }
 
     fillFromJson?(json) {
         this.id = json.id;
+        this.diasClases = json.dias_clases;
         this.nombre = json.nombre;
         this.descripcion = json.descripcion;
         this.duracion = json.duracion;
