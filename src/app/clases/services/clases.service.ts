@@ -18,6 +18,9 @@ export class ClasesService {
   constructor(private http: HttpClient, private serializeService: SerializeService) { }
 
   getListadoClases(semana, actividad) {
+    if (!actividad) {
+      return of(null);
+    }
     const formattedDate = format(semana, 'MM-DD-YYYY');
     return this.http
       .get(`${environment.apiBaseUrl}/clasesEspecificas/listado?semana=${formattedDate}&actividad=${actividad.id}`)
@@ -50,6 +53,10 @@ export class ClasesService {
 
   cancelarClase(idClase: number): Observable<any> {
     return this.http.patch(`${environment.apiBaseUrl}/clasesEspecificas/cancelar`, {idClase});
+  }
+
+  recuperarClase(idClase: number): Observable<any> {
+    return this.http.patch(`${environment.apiBaseUrl}/clasesEspecificas/recuperar`, {idClase});
   }
 
   suspenderClases(parametros: any): Observable<any> {

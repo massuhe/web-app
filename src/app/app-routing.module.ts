@@ -16,6 +16,11 @@ import { CanActivateLoginGuard } from './_guards/CanActivateLogin';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { CanActivateClassGuard } from './_guards/CanActivateClass';
 import { SuspenderClasesComponent } from './clases/suspender-clases/suspender-clases.component';
+import { ListadoUsuariosComponent } from './usuarios/listado-usuarios/listado-usuarios.component';
+import { AgregarUsuarioComponent } from './usuarios/agregar-usuario/agregar-usuario.component';
+import { ListadoRolesComponent } from './seguridad/listado-roles/listado-roles.component';
+import { AgregarRolComponent } from './seguridad/agregar-rol/agregar-rol.component';
+import { GestionInventarioComponent } from './inventario/gestion-inventario/gestion-inventario.component';
 
 const routes: Routes = [
   {
@@ -47,6 +52,12 @@ const routes: Routes = [
         component: AgregarAlumnoComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['CREAR_USUARIO']}
+      },
+      {
+        path: 'alumnos/editar/:idAlumno',
+        component: AgregarAlumnoComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['MODIFICAR_USUARIO']}
       },
       {
         path: 'clases',
@@ -82,6 +93,48 @@ const routes: Routes = [
         component: AgregarActividadComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['MODIFICAR_ACTIVIDAD']}
+      },
+      {
+        path: 'usuarios',
+        component: ListadoUsuariosComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_USUARIOS']}
+      },
+      {
+        path: 'usuarios/agregar',
+        component: AgregarUsuarioComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['CREAR_USUARIO']}
+      },
+      {
+        path: 'usuarios/editar/:idUsuario',
+        component: AgregarUsuarioComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['MODIFICAR_USUARIO']}
+      },
+      {
+        path: 'roles',
+        component: ListadoRolesComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_ROLES']}
+      },
+      {
+        path: 'roles/agregar',
+        component: AgregarRolComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['CREAR_ROL']}
+      },
+      {
+        path: 'roles/editar/:idRol',
+        component: AgregarRolComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['MODIFICAR_ROL']}
+      },
+      {
+        path: 'inventario',
+        component: GestionInventarioComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_ITEMS_INVENTARIO']}
       }
     ]
   },

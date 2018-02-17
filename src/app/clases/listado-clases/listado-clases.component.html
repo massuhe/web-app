@@ -2,7 +2,7 @@
     <h2>Listado de Clases</h2>
 </div>
 <app-screen-loader *ngIf="showLoader"></app-screen-loader>
-<div class="container" *ngIf="showScreen">
+<div class="container" *ngIf="showScreen && actividades.length">
     <div class="d-block d-md-flex">
         <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleActivityChange($event)"></app-tab-nav>
         <app-week-selector (onWeekChange)="handleWeekChange($event)" [week]="week" class="mb-4 week-selector f-grow1 d-flex justify-content-center justify-content-md-end align-items-center"></app-week-selector>
@@ -31,7 +31,10 @@
             </app-scheduler-cell>
         </app-scheduler-column>
     </app-scheduler>
-    <p *ngIf="!showLoader && dias.length === 0">No se han encontrado clases</p>
+    <div *ngIf="!showLoader && dias.length === 0" class="alert alert-warning">No se han encontrado clases</div>
+</div>
+<div class="container alert alert-warning" role="alert" *ngIf="showScreen && !actividades.length">
+    No se han encontrado actividades
 </div>
 <app-gestion-clases [idClase]="claseSeleccionada" [fecha]="fechaModal"
  [hora]="horaModal" (onGuardarStart)="handleSaveClase($event)"

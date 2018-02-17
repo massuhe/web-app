@@ -1,15 +1,10 @@
 <app-modal #modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
   <div class="app-modal-body">
     <app-content-loader *ngIf="showLoader"></app-content-loader>
-    <div *ngIf="!showLoader">
+    <div *ngIf="!showLoader && actividades.length">
       <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleChangeActividad($event)"></app-tab-nav>
-      <!-- <ul class="nav nav-tabs mb-3">
-        <li class="nav-item" *ngFor="let actividad of actividades">
-          <a class="nav-link active" (click)="handleChangeActividad(actividad)">{{actividad.nombre}}</a>
-        </li>
-      </ul> -->
       <div class="d-flex flex-column flex-sm-row">
-        <div class="d-flex flex-column w-100 text-center" *ngFor="let dia of actividadSeleccionada?.diasClases">
+        <div class="d-flex flex-column w-100 text-center" *ngFor="let dia of actividadSeleccionada.diasClases">
           <div class="clasepicker-header">{{dia.diaSemana}}</div>
           <div class="clasepicker-content" *ngFor="let clase of dia.clases" [ngClass]="{
           disponible: clase.estadoClaseFija === 'disponible',
@@ -29,9 +24,12 @@
         </p>
       </div>
     </div>
+    <div *ngIf="!showLoader && !actividades.length">
+      <div class="alert alert-warning">No se han encontrado clases</div>
+    </div>
   </div>
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleAgregar()">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleAgregar()" [disabled]="!actividades.length">
       Aceptar
     </button>
     <button type="button" class="btn btn-outline-porange" (click)="modal.hide()">Cancelar</button>

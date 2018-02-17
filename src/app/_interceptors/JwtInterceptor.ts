@@ -39,8 +39,7 @@ export class JwtInterceptor implements HttpInterceptor {
         switch (err.status) {
             case 401:
                 const auth = this.inj.get(AuthenticationService);
-                auth.logout();
-                this.router.navigate(['/login']);
+                auth.logout().subscribe(_ => this.router.navigate(['/login']));
                 break;
             case 403:
                 this.setToken(err.headers);

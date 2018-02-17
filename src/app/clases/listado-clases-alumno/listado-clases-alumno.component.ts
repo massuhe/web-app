@@ -69,6 +69,18 @@ export class ListadoClasesAlumnoComponent implements OnInit {
       });
   }
 
+  recuperarClase(dia: Dia, clase: Clase) {
+    this.dialogService.confirm(`Está por confirmar su asistencia a la clase del ${dia.fecha} ${clase.horaInicio}. ¿Desea continuar?`)
+      .then( _ => {
+        this.showLoader = true;
+        this.clasesService.recuperarClase(clase.id).pipe(
+          tap(_r => this.handleRecuperarResponse(clase)),
+          switchMap(__ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
+        )
+        .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
+      });
+  }
+
   private populateScheduler(res) {
     if (res.dias.length > 0) {
       this.handleResponse(res);
@@ -112,6 +124,15 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     clase.lugaresDisponibles++;
     this.showLoader = false;
     this.dialogService.success('La asistencia ha sido cancelada correctamente');
+    this.refreshScheduler();
+  }
+
+  private handleRecuperarResponse(clase: Clase) {
+    clase.asiste = true;
+    clase.lugaresDisponibles--;
+    this.showLoader = false;
+    this.dialogService.success('La asistencia ha sido confirmada correctamente');
+    this.refreshScheduler();
   }
 
   private checkClasesAlumno() {
@@ -123,8 +144,8 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     );
   }
 
-  private refreshScheduler() {
-    setTimeout(() => this.scheduler.adjustHeight(false));
+  private refreshScheduler(reset = false) {
+    setTimeout(() => this.scheduler.adjustHeight(reset));
   }
 
 }

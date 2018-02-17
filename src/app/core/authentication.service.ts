@@ -71,6 +71,9 @@ export class AuthenticationService {
   }
 
   userHasPermission(perm: string[]) {
+    if (!this.permisos) {
+      return false;
+    }
     return perm.reduce((pv, cv) => pv || this.permisos.includes(cv), false);
   }
 

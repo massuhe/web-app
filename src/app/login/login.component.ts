@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.builder.group({
       usuario: ['', {updateOn: 'blur', validators: [Validators.required]}],
-      contrasena: ['', {updateOn: 'blur', validators: [Validators.required]}],
+      contrasena: ['', {updateOn: 'change', validators: [Validators.required]}],
     });
   }
 

@@ -18,6 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { JwtInterceptor } from './_interceptors/JwtInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { SeguridadModule } from './seguridad/seguridad.module';
+import { InventarioModule } from './inventario/inventario.module';
 
 registerLocaleData(localeEsAr);
 
@@ -36,7 +39,10 @@ registerLocaleData(localeEsAr);
     NavModule,
     HomeModule,
     AlumnosModule,
+    UsuariosModule,
     ClasesModule,
+    InventarioModule,
+    SeguridadModule,
     ActividadesModule,
     FormsModule,
     ReactiveFormsModule,

@@ -5,16 +5,25 @@
 <div class="container">
   <button [permisos]="['CREAR_USUARIO']" routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
   <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
-    footerHeight="75">
-  </ngx-datatable>
-  <ng-template #hdrTpl let-column="column">
-    {{column.name}}
-  </ng-template>
-  <ng-template #editTmpl let-row="row" let-value="value">
-    <app-routine-button></app-routine-button>
-    <app-profile-button></app-profile-button>
-    <app-edit-button [routerLink]="'editar/' + row.id"></app-edit-button>
-    <app-delete-button (click)="borrarAlumno(row.id)"></app-delete-button>
-  </ng-template>
+  <div *ngIf="rows.length !== 0">
+    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+      footerHeight="75">
+    </ngx-datatable>
+  </div>
+  <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">
+    No se encontraron alumnos.
+  </div>
 </div>
+
+<ng-template #hdrTpl let-column="column">
+  {{column.name}}
+  </ng-template>
+<ng-template #editTmpl let-row="row" let-value="value">
+  <app-routine-button [permisos]="['VER_RUTINA']"></app-routine-button>
+  <app-profile-button [permisos]="['VER_PERFIL']"></app-profile-button>
+  <app-edit-button [routerLink]="'editar/' + row.id" [permisos]="['MODIFICAR_USUARIO']"></app-edit-button>
+  <app-delete-button (click)="borrarAlumno(row.id)" [permisos]="['ELIMINAR_USUARIO']"></app-delete-button>
+</ng-template>
+<ng-template #indexTmpl let-index="rowIndex">
+  {{index + 1}}
+</ng-template>

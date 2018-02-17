@@ -2,32 +2,17 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AlumnosService } from '../services/alumnos.service';
 import { DialogService } from '../../core/dialog.service';
 import { Alumno } from '../models/alumno';
-
-const mockRows = [
-  { id: 1, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 2, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 3, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 4, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 5, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 6, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 7, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 8, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 9, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 10, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 11, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 12, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },
-  { id: 13, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' }
-];
+import { GENERIC_ERROR_MESSAGE } from '../../app-constants';
 
 @Component({
   selector: 'app-listado-alumnos',
   templateUrl: './listado-alumnos.component.html',
-  styleUrls: ['./listado-alumnos.component.scss'],
-  providers: [AlumnosService]
+  styleUrls: ['./listado-alumnos.component.scss']
 })
 export class ListadoAlumnosComponent implements OnInit {
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
+  @ViewChild('indexTmpl') indexTmpl: TemplateRef<any>;
   private alumnos;
   rows;
   columns;
@@ -42,7 +27,7 @@ export class ListadoAlumnosComponent implements OnInit {
     this.alumnos = [];
     this.rows = [];
     this.columns = [
-      { prop: 'id', name: '#', width: 50 },
+      { prop: 'id', name: '#', width: 50, cellTemplate: this.indexTmpl },
       { prop: 'nombre' },
       { prop: 'apellido' },
       { prop: 'activo', width: 100 },
@@ -60,7 +45,7 @@ export class ListadoAlumnosComponent implements OnInit {
         this.fillRows();
         this.showLoader = false;
       },
-      this.handleErrors
+      res => this.handleErrors(res)
     );
   }
 
@@ -102,11 +87,8 @@ export class ListadoAlumnosComponent implements OnInit {
       );
   }
 
-  private handleErrors(error) {
-    if (error.status === 401) {
-      return ;
-    }
+  private handleErrors(res) {
       this.showLoader = false;
-      this.dialogService.error(error || 'Se ha producido un error inesperado');
+      this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 }

@@ -5,6 +5,7 @@ import { ValidacionService } from './validacion.service';
 import { DialogService } from './dialog.service';
 import { SerializeService } from './serialize.service';
 import { AuthenticationService } from './authentication.service';
+import { ImagesService } from './images.service';
 
 @NgModule({
     imports: [
@@ -12,7 +13,7 @@ import { AuthenticationService } from './authentication.service';
     ],
     exports: [],
     declarations: [],
-    providers: [ValidacionService, DialogService, SerializeService, AuthenticationService]
+    providers: [ValidacionService, DialogService, SerializeService, AuthenticationService, ImagesService]
 })
 export class CoreModule {
 }

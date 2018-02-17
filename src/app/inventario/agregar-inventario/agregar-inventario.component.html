@@ -1,0 +1,39 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<app-modal #modal (onVisibilityChange)="handleVisibilityChange($event)">
+  <div class="app-modal-header contentSecundaryFont w-100">
+    <h3 class="m-0">{{ item?.id ? 'Editar' : 'Agregar' }} Item</h3>
+  </div>
+  <div class="app-modal-body">
+    <form class="d-flex flex-column flex-sm-row" [formGroup]="form">
+      <div class="position-relative">
+        <img [src]="urlImage" alt="imagen" class="img-thumbnail image-container">
+        <input class="form-control" #fileInput type="file" name="descripcionImagen" class="input-image" accept="image/*" 
+          (change)="handleImageUpload($event)">
+      </div>
+      <div class="f-grow1 px-0 pt-3 pt-sm-0 px-sm-3">
+        <div class="form-group">
+          <label>Descripci&oacute;n
+            <span class="required">*</span>
+          </label>
+          <input class="form-control" formControlName="descripcion"/>
+          <div class="invalidControl" *ngIf="errors.descripcion.length !== 0 && form.get('descripcion').dirty">
+            {{errors.descripcion.join(' ')}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cantidad
+            <span class="required">*</span>
+          </label>
+          <input class="form-control" type="number" formControlName="cantidad"/>
+          <div class="invalidControl" *ngIf="errors.cantidad.length !== 0 && form.get('cantidad').dirty">
+            {{errors.cantidad.join(' ')}}
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleGuardar()">Guardar</button>
+    <button type="button" class="btn btn-outline-porange" (click)="close()">Cerrar</button>
+  </div>
+</app-modal>

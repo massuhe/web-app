@@ -106,7 +106,7 @@ export class ListadoClasesComponent implements OnInit {
   }
 
   private populateScheduler(res): void {
-    if (res.dias.length > 0) {
+    if (res && res.dias.length > 0) {
       this.horas = res.horas;
       this.dias = res.dias;
       this.showScheduler = true;

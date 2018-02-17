@@ -20,11 +20,12 @@
     <app-item-dropdown path="/" [permisos]="['GESTIONAR_MOVIMIENTOS_DINERO']">Gestionar Movimientos de Dinero</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['BALANCE_GENERAL']">Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6" [permisos]="['VER_ACTIVIDADES', 'GESTIONAR_EJERCICIOS', 'GESTIONAR_ROLES', 'GESTIONAR_INVENTARIO', 'GESTIONAR_NOVEDADES']">
+  <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6" [permisos]="['VER_USUARIOS', 'VER_ACTIVIDADES', 'GESTIONAR_EJERCICIOS', 'GESTIONAR_ROLES', 'GESTIONAR_INVENTARIO', 'GESTIONAR_NOVEDADES']">
+    <app-item-dropdown path="usuarios" [permisos]="['VER_USUARIOS']">Usuarios</app-item-dropdown>
     <app-item-dropdown path="actividades" [permisos]="['VER_ACTIVIDADES']">Actividades</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['GESTIONAR_EJERCICIOS']">Ejercicios</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['GESTIONAR_ROLES']">Roles</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['GESTIONAR_INVENTARIO']">Inventario</app-item-dropdown>
+    <app-item-dropdown path="roles" [permisos]="['VER_ROLES']">Roles</app-item-dropdown>
+    <app-item-dropdown path="inventario" [permisos]="['VER_ITEMS_INVENTARIO']">Inventario</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['GESTIONAR_NOVEDADES']">Novedades</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-sesion [isLogged]="isLogged" [usuario]="usuario" (onLogout)="handleLogout()"></app-sesion>

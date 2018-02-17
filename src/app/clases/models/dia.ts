@@ -28,6 +28,13 @@ export class Dia {
             clasesArray.push(clase);
         });
         this.clases = clasesArray;
+        this.actividad = json.actividad ? this.mapActividad(json.actividad) : undefined;
+    }
+
+    private mapActividad(jsonActividad: any): Actividad {
+        const a = new Actividad();
+        a.fillFromJson(jsonActividad);
+        return a;
     }
 
 }

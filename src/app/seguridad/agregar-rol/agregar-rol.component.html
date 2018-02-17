@@ -1,0 +1,41 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+    <h2>{{editar ? 'Editar' : 'Agregar'}} Rol</h2>
+</div>
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()" novalidate>
+        <fieldset class="form-group px-4 pb-3">
+            <legend class="px-3 ml-1">Datos del Rol</legend>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Nombre <span class="required">*</span></label>
+                            <input class="form-control" formControlName="nombre"/>
+                            <div class="invalidControl" *ngIf="errors.nombre.length !== 0 && form.get('nombre').dirty">
+                                {{ errors.nombre }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <label>Permisos</label>
+                      <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
+                      <div class="row mt-4">
+                        <div class="col-12 col-md-6 col-xl-4" *ngFor="let permiso of permisosFilter">
+                          <div class="check-container d-flex">
+                            <input type="checkbox" class="styled-checkbox" [id]="'permiso'+permiso.id" 
+                              (change)="selectPermiso($event.target.checked, permiso.id)" 
+                              [checked]="permisosSeleccionados.includes(permiso.id)">
+                            <label class="custom-control-label" [for]="'permiso'+permiso.id">
+                              {{permiso.nombre}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-end mb-4">
+                <button type="submit" class="btn btn-outline-porange" name="enviar">Guardar</button>
+            </div>
+    </form>
+</div>

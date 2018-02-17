@@ -18,3 +18,13 @@ export const MULTISELECT_SETTINGS: IMultiSelectSettings = {
     itemClasses: 'contentFont font-weight-light',
     containerClasses: 'w-100'
 };
+
+/* Mensajes del dialogo */
+export const GENERIC_ERROR_MESSAGE = 'Se ha producido un error inesperado';
+export const CONFIRM_MESSAGE = '#entidad# será #accion#. ¿Desea continuar?';
+export const SUCCESS_MESSAGE = '#entidad# se ha #accion# correctamente';
+
+/* Acciones del dialogo */
+export const GUARDAR = 'guardado';
+export const ELIMINAR = 'eliminado';
+export const ACTUALIZAR = 'actualizado';

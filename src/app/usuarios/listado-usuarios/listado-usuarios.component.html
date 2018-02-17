@@ -1,0 +1,24 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer p-5 pattern insetShadow mb-4">
+  <h2>Listado de Usuarios</h2>
+</div>
+<div class="container">
+  <button [permisos]="['CREAR_USUARIO']" routerLink="/usuarios/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Usuario</button>
+  <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
+  <div *ngIf="rows.length !== 0">
+    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+      footerHeight="75">
+    </ngx-datatable>
+  </div>
+  <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">
+    No se encontraron usuarios.
+  </div>
+</div>
+
+<ng-template #editTmpl let-row="row" let-value="value">
+  <app-edit-button [permisos]="['MODIFICAR_USUARIO']" [routerLink]="'editar/' + row.id"></app-edit-button>
+  <app-delete-button [permisos]="['ELIMINAR_USUARIO']" (click)="borrarUsuario(row.id)"></app-delete-button>
+</ng-template>
+<ng-template #indexTmpl let-index="rowIndex">
+  {{index + 1}}
+</ng-template>

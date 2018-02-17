@@ -15,9 +15,9 @@ export class SeleccionarClaseComponent implements OnInit {
   @ViewChild('modal') modal;
   @Output() onSelectClase = new EventEmitter<Clase>();
   showLoader: boolean;
-  private actividades: Actividad[];
-  private actividadSeleccionada: Actividad;
-  private claseSeleccionada: Clase;
+  actividades: Actividad[] = [];
+  actividadSeleccionada: Actividad;
+  claseSeleccionada: Clase;
 
   constructor(private claseService: ClasesService) { }
 
