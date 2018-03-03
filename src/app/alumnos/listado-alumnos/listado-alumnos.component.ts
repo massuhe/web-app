@@ -16,7 +16,8 @@ export class ListadoAlumnosComponent implements OnInit {
   private alumnos;
   rows;
   columns;
-  showLoader;
+  showLoader: boolean;
+  showScreenLoader: boolean;
 
   constructor(
     private alumnosService: AlumnosService,
@@ -70,16 +71,16 @@ export class ListadoAlumnosComponent implements OnInit {
       .confirm('¿Está seguro que quiere borrar el alumno?')
       .then(
         () => {
-          this.showLoader = true;
+          this.showScreenLoader = true;
           this.alumnosService.borrarAlumno(idAlumno).subscribe(() => {
-            this.showLoader = false;
+            this.showScreenLoader = false;
             const indiceBorrar = this.alumnos.findIndex(a => a.id === idAlumno);
             this.alumnos = [...this.alumnos.slice(0, indiceBorrar), ...this.alumnos.slice(indiceBorrar + 1)];
             this.fillRows();
             this.dialogService.success('El alumno ha sido borrado correctamente');
           },
           err => {
-            this.showLoader = false;
+            this.showScreenLoader = false;
             this.dialogService.error(err.error || 'Se ha producido un error inesperado');
           });
         },
@@ -89,6 +90,7 @@ export class ListadoAlumnosComponent implements OnInit {
 
   private handleErrors(res) {
       this.showLoader = false;
+      this.showScreenLoader = false;
       this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 }

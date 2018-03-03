@@ -1,0 +1,68 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+    <h2>Registrar Pago</h2>
+</div>
+<div class="container">
+    <form (ngSubmit)="handleSubmit()" [formGroup]="form" novalidate>
+        <fieldset class="form-group px-4">
+            <legend class="px-3 ml-1">Detalles del Pago</legend>
+            <app-buscar-pago 
+              (onSearch)="handleOnSearch($event)"
+              (onFindCuota)="handleFindCuota($event)">
+            </app-buscar-pago>
+            <div *ngIf="cuotaFound">
+              <hr/>
+              <div class="alert alert-info" role="alert" *ngIf="!cuota.id">
+                No se ha encontrado ninguna cuota con los criterios ingresados. El nuevo pago generar&aacute;
+                una nueva para el alumno y la fecha solicitada.
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-lg-4">
+                  <div class="d-flex justify-content-between">
+                    <label>Importe total del mes <span class="required">*</span></label>
+                    <div class="form-check" *ngIf="!!cuota.id">
+                      <input type="checkbox" id="editarValor" formControlName="editarValor">
+                      <label class="form-check-label p-0 font-italic" for="editarValor">Editar Valor</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" formControlName="importeTotal">
+                    <div class="invalidControl" *ngIf="errors.importeTotal.length !== 0 && form.get('importeTotal').dirty">
+                      {{errors.importeTotal.join(' ')}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 col-lg-4">
+                  <div class="form-group">
+                    <label>Importe que paga <span class="required">*</span></label>
+                    <input type="number" class="form-control" formControlName="importePaga">
+                    <div class="invalidControl" *ngIf="errors.importePaga.length !== 0 && form.get('importePaga').dirty">
+                      {{errors.importePaga.join(' ')}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-lg-4">
+                  <div class="form-group">
+                    <label>Debe</label>
+                    <input type="number" class="form-control" formControlName="debe">
+                    <div class="invalidControl" *ngIf="form.hasError('debeNotNegative')">
+                      Debe no debe de ser negativo
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="">Observaciones</label>
+                    <textarea class="form-control w-100" formControlName="observaciones"></textarea>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </fieldset>
+        <div class="d-flex justify-content-end mb-4">
+            <button type="submit" class="btn btn-outline-porange" name="enviar">Guardar</button>
+        </div>
+    </form>
+</div>

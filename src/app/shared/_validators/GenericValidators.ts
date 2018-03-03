@@ -11,4 +11,9 @@ export default class GenericValidators {
         };
     }
 
+    static greaterThanZero(control: AbstractControl) {
+        const value = control.value;
+        return value > 0 ? null : {'greaterThanZero': {value}};
+    }
+
 }

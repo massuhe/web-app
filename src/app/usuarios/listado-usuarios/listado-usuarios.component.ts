@@ -36,7 +36,8 @@ export class ListadoUsuariosComponent implements OnInit {
   private usuarios;
   rows;
   columns;
-  showLoader;
+  showLoader: boolean;
+  showScreenLoader: boolean;
 
   constructor(
     private usuariosService: UsuariosService,
@@ -90,10 +91,10 @@ export class ListadoUsuariosComponent implements OnInit {
     this.dialogService
       .confirm(AppMessages.confirm(ENTIDAD, ELIMINAR))
       .then(_ => {
-          this.showLoader = true;
-          this.usuariosService.borrarUsuario(idUsuario).pipe(finalize(() => this.showLoader = false))
+          this.showScreenLoader = true;
+          this.usuariosService.borrarUsuario(idUsuario).pipe(finalize(() => this.showScreenLoader = false))
           .subscribe(res => {
-            this.showLoader = false;
+            this.showScreenLoader = false;
             const indiceBorrar = this.usuarios.findIndex(a => a.id === idUsuario);
             this.usuarios = [...this.usuarios.slice(0, indiceBorrar), ...this.usuarios.slice(indiceBorrar + 1)];
             this.fillRows();
@@ -105,6 +106,7 @@ export class ListadoUsuariosComponent implements OnInit {
 
   private handleErrors(res) {
       this.showLoader = false;
+      this.showScreenLoader = false;
       this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 

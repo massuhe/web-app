@@ -21,6 +21,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { SeguridadModule } from './seguridad/seguridad.module';
 import { InventarioModule } from './inventario/inventario.module';
+import { FinanzasModule } from './finanzas/finanzas.module';
 
 registerLocaleData(localeEsAr);
 
@@ -44,6 +45,7 @@ registerLocaleData(localeEsAr);
     InventarioModule,
     SeguridadModule,
     ActividadesModule,
+    FinanzasModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule

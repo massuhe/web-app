@@ -44,7 +44,7 @@ export class AgregarAlumnoClaseComponent implements OnInit {
   }
 
   formatList(data: Alumno): string {
-    return `${data.nombre} ${data.apellido}`;
+    return data.fullName;
   }
 
   handleClick() {

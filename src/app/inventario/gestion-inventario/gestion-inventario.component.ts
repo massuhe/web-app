@@ -30,6 +30,7 @@ export class GestionInventarioComponent implements OnInit {
   rows;
   columns;
   showLoader: boolean;
+  showScreenLoader: boolean;
   item: ItemInventario;
   private items: ItemInventario[];
 
@@ -74,12 +75,12 @@ export class GestionInventarioComponent implements OnInit {
     this.dialogService.confirm(AppMessages.confirm(ENTIDAD, ELIMINAR))
     .then(
       ok => {
-        this.showLoader = true;
+        this.showScreenLoader = true;
         this.inventarioService.eliminarInventario(itemId)
           .subscribe(
             _ => {
               this.dialogService.success(AppMessages.success(ENTIDAD, ELIMINAR));
-              this.showLoader = false;
+              this.showScreenLoader = false;
               const itemBorrarId = this.items.findIndex(i => i.id === itemId);
               this.items = [...this.items.slice(0, itemBorrarId), ...this.items.slice(itemBorrarId + 1)];
               this.fillRows();
@@ -160,6 +161,7 @@ export class GestionInventarioComponent implements OnInit {
 
   private handleErrors(res) {
     this.showLoader = false;
+    this.showScreenLoader = false;
     this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 

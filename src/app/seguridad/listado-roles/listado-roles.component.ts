@@ -20,7 +20,8 @@ export class ListadoRolesComponent implements OnInit {
   private roles;
   rows;
   columns;
-  showLoader;
+  showLoader: boolean;
+  showScreenLoader: boolean;
 
   constructor(
     private seguridadService: SeguridadService,
@@ -67,9 +68,9 @@ export class ListadoRolesComponent implements OnInit {
       .confirm(AppMessages.confirm(ENTIDAD, ELIMINAR))
       .then(
         () => {
-          this.showLoader = true;
+          this.showScreenLoader = true;
           this.seguridadService.eliminarRol(idRol).subscribe(() => {
-            this.showLoader = false;
+            this.showScreenLoader = false;
             const indiceBorrar = this.roles.findIndex(r => r.id === idRol);
             this.roles = [...this.roles.slice(0, indiceBorrar), ...this.roles.slice(indiceBorrar + 1)];
             this.fillRows();
@@ -83,6 +84,7 @@ export class ListadoRolesComponent implements OnInit {
 
   private handleErrors(res) {
       this.showLoader = false;
+      this.showScreenLoader = false;
       this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 

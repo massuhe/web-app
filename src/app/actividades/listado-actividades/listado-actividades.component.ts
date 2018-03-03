@@ -21,7 +21,8 @@ export class ListadoActividadesComponent implements OnInit {
   private actividades: Actividad[];
   rows;
   columns;
-  showLoader;
+  showLoader: boolean;
+  showScreenLoader: boolean;
 
   constructor(
     private actividadesService: ActividadesService,
@@ -51,15 +52,15 @@ export class ListadoActividadesComponent implements OnInit {
   borrarAlumno(idActividad) {
     this.dialogService.confirm('La actividad será borrada, ¿Desea continuar?')
       .then(_ => {
-        this.showLoader = true;
+        this.showScreenLoader = true;
         this.actividadesService.delete(idActividad)
           .subscribe(suc => {
             this.dialogService.success('La actividad se ha borrado correctamente');
             this.removeActividadFromArray(idActividad);
-            this.showLoader = false;
+            this.showScreenLoader = false;
           }, err => {
             this.dialogService.error('Se ha producido un error inesperado');
-            this.showLoader = false;
+            this.showScreenLoader = false;
           });
       });
   }

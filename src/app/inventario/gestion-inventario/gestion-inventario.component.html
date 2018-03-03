@@ -1,4 +1,4 @@
-<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<app-screen-loader *ngIf="showScreenLoader"></app-screen-loader>
 <div class="titleContainer p-5 pattern insetShadow mb-4">
   <h2>Gesti&oacute;n de Inventario</h2>
 </div>
@@ -7,11 +7,10 @@
     Agregar Item
   </button>
   <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
-  <div *ngIf="rows.length !== 0">
-    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
-      footerHeight="75" [rowHeight]="'auto'">
-    </ngx-datatable>
-  </div>
+  <app-content-loader *ngIf="showLoader"></app-content-loader>
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+    footerHeight="75" [rowHeight]="'auto'" *ngIf="rows.length !== 0">
+  </ngx-datatable >
   <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">
     No se encontraron items.
   </div>

@@ -23,6 +23,7 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiselectComponent } from './multiselect/multiselect.component';
 import { RangoHorarioInputComponent } from './rango-horario-input/rango-horario-input.component';
+import { SearchButtonComponent } from './search-button/search-button.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { RangoHorarioInputComponent } from './rango-horario-input/rango-horario-
     PermissionDirective,
     DatepickerComponent,
     MultiselectComponent,
-    RangoHorarioInputComponent
+    RangoHorarioInputComponent,
+    SearchButtonComponent
   ],
   exports: [
     DeleteButtonComponent,
@@ -72,7 +74,8 @@ import { RangoHorarioInputComponent } from './rango-horario-input/rango-horario-
     PermissionDirective,
     DatepickerComponent,
     MultiselectComponent,
-    RangoHorarioInputComponent
+    RangoHorarioInputComponent,
+    SearchButtonComponent
   ]
 })
 export class SharedModule { }

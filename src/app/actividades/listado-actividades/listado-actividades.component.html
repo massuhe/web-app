@@ -1,11 +1,12 @@
-<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<app-screen-loader *ngIf="showScreenLoader"></app-screen-loader>
 <div class="titleContainer p-5 pattern insetShadow mb-4">
   <h2>Listado de Actividades</h2>
 </div>
 <div class="container">
   <button routerLink="/actividades/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Actividad</button>
+  <app-content-loader *ngIf="showLoader"></app-content-loader>
   <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
-    footerHeight="75">
+    footerHeight="75" *ngIf="rows.length !== 0">
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">
     {{column.name}}

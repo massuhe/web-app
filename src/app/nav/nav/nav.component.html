@@ -14,8 +14,8 @@
     <app-item-dropdown path="alumnos" [permisos]="['VER_USUARIOS']">Listado</app-item-dropdown>
     <app-item-dropdown path="alumnos/agregar" [permisos]="['CREAR_USUARIO']">Alta</app-item-dropdown>
   </app-navbar-item-dropdown>
-  <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['REGISTRAR_PAGO', 'VER_PAGOS', 'GESTIONAR_MOVIMIENTOS_DINERO', 'BALANCE_GENERAL']">
-    <app-item-dropdown path="/" [permisos]="['REGISTRAR_PAGO']">Registrar Pago</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">
+    <app-item-dropdown path="pagos/registrar" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">Registrar Pago</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['LISTAR_PAGOS']">Listar Pagos</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['GESTIONAR_MOVIMIENTOS_DINERO']">Gestionar Movimientos de Dinero</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['BALANCE_GENERAL']">Balance General</app-item-dropdown>

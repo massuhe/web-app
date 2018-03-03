@@ -35,4 +35,8 @@ export class Alumno extends Usuario {
             return c;
         });
     }
+
+    get fullName(): string {
+        return `${this.nombre} ${this.apellido}`;
+    }
 }

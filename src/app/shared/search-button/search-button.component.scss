@@ -1,0 +1,30 @@
+:host {
+    width: 100%;
+}
+
+/*Search icon by Icons8 */
+.icons8-Search { /* Customizes Search icon */
+    fill: #60bc4f;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+}
+
+.btn-buscar {
+    width: 110px;
+    &:hover {
+        .icons8-Search {
+            fill: white;
+        }
+    }
+}

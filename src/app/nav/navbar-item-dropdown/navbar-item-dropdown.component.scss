@@ -1,3 +1,21 @@
 .fixMargin{
     margin: 0.3rem 0 0;
 }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+    .dropdown-menu {
+        display: block;
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: all 0.2s ease-in-out;
+        visibility: hidden;
+        &.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+}
