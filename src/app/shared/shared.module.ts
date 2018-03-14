@@ -24,6 +24,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiselectComponent } from './multiselect/multiselect.component';
 import { RangoHorarioInputComponent } from './rango-horario-input/rango-horario-input.component';
 import { SearchButtonComponent } from './search-button/search-button.component';
+import { FilterButtonComponent } from './filter-button/filter-button.component';
+import { DeudoresIconComponent } from './deudores-icon/deudores-icon.component';
+import { TodosIconComponent } from './todos-icon/todos-icon.component';
+import { PaymentButtonComponent } from './payment-button/payment-button.component';
+import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
 
 @NgModule({
   imports: [
@@ -53,13 +58,19 @@ import { SearchButtonComponent } from './search-button/search-button.component';
     DatepickerComponent,
     MultiselectComponent,
     RangoHorarioInputComponent,
-    SearchButtonComponent
+    SearchButtonComponent,
+    FilterButtonComponent,
+    DeudoresIconComponent,
+    TodosIconComponent,
+    PaymentButtonComponent,
+    SpanishMonthPipe
   ],
   exports: [
     DeleteButtonComponent,
     ProfileButtonComponent,
     EditButtonComponent,
     RoutineButtonComponent,
+    PaymentButtonComponent,
     SearchInputComponent,
     ScreenLoaderComponent,
     SchedulerComponent,
@@ -75,7 +86,11 @@ import { SearchButtonComponent } from './search-button/search-button.component';
     DatepickerComponent,
     MultiselectComponent,
     RangoHorarioInputComponent,
-    SearchButtonComponent
+    SearchButtonComponent,
+    FilterButtonComponent,
+    DeudoresIconComponent,
+    TodosIconComponent,
+    SpanishMonthPipe
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-center pb-3">
+    <app-filter-alumno-card descripcion="Todos" class="mx-3" [active]="filterMode === filtersMode.Todos" (click)="changeFilter(filtersMode.Todos)">
+        <app-todos-icon fill="cadetblue" width="3rem" [active]="filterMode === filtersMode.Todos"></app-todos-icon>
+    </app-filter-alumno-card>
+    <app-filter-alumno-card descripcion="Deudores" class="mx-3" [active]="filterMode === filtersMode.Deudores" (click)="changeFilter(filtersMode.Deudores)">
+        <app-deudores-icon fill="cadetblue" width="3rem" [active]="filterMode === filtersMode.Deudores"></app-deudores-icon>
+    </app-filter-alumno-card>
+</div>

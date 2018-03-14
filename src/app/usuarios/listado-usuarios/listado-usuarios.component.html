@@ -6,7 +6,7 @@
   <button [permisos]="['CREAR_USUARIO']" routerLink="/usuarios/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Usuario</button>
   <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
     footerHeight="75" *ngIf="rows.length !== 0">
   </ngx-datatable>
   <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">

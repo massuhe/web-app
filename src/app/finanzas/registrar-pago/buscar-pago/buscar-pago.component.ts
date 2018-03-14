@@ -4,12 +4,15 @@ import { Alumno } from '../../../alumnos/models/alumno';
 import { MESES_ANIO, GENERIC_ERROR_MESSAGE } from '../../../app-constants';
 import { DialogService } from '../../../core/dialog.service';
 import { AlumnosService } from '../../../alumnos/services/alumnos.service';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { takeUntil, finalize, switchMap, mergeMap, map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { Cuota } from '../../_models/Cuota';
 import { CuotasService } from '../../_services/cuotas.service';
 import { ValidacionService } from '../../../core/validacion.service';
 import { ESTRUCTURA_BUSCAR_PAGO, MENSAJES_BUSCAR_PAGO } from '../../_constants/buscar-pago';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-buscar-pago',
@@ -28,9 +31,10 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
   form: FormGroup;
   errors: any;
   $destroy = new Subject<boolean>();
-  private alumnoSeleccionado: Alumno;
+  private alumnoSeleccionado: any;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private dialogService: DialogService,
     private alumnosService: AlumnosService,
@@ -40,17 +44,18 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.fetchAlumno();
     this.initValidationService();
+    this.onSearch.emit(true);
+    this.fetchAlumnoCuotaByParamsIfExists();
   }
 
   initForm(): void {
-    const today = new Date();
     this.form = this.formBuilder.group({
       alumno: [undefined, { updateOn: 'blur', validators: [Validators.required] }],
-      mes: [today.getMonth() + 1, { validators: [Validators.required] }],
-      anio: [+today.getFullYear(), { validators: [Validators.required] }]
+      mes: [, { validators: [Validators.required] }],
+      anio: [, { validators: [Validators.required] }]
     });
+    this.initFormWithParamsIfExists();
   }
 
   formatAlumno(data: any): string {
@@ -77,6 +82,46 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.$destroy.next();
     this.$destroy.unsubscribe();
+  }
+
+  private fetchAlumnoCuotaByParamsIfExists(): void {
+    this.route.queryParams.pipe(
+      switchMap(params => {
+        const alumno$: Observable<Alumno | Alumno[]> = params.alumno ?
+          this.alumnosService.getById(params.alumno, {useAlumnoId: true})
+          : this.alumnosService.getAlumnos();
+        return alumno$.pipe(map(al => ({al, params})));
+      }),
+      switchMap(({al, params}) => {
+        const cuota$: Observable<Cuota | {}> = params.alumno ?
+          this.cuotasService.findOrCreate(Number(params.alumno), Number(params.mes), Number(params.anio))
+          : of({});
+        return cuota$.pipe(map(pago => ({alumnos: al, pago, alumno: params.alumno})));
+      }),
+      takeUntil(this.$destroy)
+    )
+    .subscribe(
+      ({alumnos, alumno, pago}) => this.onSuccess(alumnos, alumno, pago),
+      error => this.handleError(error)
+    );
+  }
+
+  private initFormWithParamsIfExists(): void {
+    const today = new Date();
+    this.route.queryParams.subscribe(
+      params => this.form.patchValue({
+        mes: params.mes || today.getMonth() + 1,
+        anio: params.anio || +today.getFullYear()
+      })
+    );
+  }
+
+  private onSuccess(alumnos: Alumno | Alumno[], alumno: number, pago: Cuota | {}): void {
+    this.onSearch.emit(false);
+    this.handleAlumnoResults(alumnos, Number(alumno));
+    if (pago instanceof Cuota) {
+      this.successFetchPago(pago, alumno);
+    }
   }
 
   private initValidationService() {
@@ -111,20 +156,18 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
     this.onFindCuota.emit(cuota);
   }
 
-  private fetchAlumno(): void {
-    this.onSearch.emit(true);
-    this.alumnosService.getAlumnos(undefined, true)
-    .pipe(
-      takeUntil(this.$destroy),
-      finalize(() => {
-        this.onSearch.emit(false);
-        this.alumnoInput.nativeElement.focus();
-      })
-    )
-    .subscribe(
-      (alumnos: Alumno[]) => this.alumnosItems = alumnos.map(a => ({key: a.id, name: a.fullName})),
-      error => this.handleError(error)
-    );
+  private handleAlumnoResults(alumnos: Alumno[] | Alumno, alumnoId: number): void {
+    if (alumnos instanceof Array) {
+      this.alumnosItems = alumnos.map(a => ({key: a.id, name: a.fullName}));
+    } else {
+      if (!alumnos) {
+        return ;
+      }
+      this.alumnoSeleccionado = {key: alumnos.id, name: alumnos.fullName, toString: () => alumnos.fullName};
+      this.form.patchValue({alumno: this.alumnoSeleccionado});
+      this.form.get('alumno').disable();
+    }
+    this.alumnoInput.nativeElement.focus();
   }
 
   private patchAlumnoSeleccionado(): void {
@@ -135,6 +178,7 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
   }
 
   private handleError(res): void {
+    this.onSearch.emit(false);
     this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 

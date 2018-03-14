@@ -8,7 +8,7 @@
   </button>
   <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
     footerHeight="75" [rowHeight]="'auto'" *ngIf="rows.length !== 0">
   </ngx-datatable >
   <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">

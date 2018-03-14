@@ -138,7 +138,7 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
             switchMap(p => this.getAlumno(+p['idAlumno'])),
             takeUntil(this.$destroy)
         ).subscribe((alumno: Alumno) => {
-            this.idAlumno = alumno.id;
+            this.idAlumno = alumno.usuarioId;
             this.clases = alumno.clases;
             this.form.setValue({
                 'email': alumno.email,

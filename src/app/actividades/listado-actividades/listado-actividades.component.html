@@ -5,7 +5,7 @@
 <div class="container">
   <button routerLink="/actividades/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Actividad</button>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
+  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
     footerHeight="75" *ngIf="rows.length !== 0">
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">

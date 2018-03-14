@@ -30,7 +30,7 @@ export class AgregarAlumnoClaseComponent implements OnInit {
 
   observableSource = (keyword: any): Observable<Alumno[]> => {
     if (keyword) {
-      return this.alumnosService.getAlumnos(keyword, true);
+      return this.alumnosService.getAlumnos(keyword);
     } else {
       return of([]);
     }

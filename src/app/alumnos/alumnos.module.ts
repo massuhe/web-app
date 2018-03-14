@@ -9,6 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { AgregarClasesComponent } from './agregar-alumno/agregar-clases/agregar-clases.component';
 import { SeleccionarClaseComponent } from './agregar-alumno/seleccionar-clase/seleccionar-clase.component';
+import { FilterAlumnosComponent } from './listado-alumnos/filter-alumnos/filter-alumnos.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterAlumnoCardComponent } from './listado-alumnos/filter-alumno-card/filter-alumno-card.component';
 
 @NgModule({
   imports: [
@@ -18,8 +21,16 @@ import { SeleccionarClaseComponent } from './agregar-alumno/seleccionar-clase/se
     SharedModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule.forRoot()
   ],
-  declarations: [ListadoAlumnosComponent, AgregarAlumnoComponent, AgregarClasesComponent, SeleccionarClaseComponent]
+  declarations: [
+    ListadoAlumnosComponent,
+    AgregarAlumnoComponent,
+    AgregarClasesComponent,
+    SeleccionarClaseComponent,
+    FilterAlumnosComponent,
+    FilterAlumnoCardComponent
+  ]
 })
-export class AlumnosModule { }
+export class AlumnosModule {}

@@ -1,0 +1,55 @@
+:host {
+    text-align: center;
+}
+
+.card {
+    padding: 1rem;
+    border: solid 1px cadetblue;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: cadetblue;
+    font-weight: normal;
+    position: relative;
+    top: 0;
+    &:hover {
+        top: -2px;
+    }
+    &.active {
+        background-color: cadetblue;
+        color: white;
+        top: -2px;
+    }
+}
+
+/*==================================================
+ * Effect 2
+ * ===============================================*/
+ %shared-shadow {
+    transition: all 0.1s ease;
+    z-index: -1;
+    position: absolute;
+    content: "";
+    border-radius: 100%;
+    bottom: 17px;
+    left: 25%;
+    width: 50%;
+    top: 80%;
+    opacity: 0;
+    max-width: 300px;
+    background: #777;
+    box-shadow: 0 15px 10px #777;
+    transform: rotate(-3deg);
+ }
+ .shadow {
+   position: relative;
+   &:before {
+        @extend %shared-shadow;
+   }
+   &:hover, &.active {
+       &:before {
+           bottom: 14px;
+           opacity: 1;
+       }
+   }
+ }

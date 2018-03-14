@@ -14,8 +14,11 @@ export class CuotasService {
     private serializeService: SerializeService
   ) {}
 
-  public findOrCreate(alumno: number, mes: number, anio: number): Observable<Cuota> {
-    const query = `${alumno}/${mes}/${anio}`;
+  public findOrCreate(alumno: number, mes?: number, anio?: number): Observable<Cuota> {
+    const today = new Date();
+    const m = mes || today.getMonth() + 1;
+    const a = anio || today.getFullYear();
+    const query = `${alumno}/${m}/${a}`;
     return this.http
       .get(`${environment.apiBaseUrl}/cuota/${query}`)
       .pipe(map(json => this.toCuota(json)));

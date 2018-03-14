@@ -1,3 +1,4 @@
 export interface GetAlumnoOptions {
-    withClases: boolean;
+    useAlumnoId?: boolean;
+    withClases?: boolean;
 }

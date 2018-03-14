@@ -10,7 +10,7 @@ export class Usuario {
     apellido: string;
     domicilio: string;
     telefono: string;
-    activo: boolean;
+    activo: boolean | string;
     rol: Rol;
 
     fillFromJson(json, opt?)  {

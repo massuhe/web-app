@@ -16,7 +16,7 @@ export class AlumnosService {
     private serializeService: SerializeService
   ) {}
 
-  getAlumnos(search?: string, useAlumnoId?: boolean): Observable<Alumno[]> {
+  getAlumnos(search?: string): Observable<Alumno[]> {
     const f = this.getFilterGroups(search);
     return this.http
       .get(
@@ -24,12 +24,26 @@ export class AlumnosService {
           environment.apiBaseUrl
         }/usuarios?includes[]=alumno&${this.serializeService.serialize(f)}`
       )
-      .pipe(map((al: any) => al.map(a => this.toAlumno(a, useAlumnoId))));
+      .pipe(map((al: any) => al.map(a => this.toAlumno(a))));
   }
 
-  getById(idAlumno: number, options?: GetAlumnoOptions): Observable<Alumno> {
-    const url = `${environment.apiBaseUrl}/usuarios/${idAlumno}?includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`;
-    return this.http.get(url).pipe(map(json => this.toAlumno(json, false)));
+  listadoAlumnos(useAlumnoId = false): Observable<Alumno[]> {
+    return this.http.get(`${environment.apiBaseUrl}/alumnos`)
+      .pipe(map((json: any) => json.map(a => this.toAlumno(a))));
+  }
+
+  getById(idAlumno: number, options: GetAlumnoOptions = {}): Observable<Alumno> {
+    let url = `${environment.apiBaseUrl}/usuarios`;
+    if (options.useAlumnoId) {
+      const filter = {filter_groups: [{filters: [{key: 'idAlumno', value: idAlumno, operator: 'eq'}]}]};
+      url += `?${this.serializeService.serialize(filter)}`;
+    } else {
+      url += `/${idAlumno}?`;
+    }
+    url += `&includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`;
+    return this.http.get(url).pipe(map(
+      (json: any) => this.toAlumno(json instanceof Array ? json[0] : json))
+    );
   }
 
   borrarAlumno(id) {
@@ -44,9 +58,9 @@ export class AlumnosService {
     return this.http.put(`${environment.apiBaseUrl}/usuarios/${id}`, data);
   }
 
-  protected toAlumno(alumnoJson: any, useAlumnoId: boolean) {
+  protected toAlumno(alumnoJson: any) {
     const alumno = new Alumno();
-    alumno.fillFromJson(alumnoJson, { useAlumnoId });
+    alumno.fillFromJson(alumnoJson);
     return alumno;
   }
 

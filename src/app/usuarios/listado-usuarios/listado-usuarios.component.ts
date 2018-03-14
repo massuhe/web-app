@@ -56,7 +56,6 @@ export class ListadoUsuariosComponent implements OnInit {
       {
         name: 'Acciones',
         cellTemplate: this.editTmpl,
-        // headerTemplate: this.hdrTpl,
         maxWidth: 160
       }
     ];

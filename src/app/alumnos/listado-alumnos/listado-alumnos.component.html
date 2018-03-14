@@ -4,24 +4,43 @@
 </div>
 <div class="container">
   <button [permisos]="['CREAR_USUARIO']" routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
-  <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" limit="10"
-    footerHeight="75" *ngIf="rows.length !== 0">
-  </ngx-datatable>
-  <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">
+  <div *ngIf="alumnos.length !== 0">
+    <div class="d-flex">
+      <app-search-input (inputDebounced)="filterData($event)" class="f-grow1"></app-search-input>
+      <app-filter-button class="ml-2" (click)="toggleFilters()"></app-filter-button>
+    </div>
+    <app-filter-alumnos 
+      [filterMode]="filtroActivo" 
+      (onFilterChange)="handleFilterChange($event)" 
+      *ngIf="showFilters">
+    </app-filter-alumnos>
+    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
+      footerHeight="75" [rowHeight]="'auto'">
+    </ngx-datatable>
+  </div>
+  <div *ngIf="alumnos.length === 0 && !showLoader" class="alert alert-warning">
     No se encontraron alumnos.
   </div>
 </div>
 
-<ng-template #hdrTpl let-column="column">
-  {{column.name}}
-  </ng-template>
 <ng-template #editTmpl let-row="row" let-value="value">
   <app-routine-button [permisos]="['VER_RUTINA']"></app-routine-button>
   <app-profile-button [permisos]="['VER_PERFIL']"></app-profile-button>
-  <app-edit-button [routerLink]="'editar/' + row.id" [permisos]="['MODIFICAR_USUARIO']"></app-edit-button>
-  <app-delete-button (click)="borrarAlumno(row.id)" [permisos]="['ELIMINAR_USUARIO']"></app-delete-button>
+  <app-edit-button [routerLink]="'editar/' + row.usuarioId" [permisos]="['MODIFICAR_USUARIO']"></app-edit-button>
+  <app-delete-button (click)="borrarAlumno(row.usuarioId)" [permisos]="['ELIMINAR_USUARIO']"></app-delete-button>
+</ng-template>
+<ng-template #debeTmpl let-row="row" let-value="value">
+  <p class="m-0" *ngFor="let deuda of row.deudas">
+    <span class="font-weight-normal">{{deuda.mes | spanishMonth}} {{deuda.anio}}:</span> {{deuda.debe | currency}}
+  </p>
+</ng-template>
+<ng-template #debeAccionesTmpl let-row="row" let-value="value">
+  <app-payment-button 
+    [permisos]="['CREAR_CUOTA']" 
+    [routerLink]="'../pagos/registrar'" 
+    [queryParams]="{alumno: row.id, mes: row.deudas[0].mes, anio: row.deudas[0].anio}">
+  </app-payment-button> 
 </ng-template>
 <ng-template #indexTmpl let-index="rowIndex">
   {{index + 1}}
