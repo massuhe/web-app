@@ -16,7 +16,7 @@
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">
     <app-item-dropdown path="pagos/registrar" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">Registrar Pago</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['LISTAR_PAGOS']">Listar Pagos</app-item-dropdown>
+    <app-item-dropdown path="pagos" [permisos]="['VER_LISTADO_PAGOS']">Listar Pagos</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['GESTIONAR_MOVIMIENTOS_DINERO']">Gestionar Movimientos de Dinero</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['BALANCE_GENERAL']">Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>

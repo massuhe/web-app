@@ -22,6 +22,7 @@ import { ListadoRolesComponent } from './seguridad/listado-roles/listado-roles.c
 import { AgregarRolComponent } from './seguridad/agregar-rol/agregar-rol.component';
 import { GestionInventarioComponent } from './inventario/gestion-inventario/gestion-inventario.component';
 import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago.component';
+import { ListadoPagosComponent } from './finanzas/listado-pagos/listado-pagos.component';
 
 const routes: Routes = [
   {
@@ -136,6 +137,12 @@ const routes: Routes = [
         component: GestionInventarioComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_ITEMS_INVENTARIO']}
+      },
+      {
+        path: 'pagos',
+        component: ListadoPagosComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_LISTADO_PAGOS']}
       },
       {
         path: 'pagos/registrar',

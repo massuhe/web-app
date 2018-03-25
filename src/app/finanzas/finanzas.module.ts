@@ -10,6 +10,7 @@ import { AlumnosService } from '../alumnos/services/alumnos.service';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { BuscarPagoComponent } from './registrar-pago/buscar-pago/buscar-pago.component';
 import { CuotasService } from './_services/cuotas.service';
+import { ListadoPagosComponent } from './listado-pagos/listado-pagos.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { CuotasService } from './_services/cuotas.service';
     ReactiveFormsModule,
     NguiAutoCompleteModule
   ],
-  declarations: [ RegistrarPagoComponent, BuscarPagoComponent ],
+  declarations: [ RegistrarPagoComponent, BuscarPagoComponent, ListadoPagosComponent ],
   providers: [ AlumnosService, CuotasService ]
 })
 export class FinanzasModule { }
