@@ -7,7 +7,7 @@
       cursor: pointer;
       padding: 0;
       display: flex;
-      overflow: hidden;
+      // overflow: hidden;
     }
   
     // Box.
@@ -70,5 +70,16 @@
         4px -6px 0 white,
         4px -8px 0 white;
       transform: rotate(45deg);
+    }
+  }
+
+  .sc-lightsteelblue {
+    // Box checked
+    &:checked + label:before {
+      background: lightsteelblue !important;
+    }
+    // Box hover
+    &:hover + label:before {
+      background: lightsteelblue !important;
     }
   }

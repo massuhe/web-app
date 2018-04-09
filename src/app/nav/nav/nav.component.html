@@ -13,12 +13,12 @@
   <app-navbar-item-dropdown [nombre]="'Alumnos'" [itemId]="4" [permisos]="['VER_USUARIOS', 'CREAR_USUARIO']">
     <app-item-dropdown path="alumnos" [permisos]="['VER_USUARIOS']">Listado</app-item-dropdown>
     <app-item-dropdown path="alumnos/agregar" [permisos]="['CREAR_USUARIO']">Alta</app-item-dropdown>
+    <app-item-dropdown path="alumnos/reporte" [permisos]="['REPORTE_INGRESOS_ALUMNOS']">Reporte ingresos</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Finanzas'" [itemId]="5" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">
     <app-item-dropdown path="pagos/registrar" [permisos]="['CREAR_CUOTA', 'MODIFICAR_CUOTA']">Registrar Pago</app-item-dropdown>
     <app-item-dropdown path="/" [permisos]="['LISTAR_PAGOS']">Listar Pagos</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['GESTIONAR_MOVIMIENTOS_DINERO']">Gestionar Movimientos de Dinero</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['BALANCE_GENERAL']">Balance General</app-item-dropdown>
+    <app-item-dropdown path="balance" [permisos]="['VER_MOVIMIENTOS', 'CREAR_MOVIMIENTO', 'VER_CUOTAS']">Balance General</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Sistema'" [itemId]="6" [permisos]="['VER_USUARIOS', 'VER_ACTIVIDADES', 'GESTIONAR_EJERCICIOS', 'GESTIONAR_ROLES', 'GESTIONAR_INVENTARIO', 'GESTIONAR_NOVEDADES']">
     <app-item-dropdown path="usuarios" [permisos]="['VER_USUARIOS']">Usuarios</app-item-dropdown>

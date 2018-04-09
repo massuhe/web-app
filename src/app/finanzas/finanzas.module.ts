@@ -10,6 +10,11 @@ import { AlumnosService } from '../alumnos/services/alumnos.service';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { BuscarPagoComponent } from './registrar-pago/buscar-pago/buscar-pago.component';
 import { CuotasService } from './_services/cuotas.service';
+import { BalanceGeneralComponent } from './balance-general/balance-general.component';
+import { MovimientosFijosComponent } from './balance-general/movimientos-fijos/movimientos-fijos.component';
+import { MovimientosService } from './_services/movimientos.service';
+import { AgregarEditarMovimientoComponent } from './balance-general/agregar-editar-movimiento/agregar-editar-movimiento.component';
+import { FlujoCajaComponent } from './balance-general/flujo-caja/flujo-caja.component';
 
 @NgModule({
   imports: [
@@ -22,7 +27,14 @@ import { CuotasService } from './_services/cuotas.service';
     ReactiveFormsModule,
     NguiAutoCompleteModule
   ],
-  declarations: [ RegistrarPagoComponent, BuscarPagoComponent ],
-  providers: [ AlumnosService, CuotasService ]
+  declarations: [
+    RegistrarPagoComponent,
+    BuscarPagoComponent,
+    BalanceGeneralComponent,
+    MovimientosFijosComponent,
+    AgregarEditarMovimientoComponent,
+    FlujoCajaComponent
+  ],
+  providers: [AlumnosService, CuotasService, MovimientosService]
 })
-export class FinanzasModule { }
+export class FinanzasModule {}

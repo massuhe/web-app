@@ -12,9 +12,13 @@ import { SeleccionarClaseComponent } from './agregar-alumno/seleccionar-clase/se
 import { FilterAlumnosComponent } from './listado-alumnos/filter-alumnos/filter-alumnos.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterAlumnoCardComponent } from './listado-alumnos/filter-alumno-card/filter-alumno-card.component';
+import { ReporteIngresosAlumnosComponent } from './reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     CommonModule,
     NgxDatatableModule,
     HttpClientModule,
@@ -22,7 +26,8 @@ import { FilterAlumnoCardComponent } from './listado-alumnos/filter-alumno-card/
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgxChartsModule
   ],
   declarations: [
     ListadoAlumnosComponent,
@@ -30,7 +35,8 @@ import { FilterAlumnoCardComponent } from './listado-alumnos/filter-alumno-card/
     AgregarClasesComponent,
     SeleccionarClaseComponent,
     FilterAlumnosComponent,
-    FilterAlumnoCardComponent
+    FilterAlumnoCardComponent,
+    ReporteIngresosAlumnosComponent
   ]
 })
 export class AlumnosModule {}

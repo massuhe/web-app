@@ -14,14 +14,19 @@ export class CuotasService {
     private serializeService: SerializeService
   ) {}
 
-  public findOrCreate(alumno: number, mes?: number, anio?: number): Observable<Cuota> {
-    const today = new Date();
-    const m = mes || today.getMonth() + 1;
-    const a = anio || today.getFullYear();
-    const query = `${alumno}/${m}/${a}`;
+  public get(alumno?: number, mes?: number, anio?: number): Observable<Cuota | Cuota[]> {
+    const endpoint = [];
+    if (alumno) { endpoint.push(alumno); }
+    if (mes) { endpoint.push(mes); }
+    if (anio) { endpoint.push(anio); }
+    const query = endpoint.join('/');
     return this.http
       .get(`${environment.apiBaseUrl}/cuota/${query}`)
-      .pipe(map(json => this.toCuota(json)));
+      .pipe(
+        map(json => json instanceof Array ?
+          json.map(j => this.toCuota(j))
+          : this.toCuota(json))
+      );
   }
 
   public registrarPago(value: any) {

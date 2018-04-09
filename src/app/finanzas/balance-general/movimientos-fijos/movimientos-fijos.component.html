@@ -1,0 +1,47 @@
+<div class="d-flex align-items-center mb-3">
+  <h3 class="p-0 m-0 font-weight-light">{{(tipo + 's fijos') | capitalize}}</h3>
+  <svg class="icon ml-3 pointer" (click)="handleAdd()">
+    <use xlink:href="../../../../assets/images/icons.svg#add-no-circle-icon"></use>
+  </svg>
+</div>
+<div class="row">
+  <div class="col-6">
+    <input type="checkbox" class="styled-checkbox" 
+      [id]="tipo + '-gastos-gym'" 
+      [checked]="showMovimientosGYM"
+      (change)="handleCheckboxChange('showMovimientosGYM')">
+    <label class="custom-control-label" [for]="tipo + '-gastos-gym'">Mostrar {{tipo + 's'}} GYM</label>
+  </div>
+  <div class="col-6">
+    <input type="checkbox" class="styled-checkbox" 
+      [id]="tipo + '-gastos-personales'"
+      [checked]="showMovimientosPersonales"
+      (change)="handleCheckboxChange('showMovimientosPersonales')">
+    <label class="custom-control-label" [for]="tipo + '-gastos-personales'">Mostrar {{tipo + 's'}} personales</label>
+  </div>
+</div>
+<ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
+  footerHeight="75" [rowHeight]="'auto'" [rowClass]="getRowClass">
+</ngx-datatable>
+
+<!-- Templates celdas -->
+<!-- Acciones -->
+<ng-template #accionesTmpl let-row="row" let-value="value">
+  <app-edit-button (click)="handleEdit(row.id)"></app-edit-button>
+  <app-delete-button (click)="handleDelete(row.id)"></app-delete-button>
+</ng-template>
+<!-- Importe -->
+<ng-template #importeTmpl let-row="row" let-value="value">
+  {{row.importe | currency}}
+</ng-template>
+<!-- Pagado -->
+<ng-template #pagadoTmpl let-row="row" let-value="value" let-index="rowIndex">
+  <div class="pl-3">
+    <input type="checkbox" 
+      class="styled-checkbox sc-lightsteelblue" 
+      [id]="'check-' + row.tipoMovimiento + '_' + index"
+      [checked]="!!row.fechaEfectiva"
+      (change)="handleEsPersonalChange($event.target.checked, row.id)">
+    <label class="custom-control-label" [for]="'check-' + row.tipoMovimiento + '_' + index"></label>
+  </div>
+</ng-template>

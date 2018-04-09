@@ -40,8 +40,8 @@ export const MULTISELECT_SETTINGS: IMultiSelectSettings = {
 
 /* Mensajes del dialogo */
 export const GENERIC_ERROR_MESSAGE = 'Se ha producido un error inesperado';
-export const CONFIRM_MESSAGE = '#entidad# será #accion#. ¿Desea continuar?';
-export const SUCCESS_MESSAGE = '#entidad# se ha #accion# correctamente';
+export const CONFIRM_MESSAGE = '#entidad# será#n# #accion#. ¿Desea continuar?';
+export const SUCCESS_MESSAGE = '#entidad# se ha#n# #accion# correctamente';
 
 /* Acciones del dialogo */
 export const GUARDAR = 'guardado';

@@ -29,6 +29,7 @@ import { DeudoresIconComponent } from './deudores-icon/deudores-icon.component';
 import { TodosIconComponent } from './todos-icon/todos-icon.component';
 import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
+import { CapitalizePipe } from './capitalize/capitalize.pipe';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
     DeudoresIconComponent,
     TodosIconComponent,
     PaymentButtonComponent,
-    SpanishMonthPipe
+    SpanishMonthPipe,
+    CapitalizePipe
   ],
   exports: [
     DeleteButtonComponent,
@@ -90,7 +92,8 @@ import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
     FilterButtonComponent,
     DeudoresIconComponent,
     TodosIconComponent,
-    SpanishMonthPipe
+    SpanishMonthPipe,
+    CapitalizePipe
   ]
 })
 export class SharedModule { }

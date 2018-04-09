@@ -22,6 +22,8 @@ import { ListadoRolesComponent } from './seguridad/listado-roles/listado-roles.c
 import { AgregarRolComponent } from './seguridad/agregar-rol/agregar-rol.component';
 import { GestionInventarioComponent } from './inventario/gestion-inventario/gestion-inventario.component';
 import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago.component';
+import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
+import { ReporteIngresosAlumnosComponent } from './alumnos/reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,10 @@ const routes: Routes = [
         component: ListadoAlumnosComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_USUARIOS']}
+      },
+      {
+        path: 'alumnos/reporte',
+        component: ReporteIngresosAlumnosComponent
       },
       {
         path: 'alumnos/agregar',
@@ -140,8 +146,14 @@ const routes: Routes = [
       {
         path: 'pagos/registrar',
         component: RegistrarPagoComponent,
-        // canActivate: [CanActivateAuthGuard],
-        // data: {roles: ['CREAR_PAGO']}
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['CREAR_CUOTA', 'MODIFICAR_CUOTA']}
+      },
+      {
+        path: 'balance',
+        component: BalanceGeneralComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_MOVIMIENTOS', 'CREAR_MOVIMIENTO', 'VER_CUOTAS']}
       }
     ]
   },

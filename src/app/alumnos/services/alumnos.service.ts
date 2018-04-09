@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-
+import * as format from 'date-fns/format';
 import { Alumno } from '../models/alumno';
 import { SerializeService } from '../../core/serialize.service';
 import { GetAlumnoOptions } from '../_interfaces/GetAlumnoOptions';
+import { IReporte } from '../_interfaces/IReporte';
 
 @Injectable()
 export class AlumnosService {
-
   constructor(
     private http: HttpClient,
     private serializeService: SerializeService
@@ -28,22 +28,34 @@ export class AlumnosService {
   }
 
   listadoAlumnos(useAlumnoId = false): Observable<Alumno[]> {
-    return this.http.get(`${environment.apiBaseUrl}/alumnos`)
+    return this.http
+      .get(`${environment.apiBaseUrl}/alumnos`)
       .pipe(map((json: any) => json.map(a => this.toAlumno(a))));
   }
 
-  getById(idAlumno: number, options: GetAlumnoOptions = {}): Observable<Alumno> {
+  getById(
+    idAlumno: number,
+    options: GetAlumnoOptions = {}
+  ): Observable<Alumno> {
     let url = `${environment.apiBaseUrl}/usuarios`;
     if (options.useAlumnoId) {
-      const filter = {filter_groups: [{filters: [{key: 'idAlumno', value: idAlumno, operator: 'eq'}]}]};
+      const filter = {
+        filter_groups: [
+          { filters: [{ key: 'idAlumno', value: idAlumno, operator: 'eq' }] }
+        ]
+      };
       url += `?${this.serializeService.serialize(filter)}`;
     } else {
       url += `/${idAlumno}?`;
     }
     url += `&includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`;
-    return this.http.get(url).pipe(map(
-      (json: any) => this.toAlumno(json instanceof Array ? json[0] : json))
-    );
+    return this.http
+      .get(url)
+      .pipe(
+        map((json: any) =>
+          this.toAlumno(json instanceof Array ? json[0] : json)
+        )
+      );
   }
 
   borrarAlumno(id) {
@@ -56,6 +68,11 @@ export class AlumnosService {
 
   editarAlumno(id: number, data) {
     return this.http.put(`${environment.apiBaseUrl}/usuarios/${id}`, data);
+  }
+
+  reporte(fechaDesde: Date, fechaHasta: Date, frecuencia: number): Observable<IReporte[]> {
+    const urlParams = `fechaDesde=${format(fechaDesde)}&fechaHasta=${format(fechaHasta)}&frecuencia=${frecuencia}`;
+    return this.http.get(`${environment.apiBaseUrl}/reporte?${urlParams}`) as Observable<IReporte[]>;
   }
 
   protected toAlumno(alumnoJson: any) {

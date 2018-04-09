@@ -94,7 +94,7 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
       }),
       switchMap(({al, params}) => {
         const cuota$: Observable<Cuota | {}> = params.alumno ?
-          this.cuotasService.findOrCreate(Number(params.alumno), Number(params.mes), Number(params.anio))
+          this.cuotasService.get(Number(params.alumno), Number(params.mes), Number(params.anio))
           : of({});
         return cuota$.pipe(map(pago => ({alumnos: al, pago, alumno: params.alumno})));
       }),
@@ -138,7 +138,7 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
     const mes = this.form.get('mes').value;
     const anio = this.form.get('anio').value;
     this.onSearch.emit(true);
-    this.cuotasService.findOrCreate(alumno, mes, anio)
+    this.cuotasService.get(alumno, mes, anio)
     .pipe(
       takeUntil(this.$destroy),
       finalize(() => this.onSearch.emit(false))

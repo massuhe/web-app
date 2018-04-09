@@ -1,0 +1,46 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+    <h2>Balance General</h2>
+</div>
+<div class="container">
+  <div class="d-flex justify-content-center pt-3 pb-5">
+    <i class="datatable-icon-left change-date pointer mr-2" (click)="changeDate(-1)"></i>
+    <div class="w-15rem text-center">
+      <h2 class="font-weight-light date-color">{{currentDate | date:'MMMM yyyy' | capitalize}}</h2>
+    </div>
+    <i class="datatable-icon-right change-date pointer ml-2" (click)="changeDate(1)"></i>
+  </div>
+  <div class="alert alert-info" role="alert" *ngIf="outDated">
+    No existen movimientos para el periodo seleccionado, se muestran por lo tanto los movimientos existentes del periodo m&aacute;s reciente.<br>
+    Realice los cambios que considere necesarios y gu&aacute;rdelos para generar los movimientos del periodo deseado.
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-12">
+      <app-movimientos-fijos 
+        tipo="costo"
+        [data]="costosFijos"
+        (onDelete)="handleDelete($event, tipoMovimiento.Costo)"
+        (onAddButtonClick)="handleAddButtonClick(tipoMovimiento.Costo)"
+        (onEditButtonClick)="handleEditButtonClick($event, tipoMovimiento.Costo)"
+        (onCheckPagado)="handleCheckPagado($event, tipoMovimiento.Costo)">
+      </app-movimientos-fijos>
+    </div>
+    <div class="col-lg-6 col-12">
+      <app-movimientos-fijos
+        tipo="ingreso"
+        [data]="ingresosFijos"
+        (onDelete)="handleDelete($event, tipoMovimiento.Ingreso)"
+        (onAddButtonClick)="handleAddButtonClick(tipoMovimiento.Ingreso)"
+        (onEditButtonClick)="handleEditButtonClick($event, tipoMovimiento.Ingreso)"
+        (onCheckPagado)="handleCheckPagado($event, tipoMovimiento.Ingreso)">
+      </app-movimientos-fijos>
+    </div>
+  </div>
+  <button type="button" class="mt-4 btn btn-outline-porange" (click)="guardarMovimientos()">Guardar Cambios</button>
+  <hr/>
+  <app-flujo-caja [movimientos]="movimientosCaja" [cuotas]="cuotas" [currentDate]="currentDate"></app-flujo-caja>
+</div>
+<app-agregar-editar-movimiento 
+  [movimiento]="movimientoAgregadoEditando"
+  (onAgregarEditarMovimiento)="handleAgregarEditarMovimiento($event)">
+</app-agregar-editar-movimiento>

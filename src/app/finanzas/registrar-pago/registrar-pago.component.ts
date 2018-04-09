@@ -131,6 +131,7 @@ export class RegistrarPagoComponent implements OnInit, OnDestroy {
     });
   }
   private enableDisableImporteTotal(enable: boolean): void {
+    if (enable === null) { return; }
     const iTotal = this.form.get('importeTotal');
     enable ? iTotal.enable() : iTotal.disable();
   }

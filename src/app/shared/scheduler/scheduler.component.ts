@@ -17,6 +17,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/throttleTime';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { debounceTime } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Component({
   selector: 'app-scheduler',
@@ -44,11 +46,9 @@ export class SchedulerComponent
     if (!this.smallScreen) {
       this.adjustHeight();
     }
-    // this.columns.changes.subscribe(e => {
-    //   setTimeout(() => this.adjustHeight());
-    // });
     this.ngzone.runOutsideAngular(() =>
-      Observable.fromEvent(window, 'resize')
+      fromEvent(window, 'resize')
+        .pipe(debounceTime(500))
         .subscribe(event => {
           this.updateScreenValue(event['target'].innerWidth);
           if (!this.smallScreen && this.maxHeightsChanged()) {

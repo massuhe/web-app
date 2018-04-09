@@ -60,3 +60,10 @@
     }
   }
 }
+
+.movimiento-fijo-es-personal {
+  background: ghostwhite;
+  &:hover {
+    background: darken(ghostwhite, 2%);
+  }
+}

@@ -1,0 +1,45 @@
+<app-modal #modal (onVisibilityChange)="handleVisibilityChange($event)">
+  <div class="app-modal-header font-weight-normal w-100">
+    {{ isEditando ? 'Editar' : 'Agregar' }} movimiento
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-12 mb-4">
+          <label>Descripci&oacute;n</label>
+          <input type="text" class="form-control" formControlName="descripcion">
+          <div class="invalidControl" *ngIf="descripcionControl.invalid && descripcionControl.dirty">
+              El campo es requerido
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <label>Importe</label>
+          <input type="number" class="form-control" formControlName="importe">
+          <div class="invalidControl" *ngIf="importeControl.invalid && importeControl.dirty">
+              El campo es requerido
+          </div>
+        </div>
+        <div class="col-12 mt-4 mt-sm-0 col-sm-6">
+          <label>Tipo de movimiento</label>
+          <select class="form-control" formControlName="tipoMovimiento">
+            <option [value]="tipoMovimiento.Costo">Costo</option>
+            <option [value]="tipoMovimiento.Ingreso">Ingreso</option>
+          </select>
+          <div class="invalidControl" *ngIf="importeControl.invalid && importeControl.dirty">
+              El campo es requerido
+          </div>
+        </div>
+        <div class="col-12 mt-4">
+          <div class="d-inline-block">
+            <input type="checkbox" class="styled-checkbox sc-lightsteelblue" id="es-personal" formControlName="esPersonal">
+            <label for="es-personal" class="custom-control-label">Es personal</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleGuardar()">Guardar</button>
+    <button type="button" class="btn btn-outline-porange" (click)="close()">Cerrar</button>
+  </div>
+</app-modal>

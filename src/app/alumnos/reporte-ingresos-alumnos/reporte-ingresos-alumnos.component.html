@@ -1,0 +1,41 @@
+<div class="titleContainer p-5 pattern insetShadow mb-4">
+  <h2>Reporte de Ingresos de Alumnos</h2>
+</div>
+<div class="container">
+  <form [formGroup]="form" (submit)="handleSearch()" class="mb-5">
+    <fieldset class="form-group px-4">
+      <legend class="px-3 ml-1">Par&aacute;metros de Visualizaci&oacute;n</legend>
+      <div class="row py-4">
+        <div class="col-12 col-lg-4">
+          <label>Fecha Desde</label>
+          <app-datepicker dpName="fechaDesde" formControlName="fechaDesde"></app-datepicker>
+        </div>
+        <div class="col-12 mt-3 mt-lg-0 col-lg-4">
+          <label>Fecha Hasta</label>
+          <app-datepicker dpName="fechaHasta" formControlName="fechaHasta"></app-datepicker>
+        </div>
+        <div class="col-12 col-lg-4">
+          <label>Frecuencia Temporal</label>
+          <select class="form-control" formControlName="frecuencia">
+            <option *ngFor="let frecuencia of frecuencias" [value]="frecuencia.key">{{frecuencia.name}}</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+    <app-search-button class="d-flex justify-content-end" typeButton="submit"></app-search-button>
+  </form>
+  <div class="d-flex justify-content-center mt-5" *ngIf="!!data.length">
+    <ngx-charts-bar-vertical
+      scheme="flame"
+      [results]="data"
+      [gradient]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="false"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Fecha"
+      yAxisLabel="Alumnos">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
