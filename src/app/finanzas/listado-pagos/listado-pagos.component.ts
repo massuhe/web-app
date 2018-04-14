@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { PagosService } from '../_services/pagos.service';
 
 @Component({
   selector: 'app-listado-pagos',
@@ -15,26 +16,34 @@ export class ListadoPagosComponent implements OnInit {
   showScreenLoader: boolean = false;
 
   constructor(
-    // private seguridadService: SeguridadService,
+    private pagosService: PagosService,
     // private dialogService: DialogService
   ) {}
 
   ngOnInit() {
+    // this.pagos = [];
     this.pagos = [
       {
+        apellido: 'Gonzalez',
+        nombre: 'Renzo',
+        alumno_id: 1,
         mes: '01',
         anio: '2018',
-        alumno_id: 1,
-        importe: 450
+        importe: 450,
+        fechaPago: '10-01-2018 19:30',
+        totalCuota: 600
       }
     ];
     this.rows = [];
     this.columns = [
       // { name: '#', width: 50, cellTemplate: this.indexTmpl },
+      { prop: 'apellido' },
+      { prop: 'nombre' },
       { prop: 'mes' },
       { prop: 'anio' },
-      { prop: 'alumno_id' },
-      { prop: 'importe' }
+      { prop: 'importe' },
+      { prop: 'fechaPago' },
+      { prop: 'totalCuota' }
       // {
       //   name: 'Acciones',
       //   cellTemplate: this.editTmpl,
@@ -43,12 +52,27 @@ export class ListadoPagosComponent implements OnInit {
       // }
     ];
     // this.showScreenLoader = false;
-    this.showLoader = false;
+    this.showLoader = true;
+    this.pagosService.getPagos().subscribe(
+      pagos => {
+        console.log('PAGOS TRAIDOS OBJETIZADOS: ', pagos);
+        // this.pagos = pagos;
+        this.fillRows();
+        this.showLoader = false;
+      },
+      res => this.handleErrors(res)
+    );
     this.fillRows();
   }
 
   fillRows() {
     this.rows = this.pagos.slice();
+  }
+
+  private handleErrors(res) {
+    // this.showLoader = false;
+    // this.showScreenLoader = false;
+    // this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 
 }

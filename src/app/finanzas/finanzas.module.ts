@@ -11,6 +11,7 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { BuscarPagoComponent } from './registrar-pago/buscar-pago/buscar-pago.component';
 import { CuotasService } from './_services/cuotas.service';
 import { ListadoPagosComponent } from './listado-pagos/listado-pagos.component';
+import { PagosService } from './_services/pagos.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { ListadoPagosComponent } from './listado-pagos/listado-pagos.component';
     NguiAutoCompleteModule
   ],
   declarations: [ RegistrarPagoComponent, BuscarPagoComponent, ListadoPagosComponent ],
-  providers: [ AlumnosService, CuotasService ]
+  providers: [ AlumnosService, CuotasService, PagosService ]
 })
 export class FinanzasModule { }
