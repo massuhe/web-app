@@ -1,0 +1,37 @@
+.item-serie-container {
+    background: white;
+}
+
+.togglable-info {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #fbfbfb;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+    span {
+        color: mediumturquoise;
+    }
+    &.toggled {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+        max-height: 30rem;
+        transition: max-height 1s ease, padding 0.3s linear;
+    }
+}
+
+.arrow-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    fill: lightsteelblue;
+    transition: transform 0.2s ease-in-out;
+    &.toggled {
+        transform: rotate(-90deg);
+    }
+}
+
+.arrow-icon-container {
+    right: -0.7rem;
+    top: 20%;
+    cursor: pointer;
+}

@@ -21,6 +21,7 @@ export class Clase {
     asistenciasFijas?: number;
     asistenciasSemanales?: number;
     estadoClaseFija?: string;
+    fechaClaseFija?: Date;
     dia: Dia;
 
     constructor(props: Partial<Clase> = {}) {
@@ -48,7 +49,8 @@ export class Clase {
         this.id = json.id;
         this.suspendida = json.suspendida;
         this.motivo = json.motivo;
-        this.asistencias = json.alumnos.map(a => ({
+        this.fechaClaseFija = json.fecha ? parse(json.fecha) : undefined;
+        this.asistencias = json.alumnos && json.alumnos.map(a => ({
             id: a.id,
             nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
             asistio: !!+a.asistencia.asistio

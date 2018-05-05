@@ -1,0 +1,22 @@
+<div class="serie-container p-4 my-3 border">
+  <app-item-serie-rutina 
+    *ngFor="let item of serie.items" 
+    [item]="item" 
+    [semana]="semana"
+    [fecha]="fecha">
+  </app-item-serie-rutina>
+  <div class="row">
+    <div class="col-6 col-xl-2 mt-1">
+      <label class="font-weight-normal d-block p-1">Vueltas</label>
+      <span class="info-serie-container p-2 d-block rounded border">{{serie.vueltas}}</span>
+    </div>
+    <div class="col-6 col-xl-2 mt-1">
+      <label class="font-weight-normal d-block p-1">Descanso</label>
+      <span class="info-serie-container p-2 d-block rounded border">{{serie.macroDescanso}}</span>
+    </div>
+    <div class="col-xl-8 mt-3 mt-xl-1">
+      <label class="font-weight-normal d-block p-1">Observaciones</label>
+      <span class="info-serie-container p-2 d-block rounded border">{{serie.observaciones}}</span>
+    </div>
+  </div>
+</div>

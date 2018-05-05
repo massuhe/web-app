@@ -67,6 +67,9 @@ fieldset {
   .f-grow#{$i} {
     flex-grow: $i;
   }
+  .font-size-#{$i} {
+    font-size: ($i*0.5) + rem;
+  }
 }
 
 .contentFont {
@@ -140,4 +143,16 @@ fieldset {
   &:focus {
     box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
   }
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-40 {
+  width: 40%;
 }

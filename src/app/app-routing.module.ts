@@ -24,6 +24,7 @@ import { GestionInventarioComponent } from './inventario/gestion-inventario/gest
 import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago.component';
 import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
 import { ReporteIngresosAlumnosComponent } from './alumnos/reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
+import { GestionRutinaComponent } from './rutinas/gestion-rutina/gestion-rutina.component';
 
 const routes: Routes = [
   {
@@ -154,6 +155,12 @@ const routes: Routes = [
         component: BalanceGeneralComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_MOVIMIENTOS', 'CREAR_MOVIMIENTO', 'VER_CUOTAS']}
+      },
+      {
+        path: 'rutinas',
+        component: GestionRutinaComponent,
+        // canActivate: [CanActivateAuthGuard],
+        // data: {roles: ['VER_RUTINA']}
       }
     ]
   },

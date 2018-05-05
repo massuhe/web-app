@@ -1,0 +1,28 @@
+.adjust-selector {
+    position: relative;
+    top: -0.2rem;
+}
+
+.rutina-bg {
+    background-color: aliceblue;
+}
+
+.dia-container {
+    background-color: white;
+}
+
+.custom-border-bottom {
+    border-bottom: solid 1px rgb(221, 221, 221);
+}
+
+.semana-navigator-container {
+    .datatable-icon-left, .datatable-icon-right {
+        top: 0;
+    }
+    .datatable-icon-left {
+        left: -2rem;
+    }
+    .datatable-icon-right {
+        right: -2rem;
+    }
+}

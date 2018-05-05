@@ -22,6 +22,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { SeguridadModule } from './seguridad/seguridad.module';
 import { InventarioModule } from './inventario/inventario.module';
 import { FinanzasModule } from './finanzas/finanzas.module';
+import { RutinasModule } from './rutinas/rutinas.module';
+import { EjerciciosModule } from './ejercicios/ejercicios.module';
 
 registerLocaleData(localeEsAr);
 
@@ -42,10 +44,12 @@ registerLocaleData(localeEsAr);
     AlumnosModule,
     UsuariosModule,
     ClasesModule,
+    RutinasModule,
     InventarioModule,
     SeguridadModule,
     ActividadesModule,
     FinanzasModule,
+    EjerciciosModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule

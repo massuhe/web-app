@@ -14,5 +14,4 @@ class DiaActividad {
     }
 }
 
-
 export default DiaActividad;

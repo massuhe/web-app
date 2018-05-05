@@ -1,0 +1,58 @@
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>Gestionar Rutina</h2>
+</div>
+<div class="container mb-4" *ngIf="rutina">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-outline-porange ml-2">Cargar nueva rutina</button>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-3 mt-3 mt-lg-0">
+      <i class="datatable-icon-left font-size-3 pointer"
+         (click)="changeNavegableValue('numeroRutinaActive', -1)" 
+         *ngIf="numeroRutinaActive > 1">
+      </i>
+      <span class="font-size-3 adjust-selector">Rutina {{rutina.numero}}</span>
+      <i class="datatable-icon-right font-size-3 pointer"
+         (click)="changeNavegableValue('numeroRutinaActive', 1)" 
+         *ngIf="numeroRutinaActive < maxNumeroRutina">
+      </i>
+    </div>
+    <div class="col-12 col-lg-6 d-flex justify-content-center mt-3 mt-lg-0">
+      <h3 class="font-weight-normal d-flex justify-content-center">
+        Cosme Fulanito
+      </h3>
+    </div>
+    <div class="offset-lg-3"></div>
+  </div>
+  <hr/>
+  <div class="border p-1 rounded">
+    <div class="row m-0 py-2 rutina-bg">
+      <div class="col-12 col-sm-6 font-size-2"><span class="font-weight-normal">Fecha Inicio: </span>{{rutina.fechaInicio | date:'dd/MM/yyyy'}}</div>
+      <div class="col-12 col-sm-6 font-size-2"><span class="font-weight-normal">Fecha Fin:</span>{{rutina.fechaFin | date:'dd/MM/yyyy'}}</div>
+    </div>
+  </div>
+  <div class="border mt-2 p-1 rounded">
+    <div class="rutina-bg pb-3">
+      <div class="d-flex justify-content-center py-3">
+        <div class="semana-navigator-container position-relative d-inline-block">
+          <i class="datatable-icon-left position-absolute font-size-3 pointer"
+             (click)="changeNavegableValue('semanaActive', -1)"
+             *ngIf="semanaActive > 1">
+          </i>
+          <span class="font-size-3 adjust-selector">Semana {{semanaActive}}</span>
+          <i class="datatable-icon-right position-absolute font-size-3 pointer"
+             (click)="changeNavegableValue('semanaActive', 1)"
+             *ngIf="semanaActive < rutina.totalSemanas">
+          </i>
+        </div>
+      </div>
+      <div class="mx-2">
+        <app-tab-nav [items]="diasTabs" [active]="diaActive"></app-tab-nav>
+        <div class="dia-container custom-border-bottom p-3">
+          <app-gestion-dia-rutina [dia]="rutina.dias[diaActive]" [semana]="semanaActive"></app-gestion-dia-rutina>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-outline-porange mt-3">Editar rutina</button>
+</div>

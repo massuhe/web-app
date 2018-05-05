@@ -1,0 +1,32 @@
+<div class="my-2">
+  <div class="d-flex position-relative">
+    <div class="col 12 col-lg-10 d-flex border rounded item-serie-container py-2 px-0">
+      <div class="col-11 col-sm-8 col-lg-4 px-2">{{item.ejercicio.nombre}}</div>
+      <div class="col-3 col-lg-2 d-none d-sm-block px-0">{{parametroSemana?.repeticiones}}</div>
+      <div class="col-lg-2 d-none d-lg-block px-0">{{item.microDescanso}}</div>
+      <div class="col-lg-4 d-none d-lg-block px-0">{{item.observaciones}}</div>
+    </div>
+    <div class="col-lg-2 d-none d-lg-block border rounded item-serie-container py-2 ml-2">
+      {{parametroItemSerie?.carga}}
+    </div>
+    <div class="position-absolute d-lg-none arrow-icon-container" (click)="toggleInfo()">
+      <svg class="arrow-icon" [ngClass]="{toggled: toggled}">
+        <use xlink:href="../../../../assets/images/icons.svg#arrow-down-icon"></use>
+      </svg>
+    </div>
+  </div>
+  <div class="togglable-info px-3 border border-top-0 d-lg-none" [ngClass]="{toggled: toggled}">
+    <div class="d-sm-none">
+        <span class="font-weight-normal">Repeticiones:</span> {{parametroSemana?.repeticiones}}
+    </div>
+    <div>
+        <span class="font-weight-normal">Descanso:</span> {{item.microDescanso}}
+    </div>
+    <div>
+        <span class="font-weight-normal">Observaciones:</span> {{item.observaciones}}
+    </div>
+    <div>
+      <span class="font-weight-normal">Carga:</span> {{parametroItemSerie?.carga}}
+    </div>
+  </div>
+</div>

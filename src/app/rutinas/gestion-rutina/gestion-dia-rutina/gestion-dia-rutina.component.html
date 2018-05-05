@@ -1,0 +1,52 @@
+<div>
+  <div class="d-flex">
+    <div class="rutina-header d-flex align-items-center col-12 rounded font-weight-normal py-2 pl-4 pr-3 pr-lg-0 pr-4">
+      <div class="col-8 col-lg-4 px-0">
+        <span>Ejercicios</span>
+      </div>
+      <div class="col-3 col-lg-2 px-0 d-none d-sm-flex">
+        <span>Repeticiones</span>
+      </div>
+      <div class="col-lg-2 px-0 d-none d-lg-flex">
+        <span>Descanso</span>
+      </div>
+      <div class="col-lg-4 px-0 d-none d-lg-flex">
+        <span>Observaciones</span>
+      </div>
+      <div class="col-1 d-lg-none"></div>
+    </div>
+    <div class="carga-header position-relative d-none d-lg-block rounded text-center font-weight-normal ml-2 py-2">
+      <i class="datatable-icon-left position-absolute pointer font-size-3"
+         (click)="changeIndiceFecha(-1)"
+         *ngIf="indexDateSelected > 0">
+      </i>
+      <span class="date-changer">{{dateArray[indexDateSelected] | date:'dd/MM/yyyy'}}</span>
+      <i class="datatable-icon-right position-absolute pointer font-size-3" 
+         *ngIf="indexDateSelected < dateArray.length - 1"
+         (click)="changeIndiceFecha(1)">
+      </i>
+    </div>
+  </div>
+  <div class="date-changer-container position-relative border d-lg-none text-center p-2 mt-3" *ngIf="dateArray[indexDateSelected]">
+    <i class="datatable-icon-left pointer font-size-4 position-absolute" 
+       (click)="changeIndiceFecha(-1)"
+       *ngIf="indexDateSelected > 0">
+    </i>
+    <span class="mt-2">Mostrando cargas del 
+      <span class="font-weight-normal">{{dateArray[indexDateSelected] | date:'dd/MM/yyyy'}}</span>
+    </span>
+    <i class="datatable-icon-right pointer font-size-4 position-absolute" 
+       (click)="changeIndiceFecha(1)"
+       *ngIf="indexDateSelected < dateArray.length - 1">
+    </i>
+  </div>
+  <app-gestion-serie-rutina 
+    *ngFor="let serie of dia.series" 
+    [serie]="serie" 
+    [semana]="_semana"
+    [fecha]="dateArray[indexDateSelected]">
+  </app-gestion-serie-rutina>
+  <div class="d-flex justify-content-end mt-3">
+    <button type="button" class="btn btn-outline-info">Cargar detalles</button>
+  </div>
+</div>
