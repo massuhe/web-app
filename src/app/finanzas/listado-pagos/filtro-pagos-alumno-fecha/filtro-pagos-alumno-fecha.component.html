@@ -1,0 +1,37 @@
+<fieldset class="form-group px-4">
+  <legend class="px-3 ml-1">Buscar por alumno y fecha</legend>
+  <div class="row">
+    <div class="col-lg-10 form-group">
+      <label for="">Alumno</label>
+      <input class="w-100 form-control" auto-complete [(ngModel)]="alumno" [source]="alumnosItems" [open-on-focus]="false"
+          [select-on-blur]="true" max-num-list="5" [formControl]="alumnoFormControl"/>
+      <div class="invalidControl" *ngIf="alumnoFormControl.invalid">
+        <div *ngIf="alumnoFormControl.errors.length !== 0">
+          {{alumnoFormControl.errors.invalido}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-sm-6 col-lg-5 form-group">
+      <label>Fecha Desde</label>
+      <app-datepicker dpName="fechaDesde" [formControl]="fechaDesde"></app-datepicker>
+      <div class="invalidControl" *ngIf="fechaDesde.invalid && fechaDesde.errors.length !== 0">
+        <div *ngIf="fechaDesde.errors.invalido">{{fechaDesde.errors.invalido}}</div>
+        <div *ngIf="fechaDesde.errors.ambasRequired">{{fechaDesde.errors.ambasRequired}}</div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-5 form-group">
+      <label>Fecha Hasta</label>
+      <app-datepicker dpName="fechaHasta" [formControl]="fechaHasta"></app-datepicker>
+      <div class="invalidControl" *ngIf="fechaHasta.invalid && fechaHasta.errors.length !== 0">
+        <div *ngIf="fechaHasta.errors.invalido">{{fechaHasta.errors.invalido}}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-2 form-group d-lg-flex">
+      <app-search-button class="adjust-padding" (click)="handleClick()"></app-search-button>
+    </div>
+    <div class="col-12 invalidControl form-group" *ngIf="mensajeBusqueda">
+      {{mensajeBusqueda.vacio}}
+    </div>
+  </div>
+</fieldset>

@@ -3,8 +3,8 @@
   <h2>Listado de Pagos</h2>
 </div>
 <div class="container">
-  <!-- <button [permisos]="['CREAR_ROL']" routerLink="/roles/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Rol</button>
-  <app-search-input (inputDebounced)="filterData($event)"></app-search-input> -->
+  <app-filtro-pagos-cuota-mes (onSearch)="handleSearchCuotaMes($event)"></app-filtro-pagos-cuota-mes>
+  <app-filtro-pagos-alumno-fecha (onSearch)="handleSearchAlumnoFecha($event)"></app-filtro-pagos-alumno-fecha>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
   <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
     footerHeight="75" *ngIf="rows.length !== 0">
@@ -13,3 +13,7 @@
     No se encontraron pagos.
   </div>
 </div>
+
+<ng-template #indexTmpl let-index="rowIndex">
+  {{index + 1}}
+</ng-template>

@@ -12,6 +12,8 @@ import { BuscarPagoComponent } from './registrar-pago/buscar-pago/buscar-pago.co
 import { CuotasService } from './_services/cuotas.service';
 import { ListadoPagosComponent } from './listado-pagos/listado-pagos.component';
 import { PagosService } from './_services/pagos.service';
+import { FiltroPagosCuotaMesComponent } from './listado-pagos/filtro-pagos-cuota-mes/filtro-pagos-cuota-mes.component';
+import { FiltroPagosAlumnoFechaComponent } from './listado-pagos/filtro-pagos-alumno-fecha/filtro-pagos-alumno-fecha.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,7 @@ import { PagosService } from './_services/pagos.service';
     ReactiveFormsModule,
     NguiAutoCompleteModule
   ],
-  declarations: [ RegistrarPagoComponent, BuscarPagoComponent, ListadoPagosComponent ],
+  declarations: [ RegistrarPagoComponent, BuscarPagoComponent, ListadoPagosComponent, FiltroPagosCuotaMesComponent, FiltroPagosAlumnoFechaComponent ],
   providers: [ AlumnosService, CuotasService, PagosService ]
 })
 export class FinanzasModule { }

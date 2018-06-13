@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef, Inject, LOCALE_ID } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { DialogService } from '../../core/dialog.service';
+import { GENERIC_ERROR_MESSAGE } from '../../app-constants';
+import { SpanishMonthPipe } from '../../shared/spanish-month/spanish-month.pipe';
+import { DateTimeFormatPipe } from '../../shared/date-time-format/date-time-format.pipe';
+import { IFiltroAlumnoFechas } from '../_interfaces/IFiltroAlumnoFechas';
+import { IFiltroCuotaMes } from '../_interfaces/IFiltroCuotaMes';
 import { PagosService } from '../_services/pagos.service';
 
 @Component({
@@ -9,70 +16,71 @@ import { PagosService } from '../_services/pagos.service';
 })
 export class ListadoPagosComponent implements OnInit {
 
-  private pagos;
+  @ViewChild('indexTmpl') indexTmpl: TemplateRef<any>;
   rows;
   columns;
   showLoader: boolean;
-  showScreenLoader: boolean = false;
 
   constructor(
     private pagosService: PagosService,
-    // private dialogService: DialogService
+    private dialogService: DialogService,
+    @Inject(LOCALE_ID) private localeId
   ) {}
 
   ngOnInit() {
-    // this.pagos = [];
-    this.pagos = [
-      {
-        apellido: 'Gonzalez',
-        nombre: 'Renzo',
-        alumno_id: 1,
-        mes: '01',
-        anio: '2018',
-        importe: 450,
-        fechaPago: '10-01-2018 19:30',
-        totalCuota: 600
-      }
-    ];
     this.rows = [];
     this.columns = [
-      // { name: '#', width: 50, cellTemplate: this.indexTmpl },
+      { name: '#', width: 50, cellTemplate: this.indexTmpl },
       { prop: 'apellido' },
       { prop: 'nombre' },
-      { prop: 'mes' },
-      { prop: 'anio' },
-      { prop: 'importe' },
-      { prop: 'fechaPago' },
-      { prop: 'totalCuota' }
-      // {
-      //   name: 'Acciones',
-      //   cellTemplate: this.editTmpl,
-      //   headerTemplate: this.hdrTpl,
-      //   maxWidth: 160
-      // }
+      { prop: 'mes', pipe: new SpanishMonthPipe()},
+      { prop: 'anio', name: 'Año', width: 50 },
+      { prop: 'importe', pipe: new CurrencyPipe(this.localeId)},
+      { prop: 'fechaPago', pipe: new DateTimeFormatPipe(this.localeId)},
+      { prop: 'totalCuota', pipe: new CurrencyPipe(this.localeId)}
     ];
-    // this.showScreenLoader = false;
     this.showLoader = true;
-    this.pagosService.getPagos().subscribe(
+    const today = new Date();
+    let filtroCuotaMes : IFiltroCuotaMes = {
+      mes: today.getMonth() + 1,
+      anio: today.getFullYear()
+    }
+    this.pagosService.getPagosByMesCuota(filtroCuotaMes).subscribe(
       pagos => {
-        console.log('PAGOS TRAIDOS OBJETIZADOS: ', pagos);
-        // this.pagos = pagos;
-        this.fillRows();
+        this.rows = pagos;
         this.showLoader = false;
       },
       res => this.handleErrors(res)
     );
-    this.fillRows();
   }
 
-  fillRows() {
-    this.rows = this.pagos.slice();
+  handleSearchCuotaMes(cuotaMes: IFiltroCuotaMes): void {
+    this.rows = [];
+    this.showLoader = true;
+    this.pagosService.getPagosByMesCuota(cuotaMes).subscribe(
+      pagos => {
+        this.rows = pagos;
+        this.showLoader = false;
+      },
+      res => this.handleErrors(res)
+    );
+  }
+
+  handleSearchAlumnoFecha(datosAlumnoFechas: IFiltroAlumnoFechas): void {
+    this.rows = [];
+    this.showLoader = true;
+    this.pagosService.getPagosByAlumnoYFechas(datosAlumnoFechas).subscribe(
+      pagos => {
+        this.rows = pagos;
+        this.showLoader = false;
+      },
+      res => this.handleErrors(res)
+    );
   }
 
   private handleErrors(res) {
-    // this.showLoader = false;
-    // this.showScreenLoader = false;
-    // this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
+    this.showLoader = false;
+    this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
   }
 
 }
