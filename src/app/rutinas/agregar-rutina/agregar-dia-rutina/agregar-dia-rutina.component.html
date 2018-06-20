@@ -1,0 +1,13 @@
+<div class="dia-container px-0 px-md-5 py-4" [formGroup]="dia">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-outline-danger" (click)="handleDeleteDia()">Eliminar d&iacute;a</button>
+  </div>
+  <app-agregar-serie-rutina 
+    *ngFor="let serie of series.controls; let i = index" 
+    [serie]="serie"
+    [totalSemanas]="totalSemanas"
+    (onShowModal)="onShowModal.emit($event)"
+    (onDeleteSerie)="handleDeleteSerie(i)">
+  </app-agregar-serie-rutina>
+  <button class="btn btn-outline-pgreen mt-4" (click)="handleAgregarSerie()">Agregar serie</button>
+</div>

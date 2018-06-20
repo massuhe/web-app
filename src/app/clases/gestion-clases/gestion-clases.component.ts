@@ -4,20 +4,24 @@ import {
   ViewChild,
   Input,
   EventEmitter,
-  Output
+  Output,
+  OnDestroy
 } from '@angular/core';
 import { Clase } from '../models/clase';
 import { ClasesService } from '../services/clases.service';
 import { IAsistente } from '../interfaces/IAsistente';
 import { DialogService } from '../../core/dialog.service';
-import { finalize } from 'rxjs/operators/finalize';
+import { finalize, takeUntil } from 'rxjs/operators';
+import AppMessages from '../../_utils/AppMessages';
+import { ENTIDADES, GUARDAR } from '../../app-constants';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-gestion-clases',
   templateUrl: './gestion-clases.component.html',
   styleUrls: ['./gestion-clases.component.scss']
 })
-export class GestionClasesComponent implements OnInit {
+export class GestionClasesComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modal;
   @Input() idClase: number;
   @Input() fecha: Date;
@@ -27,6 +31,7 @@ export class GestionClasesComponent implements OnInit {
 
   clase: Clase;
   showLoader: boolean;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     private clasesService: ClasesService,
@@ -73,7 +78,7 @@ export class GestionClasesComponent implements OnInit {
     this.clase = { ...this.clase, asistencias: asistencias } as Clase;
   }
 
-  addAsistente(asistente: IAsistente) {
+  addAsistente(asistente: IAsistente): void {
     const existeAsistente =
       this.clase.asistencias.findIndex(
         (a: IAsistente) => a.id === asistente.id
@@ -87,22 +92,33 @@ export class GestionClasesComponent implements OnInit {
   }
 
   handleGuardar() {
-    this.dialogService.confirm('¿Desea confimar los cambios?').then(() => {
-      this.onGuardarStart.emit(true);
-      this.clasesService
-        .guardarClase(this.clase)
-        .pipe(
-          finalize(() => { this.onGuardarStart.emit(false); })
-        )
-        .subscribe(
-          () => {this.dialogService.success('La clase se ha actualizado correctamente'); },
-          () => { this.dialogService.error('Se ha producido un error inesperado'); }
-        );
-    });
+    this.dialogService
+      .confirm(AppMessages.confirm(ENTIDADES.CLASE, GUARDAR, true, false))
+      .then(
+        ok => {
+          this.onGuardarStart.emit(true);
+          this.clasesService
+            .guardarClase(this.clase)
+            .pipe(
+              finalize(() => this.onGuardarStart.emit(false)),
+              takeUntil(this.destroy$)
+            )
+            .subscribe(
+              () => this.successGuardar(),
+              err => this.handleError(err)
+            );
+        },
+        cancelar => {}
+      );
   }
 
   close(): void {
     this.modal.hide();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   /** Acciones al abrir el modal */
@@ -112,20 +128,32 @@ export class GestionClasesComponent implements OnInit {
 
   /** Acciones antes de cerrar el modal */
   private handleClose() {
+    this.destroy$.next(true);
     this.clase = new Clase();
   }
 
   private getClase() {
     this.showLoader = true;
-    this.clasesService.getDetalleClases(this.idClase).subscribe(
-      (clase: Clase) => {
-        this.clase = clase;
-        this.showLoader = false;
-      },
-      err => {
-        this.showLoader = false;
-        this.dialogService.error('Se ha producido un error inesperado');
-      }
-    );
+    this.clasesService
+      .getDetalleClases(this.idClase)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (clase: Clase) => this.successGetClase(clase),
+        err => this.handleError(err)
+      );
+  }
+
+  private successGetClase(clase: Clase) {
+    this.clase = clase;
+    this.showLoader = false;
+  }
+
+  private successGuardar() {
+    this.dialogService.success(AppMessages.success(ENTIDADES.CLASE, GUARDAR, true, false));
+  }
+
+  private handleError(error) {
+    this.showLoader = false;
+    this.dialogService.error(AppMessages.error(error));
   }
 }

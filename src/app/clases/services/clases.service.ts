@@ -70,6 +70,14 @@ export class ClasesService {
     });
   }
 
+  getClasesAsistidas(idAlumno: number): Observable<Clase[]> {
+    const queryString = this.getClasesAsistidasQueryString(idAlumno);
+    return this.http.get(`${environment.apiBaseUrl}/clasesEspecificas?${queryString}`)
+      .pipe(
+        map((json: any) => json.map(j => this.toClase(j)))
+      );
+  }
+
   private toClase(c) {
     const clase = new Clase();
     clase.fillFromJsonClaseEspecifica(c);
@@ -126,6 +134,30 @@ export class ClasesService {
       dia.clases.push(claseAdd);
     });
     return actividades;
+  }
+
+  private getClasesAsistidasQueryString(idAlumno: number): string {
+    const queryParams: any = {
+      filter_groups: [{
+        filters: [{
+          key: 'assignedToRutina',
+          value: true,
+          operator: 'eq',
+          not: false
+        }],
+        or: false
+      }],
+      select: ['id', 'fecha']
+    };
+    if (idAlumno) {
+      queryParams.filter_groups[0].filters.push({
+        key: 'idAlumno',
+        value: idAlumno,
+        operator: 'eq',
+        not: false
+      });
+    }
+    return this.serializeService.serialize(queryParams);
   }
 
 }

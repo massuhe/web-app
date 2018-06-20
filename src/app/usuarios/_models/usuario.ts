@@ -1,5 +1,3 @@
-import { Clase } from '../../clases/models/clase';
-import { Dia } from '../../clases/models/dia';
 import { Rol } from '../../seguridad/_models/rol';
 
 export class Usuario {

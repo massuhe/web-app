@@ -31,5 +31,8 @@ export const MENSAJES_AGREGAR_ALUMNO = {
     },
     'observaciones': {
         'required': 'El campo es requerido',
+    },
+    'passwordGroup': {
+        'matchFields': 'Las contraseñas no coinciden'
     }
 };

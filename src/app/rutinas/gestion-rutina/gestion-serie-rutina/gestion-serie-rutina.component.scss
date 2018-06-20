@@ -1,5 +1,7 @@
+@import '../../../../assets/scss/helpers/_variables.scss';
+
 .serie-container {
-    background: ghostwhite;
+    background: transparentize($naranjaPrimario, 0.95);
 }
 
 .info-serie-title {
@@ -9,4 +11,5 @@
 
 .info-serie-container {
     background: white;
+    min-height: 2.625rem;
 }

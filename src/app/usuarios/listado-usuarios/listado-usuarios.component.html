@@ -15,7 +15,7 @@
 </div>
 
 <ng-template #editTmpl let-row="row" let-value="value">
-  <app-edit-button [permisos]="['MODIFICAR_USUARIO']" [routerLink]="'editar/' + row.id"></app-edit-button>
+  <app-edit-button [permisos]="['MODIFICAR_USUARIO']" [routerLink]="row.id + '/editar'"></app-edit-button>
   <app-delete-button [permisos]="['ELIMINAR_USUARIO']" (click)="borrarUsuario(row.id)"></app-delete-button>
 </ng-template>
 <ng-template #indexTmpl let-index="rowIndex">

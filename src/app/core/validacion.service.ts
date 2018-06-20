@@ -21,39 +21,6 @@ export class ValidacionService {
         this.mensajes = mensajes;
     }
 
-    getEstructura() {
-        return this.estructuraSubject.asObservable();
-    }
-
-    verificarCampos(formulario: FormGroup) {
-        for (const campo of Object.keys(formulario.controls)) {
-            const control = formulario.get(campo);
-            if (control instanceof FormGroup) {
-                this.verificarCampos(control);
-            } else {
-                this.estructura[campo] = '';
-                if (control && control.dirty && !control.valid) {
-                    const mensajes = this.mensajes[campo];
-                    for (const key of Object.keys(control.errors)) {
-                        this.estructura[campo] += mensajes[key] + ' ';
-                    }
-                }
-            }
-        }
-    }
-
-    validateAllFormFields(formGroup: FormGroup) {
-        Object.keys(formGroup.controls).forEach(field => {
-            const control = formGroup.get(field);
-            if (control instanceof FormControl) {
-                control.markAsDirty();
-                control.markAsTouched();
-            } else if (control instanceof FormGroup) {
-                this.validateAllFormFields(control);
-            }
-        });
-    }
-
     getErrorsObservable(form: FormGroup) {
         const err = this.errors = this.initErrors(form);
         this.errorsSubject = new BehaviorSubject<any>(err);
@@ -82,24 +49,24 @@ export class ValidacionService {
     showErrors(form: FormGroup) {
         const controls = Object.keys(form.controls).map(c => form.get(c));
         controls.forEach(con => {
-            this.markIfDirty(con);
+            this.recursiveMarkAsDirty(con);
         });
     }
 
-    private checkErrors(fieldKey: string, errors: ValidationErrors) {
-        return errors ? Object.keys(errors).map(e => this.mensajes[fieldKey][e]) : [];
-    }
-
-    private markIfDirty(control: AbstractControl) {
+    recursiveMarkAsDirty(control: AbstractControl) {
         control.markAsDirty();
         control.markAsTouched();
         if (control instanceof FormControl) {
             control.updateValueAndValidity();
         } else if (control instanceof FormArray) {
-            control.controls.forEach(controlGroup => this.markIfDirty(controlGroup));
+            control.controls.forEach(controlGroup => this.recursiveMarkAsDirty(controlGroup));
         } else if (control instanceof FormGroup) {
-            Object.keys(control.controls).map(c => control.get(c)).forEach(con => this.markIfDirty(con));
+            Object.keys(control.controls).map(c => control.get(c)).forEach(con => this.recursiveMarkAsDirty(con));
         }
+    }
+
+    private checkErrors(fieldKey: string, errors: ValidationErrors) {
+        return errors ? Object.keys(errors).map(e => this.mensajes[fieldKey][e]) : [];
     }
 
 }

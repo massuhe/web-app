@@ -1,0 +1,20 @@
+@import '../../../../assets/scss/helpers/_variables.scss';
+
+.serie-container {
+    background: whitesmoke;
+}
+
+.mw-7 {
+    max-width: 7rem;
+}
+
+.button-adjust {
+    transform: scale(0.7);
+}
+
+.add-text {
+    &:hover {
+        color: $verdePrimario;
+    }
+    transition: all 0.2s ease-in-out;
+}

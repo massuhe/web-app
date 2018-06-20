@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { Movimiento } from '../_models/Movimiento';
 import { DialogService } from '../../core/dialog.service';
-import { GENERIC_ERROR_MESSAGE, GUARDAR } from '../../app-constants';
+import { GENERIC_ERROR_MESSAGE, GUARDAR, ENTIDADES } from '../../app-constants';
 import { TipoMovimiento } from '../_models/TipoMovimiento';
 import { AgregarEditarMovimientoComponent } from './agregar-editar-movimiento/agregar-editar-movimiento.component';
 import AppMessages from '../../_utils/AppMessages';
@@ -13,8 +13,6 @@ import { CuotasService } from '../_services/cuotas.service';
 import { zip } from 'rxjs/observable/zip';
 import { Cuota } from '../_models/Cuota';
 import { TimezoneFixer } from '../../shared/_utils/TimezoneFixer';
-
-const ENTIDAD = 'Los movimientos';
 
 @Component({
   selector: 'app-balance-general',
@@ -68,7 +66,7 @@ export class BalanceGeneralComponent implements OnInit, OnDestroy {
     )
     .subscribe(
       data => {
-        this.onSuccessFetchMovimientos(data.movimientos);
+        this.successFetchMovimientos(data.movimientos);
         this.cuotas = data.cuotas;
       },
       error => this.onError(error)
@@ -76,7 +74,7 @@ export class BalanceGeneralComponent implements OnInit, OnDestroy {
   }
 
   guardarMovimientos(): void {
-    this.dialogService.confirm(AppMessages.confirm(ENTIDAD, GUARDAR, true))
+    this.dialogService.confirm(AppMessages.confirm(ENTIDADES.MOVIMIENTOS, GUARDAR, false, true))
     .then(
       ok => {
         const month = this.currentDate.getMonth() + 1;
@@ -88,28 +86,12 @@ export class BalanceGeneralComponent implements OnInit, OnDestroy {
             finalize(() => this.showLoader = false)
           )
           .subscribe(
-            (movimientos: Movimiento[]) => {
-              this.dialogService.success(AppMessages.success(ENTIDAD, GUARDAR, true));
-              this.onSuccessFetchMovimientos(movimientos);
-            },
+            (movimientos: Movimiento[]) => this.successGuardarMovimientos(movimientos),
             error => this.onError(error)
           );
       },
       cancel => {}
     );
-  }
-
-  onSuccessFetchMovimientos(movimientos: Movimiento[]): void {
-    this.resetMovimientos();
-    if (!movimientos.length) { return ; }
-    this.outDated = !(this.currentDate.getMonth() + 1 === movimientos[0].mes
-                 && this.currentDate.getFullYear() === movimientos[0].anio);
-    this.movimientosCaja = this.outDated ? [] : movimientos.filter(m => !!m.fechaEfectiva).map(m => m.clone());
-    movimientos.forEach((m: Movimiento) => {
-      m.tipoMovimiento === TipoMovimiento.Costo ?
-        this.costosFijos = [...this.costosFijos, m]
-        : this.ingresosFijos = [...this.ingresosFijos, m];
-    });
   }
 
   handleDelete(id: number, tipoMovimiento: TipoMovimiento): void {
@@ -154,12 +136,30 @@ export class BalanceGeneralComponent implements OnInit, OnDestroy {
   }
 
   onError(res): void {
-    this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
+    this.dialogService.error(AppMessages.error(res));
   }
 
   ngOnDestroy() {
     this.$destroy.next(true);
     this.$destroy.unsubscribe();
+  }
+
+  private successFetchMovimientos(movimientos: Movimiento[]): void {
+    this.resetMovimientos();
+    if (!movimientos.length) { return ; }
+    this.outDated = !(this.currentDate.getMonth() + 1 === movimientos[0].mes
+                 && this.currentDate.getFullYear() === movimientos[0].anio);
+    this.movimientosCaja = this.outDated ? [] : movimientos.filter(m => !!m.fechaEfectiva).map(m => m.clone());
+    movimientos.forEach((m: Movimiento) => {
+      m.tipoMovimiento === TipoMovimiento.Costo ?
+        this.costosFijos = [...this.costosFijos, m]
+        : this.ingresosFijos = [...this.ingresosFijos, m];
+    });
+  }
+
+  private successGuardarMovimientos(movimientos: Movimiento[]) {
+    this.dialogService.success(AppMessages.success(ENTIDADES.MOVIMIENTOS, GUARDAR, false, true));
+    this.successFetchMovimientos(movimientos);
   }
 
   private resetMovimientos() {

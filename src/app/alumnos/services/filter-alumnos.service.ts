@@ -30,7 +30,7 @@ export class FilterAlumnosService {
           {
             name: 'Acciones',
             cellTemplate: templates.acciones.cellTemplate,
-            maxWidth: 160
+            maxWidth: 200
           }
         ];
       case FilterMode.Deudores:

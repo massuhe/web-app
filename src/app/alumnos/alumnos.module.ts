@@ -15,15 +15,17 @@ import { FilterAlumnoCardComponent } from './listado-alumnos/filter-alumno-card/
 import { ReporteIngresosAlumnosComponent } from './reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PerfilAlumnoComponent } from './perfil-alumno/perfil-alumno.component';
+import { routing } from './alumnos.routing';
+import { PerfilAlumnoDataComponent } from './perfil-alumno/perfil-alumno-data/perfil-alumno-data.component';
+import { PerfilAlumnoActionsComponent } from './perfil-alumno/perfil-alumno-actions/perfil-alumno-actions.component';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
+    routing,
     CommonModule,
     NgxDatatableModule,
-    HttpClientModule,
     SharedModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
@@ -36,7 +38,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SeleccionarClaseComponent,
     FilterAlumnosComponent,
     FilterAlumnoCardComponent,
-    ReporteIngresosAlumnosComponent
+    ReporteIngresosAlumnosComponent,
+    PerfilAlumnoComponent,
+    PerfilAlumnoDataComponent,
+    PerfilAlumnoActionsComponent
   ]
 })
 export class AlumnosModule {}

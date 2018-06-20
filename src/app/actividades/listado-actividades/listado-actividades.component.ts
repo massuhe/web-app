@@ -3,11 +3,16 @@ import {
   OnInit,
   ViewEncapsulation,
   ViewChild,
-  TemplateRef
+  TemplateRef,
+  OnDestroy
 } from '@angular/core';
 import { DialogService } from '../../core/dialog.service';
 import { ActividadesService } from '../services/actividades.service';
 import { Actividad } from '../models/Actividad';
+import AppMessages from '../../_utils/AppMessages';
+import { ELIMINAR, ENTIDADES } from '../../app-constants';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-listado-actividades',
@@ -15,7 +20,7 @@ import { Actividad } from '../models/Actividad';
   styleUrls: ['./listado-actividades.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ListadoActividadesComponent implements OnInit {
+export class ListadoActividadesComponent implements OnInit, OnDestroy {
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
   private actividades: Actividad[];
@@ -23,6 +28,7 @@ export class ListadoActividadesComponent implements OnInit {
   columns;
   showLoader: boolean;
   showScreenLoader: boolean;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     private actividadesService: ActividadesService,
@@ -49,20 +55,25 @@ export class ListadoActividadesComponent implements OnInit {
     this.getActividades();
   }
 
-  borrarAlumno(idActividad) {
-    this.dialogService.confirm('La actividad será borrada, ¿Desea continuar?')
+  eliminarActividad(idActividad) {
+    this.dialogService.confirm(AppMessages.confirm(ENTIDADES.ACTIVIDAD, ELIMINAR, true, false))
       .then(_ => {
         this.showScreenLoader = true;
         this.actividadesService.delete(idActividad)
-          .subscribe(suc => {
-            this.dialogService.success('La actividad se ha borrado correctamente');
-            this.removeActividadFromArray(idActividad);
-            this.showScreenLoader = false;
-          }, err => {
-            this.dialogService.error('Se ha producido un error inesperado');
-            this.showScreenLoader = false;
-          });
-      });
+          .pipe(
+            takeUntil(this.destroy$)
+          )
+          .subscribe(
+            suc => this.successEliminar(idActividad),
+            err => this.handleError(err)
+          );
+      },
+      cancelar => {});
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   private removeActividadFromArray(idActividad) {
@@ -72,15 +83,30 @@ export class ListadoActividadesComponent implements OnInit {
 
   private getActividades() {
     this.actividadesService.getListadoActividades()
-      .subscribe((actividades: Actividad[]) => {
-        this.actividades = actividades;
-        this.rows = actividades;
-        this.showLoader = false;
-      },
-      (error: Error) => {
-        this.dialogService.error('Se ha producido un error inesperado', 'Error');
-        this.showLoader = false;
-      }
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (actividades: Actividad[]) => this.successGetActividades(actividades),
+        error => this.handleError(error)
       );
   }
+
+  private successGetActividades(actividades: Actividad[]): void {
+    this.actividades = actividades;
+    this.rows = actividades;
+    this.showLoader = false;
+  }
+
+  private successEliminar(idActividad: number): void {
+    this.dialogService.success(AppMessages.success(ENTIDADES.ACTIVIDAD, ELIMINAR, true, false));
+    this.removeActividadFromArray(idActividad);
+    this.showScreenLoader = false;
+  }
+
+  private handleError(error): void {
+    this.dialogService.error(AppMessages.error(error));
+    this.showScreenLoader = false;
+  }
+
 }

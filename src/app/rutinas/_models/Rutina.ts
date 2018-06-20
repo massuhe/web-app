@@ -12,8 +12,17 @@ export class Rutina {
     fillFromJson(json: any): void {
         this.id = json.id;
         this.numero = json.numero_rutina;
-        this.fechaInicio = json.fecha_inicio ? parse(json.fecha_inicio) : undefined;
-        this.fechaFin = json.fecha_fin ? parse(json.fecha_fin) : undefined;
+        this.fechaInicio = this.parseDate(json.fecha_inicio);
+        this.fechaFin = this.parseDate(json.fecha_fin);
         this.totalSemanas = json.total_semanas;
+    }
+
+    private parseDate(fechaJson): Date {
+        if (!fechaJson) {
+            return ;
+        }
+        return fechaJson instanceof Object ?
+            parse(fechaJson.date)
+            : parse(fechaJson);
     }
 }

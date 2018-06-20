@@ -1,0 +1,49 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>Cargar detalles</h2>
+</div>
+<div class="container mb-4">
+  <div class="container alert alert-warning" role="alert" *ngIf="error">
+      La rutina no tiene ejercicios a los que cargar detalles.
+  </div>
+  <form *ngIf="showContent && !error" novalidate [formGroup]="form">
+    <div class="d-block d-md-flex mt-5">
+      <div class="col-12 p-0 col-md-6 d-flex">
+        <label class="mr-3 font-size-3">Semana </label>
+        <select class="form-control mw-5rem" formControlName="semana">
+          <option *ngFor="let semana of semanas" [value]="semana">{{semana}}</option>
+        </select>
+      </div>
+      <div class="col-12 p-0 mt-4 mt-md-0 col-md-6 d-sm-flex">
+        <label class="mr-3 font-size-3">D&iacute;a de la clase
+          <span class="required">*</span>
+        </label>
+        <div class="f-grow1 mw-15rem">
+          <select class="form-control" formControlName="clase">
+            <option *ngFor="let clase of clases" [value]="clase.id">{{clase.fechaClaseFija | date: 'dd/MM/yyyy'}}</option>
+          </select>
+          <div class="invalidControl" *ngIf="form.get('clase').invalid && form.get('clase').dirty">
+            El campo es requerido.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detalles-header d-flex align-items-center col-12 rounded font-weight-normal mt-5 px-4 py-2">
+      <div class="d-flex col-9 p-0">
+        <div class="col-7">
+          <span>Ejercicios</span>
+        </div>
+        <div class="col-5">
+          <span>Repeticiones</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <span>Carga</span>
+      </div>
+    </div>
+    <app-cargar-detalles-serie *ngFor="let detalleSerie of detallesGroups" [detalleSerie]="detalleSerie"></app-cargar-detalles-serie>
+    <div class="d-flex justify-content-end mt-4">
+      <button class="btn btn-outline-porange" (click)="handleGuardar()">Guardar</button>
+    </div>
+  </form>
+</div>

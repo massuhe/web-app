@@ -18,7 +18,7 @@
   {{column.name}}
   </ng-template>
 <ng-template #editTmpl let-row="row" let-value="value">
-  <app-edit-button [routerLink]="'editar/' + row.id" [permisos]="['MODIFICAR_ROL']"></app-edit-button>
+  <app-edit-button [routerLink]="row.id + '/editar'" [permisos]="['MODIFICAR_ROL']"></app-edit-button>
   <app-delete-button (click)="borrarRol(row.id)" [permisos]="['ELIMINAR_ROL']"></app-delete-button>
 </ng-template>
 <ng-template #indexTmpl let-index="rowIndex">

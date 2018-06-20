@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   isLoggin: boolean;
+  showInvalidError: boolean;
 
   constructor(private builder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) { }
 
@@ -27,13 +28,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(e) {
-    if (this.loginForm.valid) {
-      this.isLoggin = true;
-      this.authenticationService.login(e.usuario, e.contrasena)
-        .subscribe(this.onSuccess.bind(this), this.onError.bind(this));
-    } else {
+    if (!this.loginForm.valid) {
       Object.keys(this.loginForm.controls).forEach(ck => this.loginForm.get(ck).markAsDirty());
+      return ;
     }
+    this.showInvalidError = false;
+    this.isLoggin = true;
+    this.authenticationService.login(e.usuario, e.contrasena)
+      .subscribe(
+        this.onSuccess.bind(this),
+        this.onError.bind(this)
+      );
   }
 
   onSuccess() {
@@ -42,6 +47,9 @@ export class LoginComponent implements OnInit {
   }
 
   onError(err) {
+    if (err.status === 401) {
+      this.showInvalidError = true;
+    }
     this.isLoggin = false;
   }
 

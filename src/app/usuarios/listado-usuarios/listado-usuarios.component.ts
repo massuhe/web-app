@@ -4,6 +4,7 @@ import { DialogService } from '../../core/dialog.service';
 import { GENERIC_ERROR_MESSAGE, ELIMINAR } from '../../app-constants';
 import AppMessages from '../../_utils/AppMessages';
 import { finalize } from 'rxjs/operators';
+import { RutinaService } from '../../rutinas/_services/rutina.service';
 
 const mockRows = [
   { id: 1, nombre: 'Juan', apellido: 'Perez', activo: 'Sí' },

@@ -1,0 +1,32 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>Cambiar contrase&ntilde;a</h2>
+</div>
+<div class="container">
+  <form [formGroup]="form">
+    <div class="d-flex flex-column align-items-center mt-4">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label>Ingrese nueva contrase&ntilde;a</label>
+          <input type="password" class="form-control" formControlName="password">
+          <div class="invalidControl" *ngIf="form.get('password').invalid && form.get('password').dirty">
+            <span>{{form.get('password').errors['required'] && 'El campo es requerido'}}</span>
+            <span>{{form.get('password').errors['minlength'] && 'El capo debe tener al menos 6 caracteres'}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label>Repita nueva contrase&ntilde;a</label>
+          <input type="password" class="form-control" formControlName="repeatPassword">
+          <div class="invalidControl" *ngIf="form.errors && form.errors['matchFields'] && form.get('password').dirty && form.get('repeatPassword').dirty">
+            <span>Las contrase&ntilde;as no coinciden</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 d-flex justify-content-end mt-4">
+        <button class="btn btn-outline-porange" (click)="handleConfirmarCambio()">Confirmar cambio</button>
+      </div>
+    </div>
+  </form>
+</div>

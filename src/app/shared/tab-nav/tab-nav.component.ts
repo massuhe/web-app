@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ITab } from './ITab';
 
 @Component({
   selector: 'app-tab-nav',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TabNavComponent implements OnInit {
 
-  @Input() items: any[];
+  @Input() items: ITab[];
   @Input() active: number;
   @Output() onItemClick = new EventEmitter<number>();
 

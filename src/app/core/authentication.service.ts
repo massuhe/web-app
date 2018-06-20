@@ -67,6 +67,7 @@ export class AuthenticationService {
   logout(): Observable<void> {
     return fromPromise(localforage.removeItem('token').then(_ => {
       this.isLoggedIn = false;
+      this.emitData();
     }));
   }
 

@@ -1,8 +1,10 @@
+@import '../../../../assets/scss/helpers/_variables.scss';
+
 .rutina-header {
     @media (min-width: 992px) {
         flex: 0 0 calc(83.333333% - 1rem);
     }
-    background: #8fb6d8;
+    background: $verdePrimario;
     color: white;
 }
 
@@ -15,7 +17,7 @@
 }
 
 .carga-header {
-    background: #8fb6d8;
+    background: $verdePrimario;
     color: white;
     flex: 0 0 calc(16.66666667% + 0.5rem);
     max-width: calc(16.66666667% + 0.5rem);

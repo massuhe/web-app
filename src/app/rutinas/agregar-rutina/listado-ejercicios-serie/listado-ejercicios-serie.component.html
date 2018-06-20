@@ -1,0 +1,20 @@
+<div class="d-flex ejercicios-header mt-3">
+    <div class="col-3 p-1">Ejercicio</div>
+    <div class="col-2 p-1 border border-bottom-0 border-top-0 border-right-0">Repeticiones</div>
+    <div class="col-2 p-1 border border-bottom-0 border-top-0 border-right-0">Descanso</div>
+    <div class="col-3 p-1 border border-bottom-0 border-top-0 border-right-0">Observaciones</div>
+    <div class="col-2 p-1 border border-bottom-0 border-top-0 border-right-0">Acciones</div>
+</div>
+<div *ngFor="let item of items.controls; let i = index">
+  <app-agregar-item-serie 
+    [item]="item" 
+    [totalSemanas]="totalSemanas"
+    [parametroSemanaSelected]="parametroSelected"
+    [especificarPorSemana]="especificarPorSemana"
+    [disableMoveUp]="i === 0"
+    [disableMoveDown]="i === items.controls.length - 1"
+    (onDelete)="handleDelete(i)"
+    (onMoveDown)="handleMoveDown(i)"
+    (onMoveUp)="handleMoveUp(i)">
+  </app-agregar-item-serie>
+</div>

@@ -2,24 +2,27 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ViewChild
+  ViewChild,
+  OnDestroy
 } from '@angular/core';
 import { ClasesService } from '../services/clases.service';
 import { ActividadesService } from '../../actividades/services/actividades.service';
 import { DialogService } from '../../core/dialog.service';
 import * as startOfWeek from 'date-fns/start_of_week';
-import { mergeMap, tap } from 'rxjs/operators';
+import { mergeMap, tap, takeUntil } from 'rxjs/operators';
 import { GestionClasesComponent } from '../../clases/gestion-clases/gestion-clases.component';
 import { Clase } from '../models/clase';
 import { Dia } from '../models/dia';
 import { Actividad } from '../../actividades/models/Actividad';
+import { Subject } from 'rxjs/Subject';
+import AppMessages from '../../_utils/AppMessages';
 
 @Component({
   selector: 'app-listado-clases',
   templateUrl: './listado-clases.component.html',
   styleUrls: ['./listado-clases.component.scss']
 })
-export class ListadoClasesComponent implements OnInit {
+export class ListadoClasesComponent implements OnInit, OnDestroy {
   @ViewChild(GestionClasesComponent) gestionClases;
   @ViewChild('sched') scheduler;
 
@@ -36,6 +39,7 @@ export class ListadoClasesComponent implements OnInit {
   fechaModal: Date;
   horaModal: string;
   claseSeleccionada: number;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     private clasesService: ClasesService,
@@ -56,7 +60,8 @@ export class ListadoClasesComponent implements OnInit {
             this.week,
             this.actividadSeleccionada
           )
-        )
+        ),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         res => this.populateScheduler(res),
@@ -105,6 +110,11 @@ export class ListadoClasesComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   private populateScheduler(res): void {
     if (res && res.dias.length > 0) {
       this.horas = res.horas;
@@ -126,12 +136,13 @@ export class ListadoClasesComponent implements OnInit {
 
   private handleErrors(err): void {
     this.showLoader = false;
-    this.dialogService.error(err.error.clientMessage || 'Se ha producido un error inesperado');
+    this.dialogService.error(AppMessages.error(err));
   }
 
   private getClases(): void {
     this.clasesService
       .getListadoClases(this.week, this.actividadSeleccionada)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         res => this.populateScheduler(res),
         err => this.handleErrors(err)

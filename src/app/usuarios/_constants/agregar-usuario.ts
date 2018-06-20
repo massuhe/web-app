@@ -23,5 +23,8 @@ export const MENSAJES_AGREGAR_USUARIO = {
     'telefono': {
         'required': 'El campo es requerido',
         'pattern': 'El campo debe ser númerico'
+    },
+    'passwordGroup': {
+        'matchFields': 'Las contraseñas no coinciden'
     }
 };

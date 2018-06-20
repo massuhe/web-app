@@ -1,0 +1,51 @@
+<div class="serie-container border mt-4 p-3 rounded" [formGroup]="serie">
+  <div class="d-flex justify-content-end">
+    <app-remove-button (click)="onDeleteSerie.emit(true)"></app-remove-button>
+  </div>
+  <div class="px-lg-3">
+    <div class="row justify-content-center">
+      <div class="form-group d-inline-block col-12 col-md-6 m-0">
+        <label class="mr-4">Vueltas:</label>
+        <input class="form-control mw-7 d-inline-block" formControlName="vueltas" />
+      </div>
+      <div class="form-group d-inline-block col-12 col-md-6 mt-3 m-0 mt-md-0">
+        <label class="mr-4">Descanso:</label>
+        <input class="form-control mw-7 d-inline-block" formControlName="macroDescanso" />
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-12">
+        <label>Especificar par&aacute;metros por semana</label>
+        <input class="mt-2 ml-2 mr-3" type="checkbox" formControlName="especificarPorSemana"/>
+        <select class="form-control mw-7 d-inline-block" *ngIf="especificarPorSemana" formControlName="semanaEspecificar">
+          <option *ngFor="let semana of semanas" [value]="semana">{{semana}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-12">
+        <span>Ejercicios:</span>
+        <app-listado-ejercicios-serie 
+          [parametroSelected]="serie.get('semanaEspecificar').value"
+          [items]="items" 
+          [totalSemanas]="semanas.length"
+          [especificarPorSemana]="especificarPorSemana">
+        </app-listado-ejercicios-serie>
+      </div>
+      <div class="col-12">
+        <div class="d-inline-flex align-items-center mt-3 add-text pointer" (click)="handleAgregarEjercicio()">
+          <div class="d-inline-block button-adjust">
+            <app-add-button></app-add-button>
+          </div>
+          <span>Agregar ejercicio</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label>Observaciones</label>
+        <textarea class="form-control" formControlName="observaciones"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

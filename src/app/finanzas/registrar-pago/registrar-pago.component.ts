@@ -7,7 +7,7 @@ import { Alumno } from '../../alumnos/models/alumno';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil, finalize, tap, switchMap, debounceTime } from 'rxjs/operators';
 import { DialogService } from '../../core/dialog.service';
-import { GENERIC_ERROR_MESSAGE, MESES_ANIO, GUARDAR } from '../../app-constants';
+import { GENERIC_ERROR_MESSAGE, MESES_ANIO, GUARDAR, ENTIDADES } from '../../app-constants';
 import { merge } from 'rxjs/observable/merge';
 import { Cuota } from '../_models/Cuota';
 import { Pago } from '../_models/Pago';
@@ -18,8 +18,6 @@ import { ValidacionService } from '../../core/validacion.service';
 import { ESTRUCTURA_REGISTRAR_PAGO, MENSAJES_REGISTRAR_PAGO } from '../_constants/registrar-pago';
 import GenericValidators from '../../shared/_validators/GenericValidators';
 import CuotasValidators from '../_validators/CuotasValidators';
-
-const ENTIDAD = 'El pago';
 
 @Component({
   selector: 'app-registrar-pago',
@@ -90,7 +88,7 @@ export class RegistrarPagoComponent implements OnInit, OnDestroy {
   }
 
   private guardarCuota(): void {
-    this.dialogService.confirm(AppMessages.confirm(ENTIDAD, GUARDAR))
+    this.dialogService.confirm(AppMessages.confirm(ENTIDADES.PAGO, GUARDAR))
     .then(
       ok => {
         this.showLoader = true;
@@ -137,12 +135,12 @@ export class RegistrarPagoComponent implements OnInit, OnDestroy {
   }
 
   private handleSuccess(cuota: Cuota): void {
-    this.dialogService.success(AppMessages.success(ENTIDAD, GUARDAR));
+    this.dialogService.success(AppMessages.success(ENTIDADES.PAGO, GUARDAR));
     this.handleFindCuota(cuota);
   }
 
   private handleError(res): void {
-    this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
+    this.dialogService.error(AppMessages.error(res));
   }
 
   private calcularDebe(importeTotal: number, importePaga: number): number {

@@ -1,0 +1,47 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer pattern insetShadow mb-4">
+  <h2>{{editar ? 'Editar' : 'Agregar'}} rutina</h2>
+</div>
+<div class="container mb-4">
+  <form [formGroup]="form">
+    <div class="header-input d-block d-sm-flex">
+      <label class="font-size-3 mr-3">Fecha de inicio</label>
+      <div class="f-grow1">
+        <app-datepicker dpName="fechaInicio" formControlName="fechaInicio"></app-datepicker>
+        <div class="invalidControl" *ngIf="form.get('fechaInicio').invalid && form.get('fechaInicio').touched">
+            El campo es requerido.
+        </div>
+      </div>
+    </div>
+    <div class="header-input d-block d-sm-flex mt-3">
+      <label class="font-size-3 mr-3">Cantidad de semanas</label>
+      <select class="form-control mw-5rem" formControlName="totalSemanas">
+        <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{n}}</option>
+      </select>
+    </div>
+    <button class="btn btn-outline-porange mt-4" (click)="handleAgregarDia()">Agregar d&iacute;a</button>
+    <div class="mt-4">
+      <div class="alert alert-info mt-3" *ngIf="dias.length === 0 && showContent">Para crear una rutina, comenz&aacute; agregando un d&iacute;a</div>
+      <div *ngIf="dias.length !== 0">
+        <app-tab-nav 
+          [items]="itemsDias" 
+          [active]="diaActive"
+          (onItemClick)="handleChangeDia($event)">
+        </app-tab-nav>
+        <app-agregar-dia-rutina 
+          [dia]="dias.controls[diaActive]"
+          [totalSemanas]="form.get('totalSemanas').value"
+          (onShowModal)="handleShowModal($event)"
+          (onDeleteDia)="handleDeleteDia($event)">
+        </app-agregar-dia-rutina>
+      </div>
+    </div>
+    <div class="d-flex mt-4 justify-content-end mb-3">
+      <button class="btn btn-outline-porange" (click)="handleGuardar()">Guardar</button>
+    </div>
+  </form>
+</div>
+<app-agregar-ejercicio-modal 
+  (onAgregar)="handleAgregarEjercicio($event)"
+  (onClose)="handleHideModal()">
+</app-agregar-ejercicio-modal>

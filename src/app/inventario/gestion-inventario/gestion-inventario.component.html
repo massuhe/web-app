@@ -6,12 +6,14 @@
   <button [permisos]="['CREAR_ITEM_INVENTARIO']" type="button" class="btn btn-outline-porange mb-4" (click)="agregarItem()">
     Agregar Item
   </button>
-  <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
-  <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
-    footerHeight="75" [rowHeight]="'auto'" *ngIf="rows.length !== 0">
-  </ngx-datatable >
-  <div *ngIf="rows.length === 0 && !showLoader" class="alert alert-warning">
+  <div *ngIf="items.length !== 0">
+    <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
+    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
+      footerHeight="75" [rowHeight]="'auto'">
+    </ngx-datatable >
+  </div>
+  <div *ngIf="items.length === 0 && !showLoader" class="alert alert-warning">
     No se encontraron items.
   </div>
 </div>

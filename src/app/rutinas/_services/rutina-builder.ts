@@ -8,8 +8,7 @@ import { ParametroItemSerie } from '../_models/ParametroItemSerie';
 import { Clase } from '../../clases/models/clase';
 
 export class RutinaBuilder {
-  static build(json) {
-    const clases: Clase[] = [];
+  static build(json, clases: Clase[]) {
     const rutina = new Rutina();
     rutina.fillFromJson(json);
     const dias = this.buildDias(json.dias, clases);
@@ -90,12 +89,7 @@ export class RutinaBuilder {
     for (let parametroJson of parametrosJson) {
       const parametro = new ParametroItemSerie();
       parametro.fillFromJson(parametroJson);
-      let clase = clases.find(c => c.id === parametroJson.clase.id);
-      if (!clase) {
-        clase = new Clase();
-        clase.fillFromJsonClaseEspecifica(parametroJson.clase);
-        clases.push(clase);
-      }
+      const clase = clases.find(c => c.id === parametroJson.clase_especifica_id);
       parametro.clase = clase;
       parametros.push(parametro);
     }

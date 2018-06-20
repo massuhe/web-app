@@ -24,7 +24,7 @@
     </fieldset>
     <app-search-button class="d-flex justify-content-end" typeButton="submit"></app-search-button>
   </form>
-  <div class="d-flex justify-content-center mt-5" *ngIf="!!data.length">
+  <div class="d-flex justify-content-center mt-5" *ngIf="!!data.length && !showLoader">
     <ngx-charts-bar-vertical
       scheme="flame"
       [results]="data"
@@ -38,4 +38,5 @@
       yAxisLabel="Alumnos">
     </ngx-charts-bar-vertical>
   </div>
+  <app-content-loader *ngIf="showLoader"></app-content-loader>
 </div>

@@ -3,7 +3,7 @@
   <h2>Listado de Alumnos</h2>
 </div>
 <div class="container">
-  <button [permisos]="['CREAR_USUARIO']" routerLink="/alumnos/agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
+  <button [permisos]="['CREAR_USUARIO']" routerLink="agregar" type="button" class="btn btn-outline-porange mb-4">Agregar Alumno</button>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
   <div *ngIf="alumnos.length !== 0">
     <div class="d-flex">
@@ -12,7 +12,7 @@
     </div>
     <app-filter-alumnos 
       [filterMode]="filtroActivo" 
-      (onFilterChange)="handleFilterChange($event)" 
+      (onFilterChange)="handleFilterChange($event)"
       *ngIf="showFilters">
     </app-filter-alumnos>
     <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
@@ -25,10 +25,16 @@
 </div>
 
 <ng-template #editTmpl let-row="row" let-value="value">
-  <app-routine-button [permisos]="['VER_RUTINA']"></app-routine-button>
-  <app-profile-button [permisos]="['VER_PERFIL']"></app-profile-button>
-  <app-edit-button [routerLink]="'editar/' + row.usuarioId" [permisos]="['MODIFICAR_USUARIO']"></app-edit-button>
-  <app-delete-button (click)="borrarAlumno(row.usuarioId)" [permisos]="['ELIMINAR_USUARIO']"></app-delete-button>
+  <app-routine-button 
+    [permisos]="['VER_RUTINA']"
+    [routerLink]="[row.id, 'rutina']">
+  </app-routine-button>
+  <app-profile-button [routerLink]="[row.id, 'perfil']" [permisos]="['VER_PERFIL']"></app-profile-button>
+  <svg class="table-action-icons" [routerLink]="[row.usuarioId, 'cambiarContrasena']">
+    <use xlink:href="../../../assets/images/icons.svg#password-icon"></use>
+  </svg>
+  <app-edit-button [routerLink]="[row.usuarioId, 'editar']" [permisos]="['MODIFICAR_USUARIO']"></app-edit-button>
+  <app-delete-button (click)="borrarAlumno(row)" [permisos]="['ELIMINAR_USUARIO']"></app-delete-button>
 </ng-template>
 <ng-template #debeTmpl let-row="row" let-value="value">
   <p class="m-0" *ngFor="let deuda of row.deudas">

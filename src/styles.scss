@@ -8,6 +8,28 @@
 @import './assets/scss/components/_checkboxes.scss';
 @import './assets/scss/helpers/_variables.scss';
 
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+  
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+  .mw-md-15rem {
+    max-width: 15rem;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+
+}
+
 body,
 html,
 * {
@@ -70,6 +92,20 @@ fieldset {
   .font-size-#{$i} {
     font-size: ($i*0.5) + rem;
   }
+}
+
+.input-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
+.content-black {
+  color: black;
 }
 
 .contentFont {
@@ -145,6 +181,10 @@ fieldset {
   }
 }
 
+.font-verde-primario {
+  color: $verdePrimario;
+}
+
 .w-15 {
   width: 15%;
 }
@@ -155,4 +195,44 @@ fieldset {
 
 .w-40 {
   width: 40%;
+}
+
+.bg-white {
+  background: white;
+}
+
+.mw-5rem {
+  max-width: 5rem;
+}
+
+.mw-10rem {
+  max-width: 10rem;
+}
+
+.mw-15rem {
+  max-width: 15rem;
+}
+
+.mw-50rem {
+  max-width: 60rem;
+}
+
+.mh-15rem {
+  max-height: 15rem;
+}
+
+.table-action-icons {
+  border: solid 1px gray;
+  border-radius: 5px;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  padding: 2px;
+  fill: gray;
+  background: white;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    fill: white;
+    background: gray;
+  }
 }

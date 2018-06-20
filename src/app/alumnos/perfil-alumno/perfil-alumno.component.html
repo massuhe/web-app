@@ -1,0 +1,25 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<div class="titleContainer p-5 pattern insetShadow mb-4">
+  <h2>{{form.value['nombre'] ? form.value['nombre'] + ' ' + form.value['apellido'] : 'Perfil'}}</h2>
+</div>
+<div class="container">
+  <div class="row" *ngIf="showContent">
+    <div class="col-12 col-md-3 d-md-block">
+      <div class="d-flex justify-content-center justify-content-md-start">
+        <figure class="figure mw-15rem">
+          <div class="position-relative">
+            <img class="mh-15rem rounded w-100" [src]="imagenPerfil"/>
+            <input #fileInput class="input-image" type="file" [disabled]="!edit" (change)="handleImageChange($event)" accept="image/*">
+            <figcaption *ngIf="edit" class="figure-caption">Click en la imagen para cambiarla</figcaption>
+          </div>
+        </figure>
+      </div>
+      <app-perfil-alumno-actions (onEditarDatos)="handleEditarDatos()" (onCambiarContrasena)="handleCambiarContrasena()">
+      </app-perfil-alumno-actions>
+    </div>
+    <div class="col-12 col-md-8 my-4 my-md-0">
+      <app-perfil-alumno-data [editMode]="edit" [form]="form" (onGuardar)="handleGuardar()" (onCancelar)="handleCancelar()">
+      </app-perfil-alumno-data>
+    </div>
+  </div>
+</div>

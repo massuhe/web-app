@@ -1,0 +1,22 @@
+<div [formGroup]="item" class="d-flex">
+  <div class="col-3 p-1 bg-white border border-top-0 border-right-0 d-flex align-items-center">{{nombreEjercicio}}</div>
+  <div [formGroup]="parametroSemanaGroup" class="col-2 p-0">
+    <input 
+      class="p-1 border border-top-0 border-right-0 w-100 h-100" 
+      formControlName="repeticiones"
+    />
+  </div>
+  <input class="col-2 p-1 border border-top-0 border-right-0" formControlName="microDescanso"/>
+  <input class="col-3 p-1 border border-top-0 border-right-0" formControlName="observaciones"/>
+  <div class="col-2 p-1 bg-white border border-top-0 border-right-0 d-flex justify-content-center">
+    <svg class="ejercicio-icon arrow pointer" [ngClass]="{disabled: disableMoveDown}" (click)="!disableMoveDown && onMoveDown.emit(true)">
+      <use xlink:href="../../../../assets/images/icons.svg#arrow-down-icon"></use>
+    </svg>
+    <svg class="ejercicio-icon arrow up pointer" [ngClass]="{disabled: disableMoveUp}" (click)="!disableMoveUp && onMoveUp.emit(true)">
+      <use xlink:href="../../../../assets/images/icons.svg#arrow-down-icon"></use>
+    </svg>
+    <svg class="ejercicio-icon delete pointer" (click)="onDelete.emit(true)">
+      <use xlink:href="../../../../assets/images/icons.svg#remove-circle-icon"></use>
+    </svg>
+  </div>
+</div>

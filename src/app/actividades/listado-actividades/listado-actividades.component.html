@@ -12,7 +12,7 @@
     {{column.name}}
   </ng-template>
   <ng-template #editTmpl let-row="row" let-value="value">
-    <app-edit-button [routerLink]="['/actividades/editar', row.id]"></app-edit-button>
-    <app-delete-button (click)="borrarAlumno(row.id)"></app-delete-button>
+    <app-edit-button [routerLink]="row.id + '/editar'"></app-edit-button>
+    <app-delete-button (click)="eliminarActividad(row.id)"></app-delete-button>
   </ng-template>
 </div>

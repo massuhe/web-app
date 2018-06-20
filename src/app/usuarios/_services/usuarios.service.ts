@@ -41,6 +41,11 @@ export class UsuariosService {
     return this.http.delete(`${environment.apiBaseUrl}/usuarios/${idUsuario}`);
   }
 
+  cambiarContrasena(idUsuario: number, password: string): Observable<any> {
+    const endpoint = idUsuario ? `usuarios/${idUsuario}/contrasena` : 'contrasena';
+    return this.http.put(`${environment.apiBaseUrl}/${endpoint}`, {password});
+  }
+
   protected getFilterGroups(search?) {
     const f = {
       includes: ['rol'],

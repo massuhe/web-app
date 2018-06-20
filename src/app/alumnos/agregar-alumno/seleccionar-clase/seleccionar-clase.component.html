@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleAgregar()" [disabled]="!actividades.length">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleAgregar()" [disabled]="!actividades.length || !claseSeleccionada">
       Aceptar
     </button>
     <button type="button" class="btn btn-outline-porange" (click)="modal.hide()">Cancelar</button>

@@ -40,10 +40,64 @@ export const MULTISELECT_SETTINGS: IMultiSelectSettings = {
 
 /* Mensajes del dialogo */
 export const GENERIC_ERROR_MESSAGE = 'Se ha producido un error inesperado';
-export const CONFIRM_MESSAGE = '#entidad# será#n# #accion#. ¿Desea continuar?';
-export const SUCCESS_MESSAGE = '#entidad# se ha#n# #accion# correctamente';
+export const CONFIRM_MESSAGE = '#articulo# #entidad# #ser# #accion#. ¿Desea continuar?';
+export const SUCCESS_MESSAGE = '#articulo# #entidad# #ser# #accion# correctamente';
 
 /* Acciones del dialogo */
-export const GUARDAR = 'guardado';
-export const ELIMINAR = 'eliminado';
-export const ACTUALIZAR = 'actualizado';
+export const GUARDAR = {
+  masculino: {
+    singular: 'guardado',
+    plural: 'guardados'
+  },
+  femenino: 'guardada'
+};
+
+export const ELIMINAR = {
+  masculino: 'eliminado',
+  femenino: 'eliminada'
+};
+
+export const ACTUALIZAR = {
+  masculino: 'actualizado',
+  femenino: 'actualizada'
+};
+
+export const CAMBIAR = {
+  masculino: 'cambiado',
+  femenino: 'cambiada'
+};
+
+export const CONFIRMAR = {
+  masculino: 'confirmado',
+  femenino: 'confirmada'
+};
+
+export const CANCELAR = {
+  masculino: 'cancelado',
+  femenino: 'cancelada'
+};
+
+export const SUSPENDER = {
+  masculino: 'suspendidos',
+  femenino: 'suspendidas'
+};
+
+export const HABILITAR = {
+  masculino: 'habilitados',
+  femenino: 'habilitadas'
+};
+
+export enum ENTIDADES {
+  ACTIVIDAD = 'actividad',
+  ALUMNO = 'alumno',
+  CLASE = 'clase',
+  CLASES = 'clases',
+  ASISTENCIA = 'asistencia',
+  MOVIMIENTOS = 'movimientos',
+  PAGO = 'pago',
+  ITEM = 'item de inventario',
+  RUTINA = 'rutina',
+  CAMBIOS = 'cambios',
+  USUARIO = 'usuario',
+  CONTRASENA = 'contraseña'
+}

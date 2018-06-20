@@ -24,6 +24,7 @@ import { InventarioModule } from './inventario/inventario.module';
 import { FinanzasModule } from './finanzas/finanzas.module';
 import { RutinasModule } from './rutinas/rutinas.module';
 import { EjerciciosModule } from './ejercicios/ejercicios.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEsAr);
 
@@ -37,14 +38,13 @@ registerLocaleData(localeEsAr);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CoreModule,
     AppRoutingModule,
     NavModule,
     HomeModule,
-    AlumnosModule,
     UsuariosModule,
     ClasesModule,
-    RutinasModule,
     InventarioModule,
     SeguridadModule,
     ActividadesModule,

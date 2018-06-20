@@ -1,0 +1,13 @@
+<div class="d-flex mt-2" [formGroup]="detalleItem">
+  <div class="col-9 d-flex p-0 bg-white border rounded">
+    <div class="col-7 d-flex align-items-center">
+      <span>{{detalleItem.value['ejercicioNombre']}}</span>
+    </div>
+    <div class="col-5 d-flex align-items-center">
+      <span>{{detalleItem.value['repeticiones']}}</span>
+    </div>
+  </div>
+  <div class="col-3">
+    <input class="form-control h-100 mw-100" maxlength="10" formControlName="carga">
+  </div>
+</div>

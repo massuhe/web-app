@@ -1,0 +1,9 @@
+@import '../../../assets/scss/helpers/_variables.scss';
+
+.detalles-header {
+    @media (min-width: 992px) {
+        flex: 0 0 calc(83.333333% - 1rem);
+    }
+    background: $verdePrimario;
+    color: white;
+}

@@ -12,6 +12,7 @@ export class Alumno extends Usuario {
     observacionesAntecMedicos: string;
     clases: Clase[];
     deudas?: IDeuda[];
+    imagenPerfil?: string;
 
     fillFromJson(json)  {
         this.id = json.alumno.id;
@@ -30,6 +31,7 @@ export class Alumno extends Usuario {
         this.deudas = json.debe ? json.debe.map(
             d => ({anio: Number(d.anio), mes: Number(d.mes), debe: Number(d.debe)})
         ) : undefined;
+        this.imagenPerfil = json.alumno ? json.alumno.imagen_perfil : undefined;
     }
 
     mapClases(clases): Clase[] {

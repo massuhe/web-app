@@ -1,19 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ClasesService } from '../services/clases.service';
 import { ActividadesService } from '../../actividades/services/actividades.service';
 import { DialogService } from '../../core/dialog.service';
 import * as startOfWeek from 'date-fns/start_of_week';
-import { tap, mergeMap, switchMap } from 'rxjs/operators';
+import { tap, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 import { Dia } from '../models/dia';
 import { Clase } from '../models/clase';
+import { Subject } from 'rxjs/Subject';
+import AppMessages from '../../_utils/AppMessages';
+import { ENTIDADES, CANCELAR, CONFIRMAR } from '../../app-constants';
 
 @Component({
   selector: 'app-listado-clases-alumno',
   templateUrl: './listado-clases-alumno.component.html',
   styleUrls: ['./listado-clases-alumno.component.scss']
 })
-export class ListadoClasesAlumnoComponent implements OnInit {
-
+export class ListadoClasesAlumnoComponent implements OnInit, OnDestroy {
   @ViewChild('sched') scheduler;
 
   horas;
@@ -26,6 +28,7 @@ export class ListadoClasesAlumnoComponent implements OnInit {
   clases;
   puedeRecuperar;
   showScreen;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     private clasesService: ClasesService,
@@ -40,9 +43,18 @@ export class ListadoClasesAlumnoComponent implements OnInit {
       .getActividadesHoraLimite()
       .pipe(
         tap(acts => this.setActividades(acts)),
-        mergeMap(_ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
+        mergeMap(_ =>
+          this.clasesService.getListadoClases(
+            this.week,
+            this.actividadSeleccionada
+          )
+        ),
+        takeUntil(this.destroy$)
       )
-      .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
+      .subscribe(
+        res => this.populateScheduler(res),
+        err => this.handleErrors(err)
+      );
   }
 
   handleWeekChange(week: Date) {
@@ -52,33 +64,78 @@ export class ListadoClasesAlumnoComponent implements OnInit {
   }
 
   handleActivityChange(actividadId: number) {
-    this.actividadSeleccionada = this.actividades.find(a => a.id === actividadId);
+    this.actividadSeleccionada = this.actividades.find(
+      a => a.id === actividadId
+    );
     this.showLoader = true;
     this.getClases();
   }
 
   cancelarClase(dia: Dia, clase: Clase) {
-    this.dialogService.confirm(`Está por cancelar su asistencia a la clase del ${dia.fecha} ${clase.horaInicio}. ¿Desea continuar?`)
-      .then( _ => {
-        this.showLoader = true;
-        this.clasesService.cancelarClase(clase.id).pipe(
-          tap(_r => this.handleCancelarResponse(clase)),
-          switchMap(__ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
-        )
-        .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
-      });
+    this.dialogService
+      .confirm(
+        `Está por cancelar su asistencia a la clase del ${
+          dia.fecha
+        } ${clase.horaInicio.substring(0, 5)}. ¿Desea continuar?`
+      )
+      .then(
+        _ => {
+          this.showLoader = true;
+          this.clasesService
+            .cancelarClase(clase.id)
+            .pipe(
+              tap(_r => this.handleCancelarResponse(clase)),
+              switchMap(__ =>
+                this.clasesService.getListadoClases(
+                  this.week,
+                  this.actividadSeleccionada
+                )
+              ),
+              takeUntil(this.destroy$)
+            )
+            .subscribe(
+              res => this.populateScheduler(res),
+              err => this.handleErrors(err)
+            );
+        },
+        cancelar => {}
+      );
   }
 
   recuperarClase(dia: Dia, clase: Clase) {
-    this.dialogService.confirm(`Está por confirmar su asistencia a la clase del ${dia.fecha} ${clase.horaInicio}. ¿Desea continuar?`)
-      .then( _ => {
-        this.showLoader = true;
-        this.clasesService.recuperarClase(clase.id).pipe(
-          tap(_r => this.handleRecuperarResponse(clase)),
-          switchMap(__ => this.clasesService.getListadoClases(this.week, this.actividadSeleccionada))
-        )
-        .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
-      });
+    this.dialogService
+      .confirm(
+        `Está por confirmar su asistencia a la clase del ${dia.fecha} ${
+          clase.horaInicio.substring(0, 5)
+        }. ¿Desea continuar?`
+      )
+      .then(
+        _ => {
+          this.showLoader = true;
+          this.clasesService
+            .recuperarClase(clase.id)
+            .pipe(
+              tap(_r => this.handleRecuperarResponse(clase)),
+              switchMap(__ =>
+                this.clasesService.getListadoClases(
+                  this.week,
+                  this.actividadSeleccionada
+                )
+              ),
+              takeUntil(this.destroy$)
+            )
+            .subscribe(
+              res => this.populateScheduler(res),
+              err => this.handleErrors(err)
+            );
+        },
+        cancelar => {}
+      );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   private populateScheduler(res) {
@@ -95,13 +152,17 @@ export class ListadoClasesAlumnoComponent implements OnInit {
 
   private handleErrors(err) {
     this.showLoader = false;
-    this.dialogService.error(err.error.message || 'Se ha producido un error inesperado');
+    this.dialogService.error(AppMessages.error(err));
   }
 
   private getClases() {
     this.clasesService
       .getListadoClases(this.week, this.actividadSeleccionada)
-      .subscribe(res => this.populateScheduler(res), err => this.handleErrors(err));
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        res => this.populateScheduler(res),
+        err => this.handleErrors(err)
+      );
   }
 
   private setActividades(a) {
@@ -123,7 +184,9 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     clase.asiste = false;
     clase.lugaresDisponibles++;
     this.showLoader = false;
-    this.dialogService.success('La asistencia ha sido cancelada correctamente');
+    this.dialogService.success(
+      AppMessages.success(ENTIDADES.ASISTENCIA, CANCELAR, true, false)
+    );
     this.refreshScheduler();
   }
 
@@ -131,7 +194,9 @@ export class ListadoClasesAlumnoComponent implements OnInit {
     clase.asiste = true;
     clase.lugaresDisponibles--;
     this.showLoader = false;
-    this.dialogService.success('La asistencia ha sido confirmada correctamente');
+    this.dialogService.success(
+      AppMessages.success(ENTIDADES.ASISTENCIA, CONFIRMAR, true, false)
+    );
     this.refreshScheduler();
   }
 
@@ -147,5 +212,4 @@ export class ListadoClasesAlumnoComponent implements OnInit {
   private refreshScheduler(reset = false) {
     setTimeout(() => this.scheduler.adjustHeight(reset));
   }
-
 }

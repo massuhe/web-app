@@ -1,0 +1,72 @@
+<form [formGroup]="form">
+  <div class="form-group row">
+    <label for="staticEmail" class="w-100 align-items-center col-form-label col-4 d-flex py-0">Email</label>
+    <div class="col-8">
+      <input type="text" readonly class="form-control-plaintext w-100" formControlName="email">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="align-items-center col-form-label col-4 d-flex py-0">Domicilio</label>
+    <div class="col-8">
+      <input type="text" class="w-100"
+        [readonly]="!editMode" 
+        [ngClass]="{'form-control-plaintext': !editMode, 'form-control': editMode}" 
+        formControlName="domicilio">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="align-items-center col-form-label col-4 d-flex py-0">Tel&eacute;fono</label>
+    <div class="col-8">
+      <input type="number" class="w-100"
+        [readonly]="!editMode" 
+        [ngClass]="{'form-control-plaintext': !editMode, 'form-control': editMode}" 
+        formControlName="telefono">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="align-items-center col-form-label col-4 d-flex py-0">Antecedentes deportivos</label>
+    <div class="col-3 col-lg-2">
+      <!-- <select class="form-control" *ngIf="editMode" formControlName="tieneAntecDeportivos">
+        <option [value]="true">S&iacute;</option>
+        <option [value]="false">No</option>
+      </select> -->
+      <span class="font-weight-normal content-black">{{form.get('tieneAntecDeportivos').value ? 'Sí' : 'No'}}</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-form-label col-4 d-flex py-0">Observaciones antecedentes deportivos</label>
+    <div class="col-8">
+      <span class="font-weight-normal content-black">{{form.get('observacionesAntecDeportivos').value}}</span>
+      <!-- <textarea type="text" class="w-100"
+        readonly
+        [ngClass]="{'form-control-plaintext': !editMode, 'form-control': editMode}" 
+        formControlName="observacionesAntecDeportivos">
+      </textarea> -->
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="align-items-center col-form-label col-4 d-flex py-0">Antecedentes m&eacute;dicos</label>
+    <div class="col-3 col-lg-2">
+      <!-- <select class="form-control" *ngIf="editMode" formControlName="tieneAntecMedicos">
+        <option [value]="true">S&iacute;</option>
+        <option [value]="false">No</option>
+      </select> -->
+      <span class="font-weight-normal content-black">{{form.get('tieneAntecMedicos').value ? 'Sí' : 'No'}}</span>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-form-label col-4 d-flex py-0 ">Observaciones antecedentes m&eacute;dicos</label>
+    <div class="col-8">
+      <span class="font-weight-normal content-black">{{form.get('observacionesAntecMedicos').value}}</span>
+      <!-- <textarea type="text" class="w-100" 
+        readonly
+        [ngClass]="{'form-control-plaintext': !editMode, 'form-control': editMode}" 
+        formControlName="observacionesAntecMedicos">
+      </textarea> -->
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-5" *ngIf="editMode">
+    <button type="button" class="btn btn-outline-porange" (click)="onGuardar.emit(true)">Guardar</button>
+    <button type="button" class="btn btn-outline-secondary ml-3" (click)="onCancelar.emit(true)">Cancelar</button>
+  </div>
+</form>

@@ -43,10 +43,13 @@
   <app-gestion-serie-rutina 
     *ngFor="let serie of dia.series" 
     [serie]="serie" 
-    [semana]="_semana"
+    [semana]="semana"
     [fecha]="dateArray[indexDateSelected]">
   </app-gestion-serie-rutina>
   <div class="d-flex justify-content-end mt-3">
-    <button type="button" class="btn btn-outline-info">Cargar detalles</button>
+    <button type="button" 
+      class="btn btn-outline-porange" 
+      [routerLink]="[numeroDia, 'cargarDetalles']"
+      *ngIf="showCargarDetalles">Cargar detalles</button>
   </div>
 </div>

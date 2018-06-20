@@ -30,6 +30,7 @@ import { TodosIconComponent } from './todos-icon/todos-icon.component';
 import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
 import { CapitalizePipe } from './capitalize/capitalize.pipe';
+import { CambiarContrasenaComponent } from './cambiar-contrasena/cambiar-contrasena.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { CapitalizePipe } from './capitalize/capitalize.pipe';
     TodosIconComponent,
     PaymentButtonComponent,
     SpanishMonthPipe,
-    CapitalizePipe
+    CapitalizePipe,
+    CambiarContrasenaComponent
   ],
   exports: [
     DeleteButtonComponent,

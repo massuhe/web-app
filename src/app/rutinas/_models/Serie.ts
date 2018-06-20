@@ -9,7 +9,7 @@ export class Serie {
 
     fillFromJson(json: any): void {
         this.id = json.id;
-        this.macroDescanso = json.macroDescanso;
+        this.macroDescanso = json.macro_descanso;
         this.observaciones = json.observaciones;
         this.vueltas = json.vueltas;
     }

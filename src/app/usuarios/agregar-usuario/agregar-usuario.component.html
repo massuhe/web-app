@@ -44,9 +44,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label>Domicilio
-              <span class="required">*</span>
-            </label>
+            <label>Domicilio</label>
             <input class="form-control" formControlName="domicilio" />
             <div class="invalidControl" *ngIf="errors.domicilio.length !== 0 && form.get('domicilio').dirty">
               {{ errors.domicilio }}
@@ -73,6 +71,30 @@
           </div>
         </div>
       </div>
+      <div *ngIf="form.get('passwordGroup')" >
+        <hr/>
+        <div class="row" formGroupName="passwordGroup">
+            <div class="col-sm-4">
+               <div class="form-group">
+                   <label>Contrase&ntilde;a <span class="required">*</span></label>
+                   <input type="password" class="form-control" formControlName="password">
+                   <div class="invalidControl" *ngIf="passwordGroup.get('password').invalid && passwordGroup.get('password').dirty">
+                        {{passwordGroup.get('password').errors['required'] &&  'El campo es requerido '}}
+                        {{passwordGroup.get('password').errors['min'] &&  'Debe tener al menos 6 caracteres '}}
+                   </div>
+               </div>
+           </div>
+           <div class="col-sm-4">
+            <div class="form-group">
+                <label>Confirmar contrase&ntilde;a </label>
+                <input type="password" class="form-control" formControlName="passwordConfirm">
+                <div class="invalidControl" *ngIf="errors.passwordGroup.length !== 0 && passwordGroup.get('passwordConfirm').dirty && passwordGroup.get('passwordConfirm').dirty">
+                    {{ errors.passwordGroup.join('. ') }}
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
     </fieldset>
     <div class="d-flex justify-content-end mb-4">
       <button type="submit" class="btn btn-outline-porange" name="enviar">Guardar</button>

@@ -1,18 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { ItemInventario } from '../_models/itemInventario';
-import { AgregarInventarioComponent } from '../agregar-inventario/agregar-inventario.component';
 import { InventarioService } from '../_services/inventario.service';
 import { DialogService } from '../../core/dialog.service';
-import { GENERIC_ERROR_MESSAGE, ELIMINAR } from '../../app-constants';
-import { concatMap, switchMap, concat, mergeMap, finalize } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { ELIMINAR, ENTIDADES } from '../../app-constants';
+import { switchMap, mergeMap, takeUntil, share } from 'rxjs/operators';
 import { from } from 'rxjs/observable/from';
 import { ImagesService } from '../../core/images.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { HOLDER_PATH } from '../_constants/agregar-inventario';
 import AppMessages from '../../_utils/AppMessages';
-
-const ENTIDAD = 'El item';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-gestion-inventario',
@@ -20,7 +15,7 @@ const ENTIDAD = 'El item';
   styleUrls: ['./gestion-inventario.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class GestionInventarioComponent implements OnInit {
+export class GestionInventarioComponent implements OnInit, OnDestroy {
 
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
@@ -32,13 +27,13 @@ export class GestionInventarioComponent implements OnInit {
   showLoader: boolean;
   showScreenLoader: boolean;
   item: ItemInventario;
-  private items: ItemInventario[];
+  items: ItemInventario[];
+  private destroy$ = new Subject<boolean>();
 
   constructor(
     private inventarioService: InventarioService,
     private dialogService: DialogService,
-    private imagesService: ImagesService,
-    private sanitizer: DomSanitizer
+    private imagesService: ImagesService
   ) { }
 
   ngOnInit() {
@@ -72,19 +67,16 @@ export class GestionInventarioComponent implements OnInit {
   }
 
   borrarItem(itemId: number): void {
-    this.dialogService.confirm(AppMessages.confirm(ENTIDAD, ELIMINAR))
+    this.dialogService.confirm(AppMessages.confirm(ENTIDADES.ITEM, ELIMINAR))
     .then(
       ok => {
         this.showScreenLoader = true;
         this.inventarioService.eliminarInventario(itemId)
+          .pipe(
+            takeUntil(this.destroy$)
+          )
           .subscribe(
-            _ => {
-              this.dialogService.success(AppMessages.success(ENTIDAD, ELIMINAR));
-              this.showScreenLoader = false;
-              const itemBorrarId = this.items.findIndex(i => i.id === itemId);
-              this.items = [...this.items.slice(0, itemBorrarId), ...this.items.slice(itemBorrarId + 1)];
-              this.fillRows();
-            },
+            _ => this.successBorrarItems(itemId),
             this.handleErrors.bind(this)
           );
       },
@@ -96,6 +88,11 @@ export class GestionInventarioComponent implements OnInit {
     this.rows = this.items.filter(
       r => r.descripcion.toUpperCase().includes(filterText)
     );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   private initTable(): void {
@@ -115,40 +112,45 @@ export class GestionInventarioComponent implements OnInit {
 
   private fetchData(): void {
     this.showLoader = true;
-    this.inventarioService.getInventarios()
+    const getInventario$ = this.inventarioService.getInventarios()
       .pipe(
-        switchMap(
-          items => from(items),
-          (items, item) => ({items, item})
-        ),
+        share(),
+        takeUntil(this.destroy$)
+      );
+    getInventario$
+      .subscribe(
+        items => this.successGetItemsInventario(items),
+        error => this.handleErrors(error)
+      );
+    getInventario$
+      .pipe(
+        switchMap(items => from(items)),
         mergeMap(
-          ({items, item}) => this.imagesService.getInventarioImage(item.imagePath),
-          ({items, item}, img, index) => ({image: {img, idItem: item.id}, items, index})
+          item => this.imagesService.getInventarioImage(item.imagePath),
+          (item, img) => ({img, idItem: item.id})
         )
       )
       .subscribe(
-        ({image, items, index}) => {
-          this.populateTable(items, index);
-          this.setImage(image);
-        },
-        res => this.handleErrors(res),
-        () => this.showLoader = false
+        image => this.successFetchData(image),
+        res => this.handleErrors(res)
       );
   }
 
-  private populateTable(items: ItemInventario[], index: number) {
-    if (index === 0) {
-      this.showLoader = false;
-      this.items = items;
-      this.fillRows();
-    }
+  private successGetItemsInventario(items: ItemInventario[]) {
+    this.showLoader = false;
+    this.items = items;
+    this.fillRows();
   }
 
-  private fillRows() {
+  private fillRows(): void {
     this.rows = this.items.slice();
   }
 
-  private setImage(image) {
+  private successFetchData(image): void {
+    this.setImage(image);
+  }
+
+  private setImage(image): void {
     const reader = new FileReader();
     const {idItem, ...rest} = image;
     const item = this.items.find(i => i.id === idItem);
@@ -159,10 +161,18 @@ export class GestionInventarioComponent implements OnInit {
     }
   }
 
+  private successBorrarItems(itemId: number) {
+    this.dialogService.success(AppMessages.success(ENTIDADES.ITEM, ELIMINAR));
+    this.showScreenLoader = false;
+    const itemBorrarId = this.items.findIndex(i => i.id === itemId);
+    this.items = [...this.items.slice(0, itemBorrarId), ...this.items.slice(itemBorrarId + 1)];
+    this.fillRows();
+  }
+
   private handleErrors(res) {
     this.showLoader = false;
     this.showScreenLoader = false;
-    this.dialogService.error(res.error.clientMessage || GENERIC_ERROR_MESSAGE);
+    this.dialogService.error(AppMessages.error(res));
   }
 
 

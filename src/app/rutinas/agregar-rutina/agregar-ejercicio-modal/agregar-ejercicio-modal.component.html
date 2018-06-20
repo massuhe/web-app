@@ -1,0 +1,26 @@
+<form [formGroup]="form">
+    <app-modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
+        <div class="app-modal-body">
+            <app-content-loader *ngIf="!showContent"></app-content-loader>
+            <div *ngIf="showContent">
+                <label>Tipo de ejercicio</label>
+                <select class="form-control" formControlName="tipoEjercicio">
+                    <option *ngFor="let tipoEjercicio of tiposEjercicios" [value]="tipoEjercicio.id">{{tipoEjercicio.nombre}}</option>
+                </select>
+                <label class="mt-3">Ejercicio</label>
+                <select class="form-control" formControlName="ejercicio">
+                    <option *ngFor="let ejer of tipoEjercicio.ejercicios" [value]="ejer.id">{{ejer.nombre}}</option>
+                </select>
+                <div class="invalidControl" *ngIf="form.get('ejercicio').invalid && form.get('ejercicio').dirty">
+                    El campo es requerido
+                </div>
+            </div>
+        </div>
+        <div class="app-modal-footer">
+            <button type="submit" class="btn btn-outline-porange mr-2" [disabled]="!showContent" (click)="handleAgregar()">
+                Agregar
+            </button>
+            <button type="button" class="btn btn-outline-porange" (click)="closeModal()">Cancelar</button>
+        </div>
+    </app-modal>
+</form>

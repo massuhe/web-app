@@ -25,6 +25,7 @@ import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago
 import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
 import { ReporteIngresosAlumnosComponent } from './alumnos/reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
 import { GestionRutinaComponent } from './rutinas/gestion-rutina/gestion-rutina.component';
+import { AgregarRutinaComponent } from './rutinas/agregar-rutina/agregar-rutina.component';
 
 const routes: Routes = [
   {
@@ -47,25 +48,15 @@ const routes: Routes = [
       },
       {
         path: 'alumnos',
-        component: ListadoAlumnosComponent,
-        canActivate: [CanActivateAuthGuard],
-        data: {roles: ['VER_USUARIOS']}
+        loadChildren: './alumnos/alumnos.module#AlumnosModule'
       },
       {
-        path: 'alumnos/reporte',
-        component: ReporteIngresosAlumnosComponent
+        path: 'perfil',
+        loadChildren: './alumnos/alumnos.module#AlumnosModule'
       },
       {
-        path: 'alumnos/agregar',
-        component: AgregarAlumnoComponent,
-        canActivate: [CanActivateAuthGuard],
-        data: {roles: ['CREAR_USUARIO']}
-      },
-      {
-        path: 'alumnos/editar/:idAlumno',
-        component: AgregarAlumnoComponent,
-        canActivate: [CanActivateAuthGuard],
-        data: {roles: ['MODIFICAR_USUARIO']}
+        path: 'cambiarContrasena',
+        loadChildren: './alumnos/alumnos.module#AlumnosModule'
       },
       {
         path: 'clases',
@@ -97,7 +88,7 @@ const routes: Routes = [
         data: {roles: ['CREAR_ACTIVIDAD']}
       },
       {
-        path: 'actividades/editar/:idActividad',
+        path: 'actividades/:idActividad/editar',
         component: AgregarActividadComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['MODIFICAR_ACTIVIDAD']}
@@ -115,7 +106,7 @@ const routes: Routes = [
         data: {roles: ['CREAR_USUARIO']}
       },
       {
-        path: 'usuarios/editar/:idUsuario',
+        path: 'usuarios/:idUsuario/editar',
         component: AgregarUsuarioComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['MODIFICAR_USUARIO']}
@@ -133,7 +124,7 @@ const routes: Routes = [
         data: {roles: ['CREAR_ROL']}
       },
       {
-        path: 'roles/editar/:idRol',
+        path: 'roles/:idRol/editar',
         component: AgregarRolComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['MODIFICAR_ROL']}
@@ -157,10 +148,16 @@ const routes: Routes = [
         data: {roles: ['VER_MOVIMIENTOS', 'CREAR_MOVIMIENTO', 'VER_CUOTAS']}
       },
       {
-        path: 'rutinas',
-        component: GestionRutinaComponent,
-        // canActivate: [CanActivateAuthGuard],
-        // data: {roles: ['VER_RUTINA']}
+        path: 'alumnos/:idAlumno/rutina',
+        loadChildren: './rutinas/rutinas.module#RutinasModule',
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_RUTINAS', 'VER_RUTINA', 'CREAR_RUTINA', 'MODIFICAR_RUTINA', 'ELIMINAR_RUTINA', 'CARGAR_DETALLES']}
+      },
+      {
+        path: 'rutina',
+        loadChildren: './rutinas/rutinas.module#RutinasModule',
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_RUTINA_ALUMNO', 'CARGAR_DETALLES_ALUMNO']}
       }
     ]
   },

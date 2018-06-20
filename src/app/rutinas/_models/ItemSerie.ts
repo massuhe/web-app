@@ -10,7 +10,7 @@ export class ItemSerie {
 
     fillFromJson(json: any): void {
         this.id = json.id;
-        this.microDescanso = json.microDescanso;
+        this.microDescanso = json.micro_descanso;
         this.observaciones = json.observaciones;
     }
 }

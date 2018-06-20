@@ -1,10 +1,9 @@
 <app-navbar>
   <app-navbar-item [itemId]="1" path="home">Home</app-navbar-item>
-  <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2" [permisos]="['VER_PERFIL', 'GESTIONAR_RUTINA', 'EDITAR_PERFIL', 'CAMBIAR_CONTRASENA']">
-    <app-item-dropdown path="/" [permisos]="['VER_PERFIL']">Ver Perfil</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['GESTIONAR_RUTINA']">Rutina</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['EDITAR_PERFIL']">Editar Datos</app-item-dropdown>
-    <app-item-dropdown path="/" [permisos]="['CAMBIAR_CONTRASENA']">Cambiar Contrasena</app-item-dropdown>
+  <app-navbar-item-dropdown [nombre]="'Mi Perfil'" [itemId]="2" [permisos]="['VER_PERFIL_ALUMNO', 'VER_RUTINA_ALUMNO', 'EDITAR_PERFIL', 'CAMBIAR_CONTRASENA']">
+    <app-item-dropdown path="perfil" [permisos]="['VER_PERFIL_ALUMNO']">Ver Perfil</app-item-dropdown>
+    <app-item-dropdown path="rutina" [permisos]="['VER_RUTINA_ALUMNO']">Rutina</app-item-dropdown>
+    <app-item-dropdown path="cambiarContrasena" [permisos]="['CAMBIAR_CONTRASENA']">Cambiar Contrasena</app-item-dropdown>
   </app-navbar-item-dropdown>
   <app-navbar-item-dropdown [nombre]="'Clases'" [itemId]="3" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO', 'SUSPENDER_CLASES']">
     <app-item-dropdown path="clases" [permisos]="['VER_LISTADO_CLASES_ESPECIFICAS', 'VER_LISTADO_CLASES_ESPECIFICAS_ALUMNO']">Listado</app-item-dropdown>

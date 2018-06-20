@@ -33,22 +33,8 @@ export class AlumnosService {
       .pipe(map((json: any) => json.map(a => this.toAlumno(a))));
   }
 
-  getById(
-    idAlumno: number,
-    options: GetAlumnoOptions = {}
-  ): Observable<Alumno> {
-    let url = `${environment.apiBaseUrl}/usuarios`;
-    if (options.useAlumnoId) {
-      const filter = {
-        filter_groups: [
-          { filters: [{ key: 'idAlumno', value: idAlumno, operator: 'eq' }] }
-        ]
-      };
-      url += `?${this.serializeService.serialize(filter)}`;
-    } else {
-      url += `/${idAlumno}?`;
-    }
-    url += `&includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`;
+  getById(idAlumno: number, options: GetAlumnoOptions = {}): Observable<Alumno> {
+    const url = this.getFetchAlumnoUrl(idAlumno, options);
     return this.http
       .get(url)
       .pipe(
@@ -67,7 +53,9 @@ export class AlumnosService {
   }
 
   editarAlumno(id: number, data) {
-    return this.http.put(`${environment.apiBaseUrl}/usuarios/${id}`, data);
+    const endpoint = id ? `usuarios/${id}` : 'perfil';
+    const url = `${environment.apiBaseUrl}/${endpoint}`;
+    return this.http.put(url, data);
   }
 
   reporte(fechaDesde: Date, fechaHasta: Date, frecuencia: number): Observable<IReporte[]> {
@@ -97,5 +85,53 @@ export class AlumnosService {
       });
     }
     return f;
+  }
+
+  protected getFetchAlumnoUrl(idAlumno: number, options: GetAlumnoOptions): string {
+    const urlBase = environment.apiBaseUrl;
+    const endpoint = this.getAlumnoUrlEndpoint(idAlumno, options);
+    const params = this.getAlumnoUrlParams(idAlumno, options).join('&');
+    return `${urlBase}/${endpoint}?${params}`;
+
+    // if (idAlumno) {
+    //   url += '/usuarios';
+    //   if (options.useAlumnoId) {
+    //     const filter = {
+    //       filter_groups: [
+    //         { filters: [{ key: 'idAlumno', value: idAlumno, operator: 'eq' }] }
+    //       ]
+    //     };
+    //     url += `?${this.serializeService.serialize(filter)}`;
+    //   } else {
+    //     url += `/${idAlumno}?`;
+    //   }
+    // } else {
+    //   url += '/perfil?';
+    // }
+    // url += `&includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`;
+    // return url;
+  }
+
+  protected getAlumnoUrlEndpoint(idAlumno: number, options: GetAlumnoOptions): string {
+    if (!idAlumno) {
+      return 'perfil';
+    }
+    if (options.useAlumnoId) {
+      return 'usuarios';
+    }
+    return `usuarios/${idAlumno}`;
+  }
+
+  protected getAlumnoUrlParams(idAlumno: number, options: GetAlumnoOptions): string[] {
+    const params = [`includes[]=alumno${options.withClases ? '.clases.actividad' : ''}`];
+    if (options.useAlumnoId) {
+      const filter = {
+        filter_groups: [
+          { filters: [{ key: 'idAlumno', value: idAlumno, operator: 'eq' }] }
+        ]
+      };
+      params.push(this.serializeService.serialize(filter));
+    }
+    return params;
   }
 }
