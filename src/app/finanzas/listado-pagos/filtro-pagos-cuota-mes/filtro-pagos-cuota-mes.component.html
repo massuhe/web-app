@@ -1,0 +1,18 @@
+<fieldset class="form-group px-4">
+  <legend class="px-3 ml-1">Buscar por mes de cuota</legend>
+  <div class="row align-items-end">
+    <div class="col-md-6 col-lg-5 form-group">
+      <label for="">Mes</label>
+      <select class="form-control" [(ngModel)]="mesSelected">
+        <option *ngFor="let mes of meses; let i = index" [value]="i + 1">{{mes}}</option>
+      </select>
+    </div>
+    <div class="col-md-6 col-lg-5 form-group">
+      <label for="">A&ntilde;o</label>
+      <input type="number" class="form-control" [(ngModel)]="anio"/>
+    </div>
+    <div class="col-12 col-lg-2 form-group">
+      <app-search-button (click)="handleClick()"></app-search-button>
+    </div>
+  </div>
+</fieldset>

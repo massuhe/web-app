@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home/home.component';
-import { ListadoAlumnosComponent } from './alumnos/listado-alumnos/listado-alumnos.component';
-import { AgregarAlumnoComponent } from './alumnos/agregar-alumno/agregar-alumno.component';
 import { ListadoClasesComponent } from './clases/listado-clases/listado-clases.component';
 import { ListadoClasesAlumnoComponent } from './clases/listado-clases-alumno/listado-clases-alumno.component';
 import { ListadoActividadesComponent } from './actividades/listado-actividades/listado-actividades.component';
@@ -23,9 +21,7 @@ import { AgregarRolComponent } from './seguridad/agregar-rol/agregar-rol.compone
 import { GestionInventarioComponent } from './inventario/gestion-inventario/gestion-inventario.component';
 import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago.component';
 import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
-import { ReporteIngresosAlumnosComponent } from './alumnos/reporte-ingresos-alumnos/reporte-ingresos-alumnos.component';
-import { GestionRutinaComponent } from './rutinas/gestion-rutina/gestion-rutina.component';
-import { AgregarRutinaComponent } from './rutinas/agregar-rutina/agregar-rutina.component';
+import { ListadoPagosComponent } from './finanzas/listado-pagos/listado-pagos.component';
 
 const routes: Routes = [
   {
@@ -134,6 +130,12 @@ const routes: Routes = [
         component: GestionInventarioComponent,
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_ITEMS_INVENTARIO']}
+      },
+      {
+        path: 'pagos',
+        component: ListadoPagosComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_LISTADO_PAGOS']}
       },
       {
         path: 'pagos/registrar',

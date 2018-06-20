@@ -15,6 +15,10 @@ import { MovimientosFijosComponent } from './balance-general/movimientos-fijos/m
 import { MovimientosService } from './_services/movimientos.service';
 import { AgregarEditarMovimientoComponent } from './balance-general/agregar-editar-movimiento/agregar-editar-movimiento.component';
 import { FlujoCajaComponent } from './balance-general/flujo-caja/flujo-caja.component';
+import { PagosService } from './_services/pagos.service';
+import { ListadoPagosComponent } from './listado-pagos/listado-pagos.component';
+import { FiltroPagosCuotaMesComponent } from './listado-pagos/filtro-pagos-cuota-mes/filtro-pagos-cuota-mes.component';
+import { FiltroPagosAlumnoFechaComponent } from './listado-pagos/filtro-pagos-alumno-fecha/filtro-pagos-alumno-fecha.component';
 
 @NgModule({
   imports: [
@@ -30,11 +34,14 @@ import { FlujoCajaComponent } from './balance-general/flujo-caja/flujo-caja.comp
   declarations: [
     RegistrarPagoComponent,
     BuscarPagoComponent,
+    ListadoPagosComponent,
     BalanceGeneralComponent,
     MovimientosFijosComponent,
+    FiltroPagosCuotaMesComponent,
+    FiltroPagosAlumnoFechaComponent,
     AgregarEditarMovimientoComponent,
     FlujoCajaComponent
   ],
-  providers: [AlumnosService, CuotasService, MovimientosService]
+  providers: [AlumnosService, CuotasService, MovimientosService, PagosService]
 })
 export class FinanzasModule {}
