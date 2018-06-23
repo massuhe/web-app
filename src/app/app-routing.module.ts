@@ -22,6 +22,7 @@ import { GestionInventarioComponent } from './inventario/gestion-inventario/gest
 import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago.component';
 import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
 import { ListadoPagosComponent } from './finanzas/listado-pagos/listado-pagos.component';
+import { GestionEjercicioComponent } from './ejercicios/gestion-ejercicio/gestion-ejercicio.component';
 
 const routes: Routes = [
   {
@@ -160,6 +161,10 @@ const routes: Routes = [
         loadChildren: './rutinas/rutinas.module#RutinasModule',
         canActivate: [CanActivateAuthGuard],
         data: {roles: ['VER_RUTINA_ALUMNO', 'CARGAR_DETALLES_ALUMNO']}
+      },
+      {
+        path: 'ejercicios',
+        component: GestionEjercicioComponent
       }
     ]
   },

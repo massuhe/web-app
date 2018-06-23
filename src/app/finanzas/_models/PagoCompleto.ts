@@ -1,4 +1,4 @@
-import { Pago } from "./Pago";
+import { Pago } from './Pago';
 
 export class PagoCompleto extends Pago {
 
@@ -8,7 +8,7 @@ export class PagoCompleto extends Pago {
   anio: string;
   fechaPago: any;
   totalCuota: string;
-  
+
   fillFromJson(json: any): void {
     super.fillFromJson(json);
     this.apellido = json.cuota.alumno.usuario.apellido;

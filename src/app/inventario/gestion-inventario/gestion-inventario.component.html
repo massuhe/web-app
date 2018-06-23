@@ -4,7 +4,7 @@
 </div>
 <div class="container">
   <button [permisos]="['CREAR_ITEM_INVENTARIO']" type="button" class="btn btn-outline-porange mb-4" (click)="agregarItem()">
-    Agregar Item
+    Agregar item
   </button>
   <app-content-loader *ngIf="showLoader"></app-content-loader>
   <div *ngIf="items.length !== 0">

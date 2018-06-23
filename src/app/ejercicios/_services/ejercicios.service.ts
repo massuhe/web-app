@@ -15,6 +15,14 @@ export class EjerciciosService {
 
   }
 
+  getEjercicios(): Observable<TipoEjercicio[]> {
+
+  }
+
+  getTiposEjercicio(): Observable<Ejercicio[]> {
+    
+  }
+
   getEjerciciosGroupedByTipo(): Observable<TipoEjercicio[]> {
     return this.http
       .get(`${environment.apiBaseUrl}/tiposEjercicios?includes[]=ejercicios`)
