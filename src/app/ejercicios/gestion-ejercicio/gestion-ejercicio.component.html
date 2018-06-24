@@ -3,7 +3,16 @@
   <h2>Gesti&oacute;n de ejercicios</h2>
 </div>
 <div class="container">
-  <app-listado-tipos-ejercicio></app-listado-tipos-ejercicio>
+  <app-listado-tipos-ejercicio 
+    [tiposEjercicio]="tiposEjercicio"
+    (onGuardar)="handleGuardarTipoEjercicio($event)"
+    (onDelete)="handleDeleteTipoEjercicio($event)">
+  </app-listado-tipos-ejercicio>
   <hr/>
-  <app-listado-ejercicios></app-listado-ejercicios>
+  <app-listado-ejercicios 
+    [tiposEjercicio]="tiposEjercicio" 
+    [ejercicios]="ejercicios"
+    (onGuardar)="handleGuardarEjercicio($event)"
+    (onDelete)="handleDeleteEjercicio($event)">
+  </app-listado-ejercicios>
 </div>

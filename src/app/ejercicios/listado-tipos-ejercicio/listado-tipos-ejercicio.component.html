@@ -1,13 +1,17 @@
 <h4 class="font-weight-light mb-4">Tipos de ejercicio</h4>
-<button type="button" class="btn btn-outline-porange mb-4">Agregar tipo de ejercicio</button>
+<button type="button" class="btn btn-outline-porange mb-4" (click)="handleAgregarTipoEjercicio()">Agregar tipo de ejercicio</button>
 <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
-<ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" scrollbarH="true" columnMode="force" [limit]="10" footerHeight="75"
+<ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" scrollbarH="true" columnMode="force" [limit]="5" footerHeight="75"
   [rowHeight]="'auto'">
 </ngx-datatable>
+<app-agregar-tipo-ejercicio
+  [tipoEjercicio]="tipoEjercicioSelected"
+  (onGuardar)="onGuardar.emit($event)">
+</app-agregar-tipo-ejercicio>
 
 <ng-template #editTmpl let-row="row" let-value="value">
-  <app-edit-button></app-edit-button>
-  <app-delete-button></app-delete-button>
+  <app-edit-button (click)="handleEditTipoEjercicio(row)"></app-edit-button>
+  <app-delete-button (click)="onDelete.emit(row.id)"></app-delete-button>
 </ng-template>
 <ng-template #indexTmpl let-index="rowIndex">
   {{index + 1}}

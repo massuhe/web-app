@@ -267,7 +267,6 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
       apellido,
       email,
       domicilio,
-      passwordGroup: {password},
       telefono,
       tieneAntecDeportivos,
       tieneAntecMedicos,
@@ -281,7 +280,7 @@ export class AgregarAlumnoComponent implements OnInit, OnDestroy {
       email,
       domicilio,
       telefono,
-      password,
+      password: passwordGroup && passwordGroup.password,
       alumno: {
         clases: this.clases.map(c => c.id),
         imagen: this.imagenPerfil,

@@ -99,5 +99,7 @@ export enum ENTIDADES {
   RUTINA = 'rutina',
   CAMBIOS = 'cambios',
   USUARIO = 'usuario',
-  CONTRASENA = 'contraseña'
+  CONTRASENA = 'contraseña',
+  EJERCICIO = 'ejercicio',
+  TIPO_EJERCICIO = 'tipo de ejercicio'
 }
