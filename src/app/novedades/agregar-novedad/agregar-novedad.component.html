@@ -1,0 +1,48 @@
+<app-screen-loader *ngIf="showLoader"></app-screen-loader>
+<app-modal #modal (onVisibilityChange)="handleVisibilityChange($event)">
+  <div class="app-modal-header contentSecundaryFont w-100">
+    <h3 class="m-0">{{ novedad?.id ? 'Editar' : 'Agregar' }} novedad</h3>
+  </div>
+  <div class="app-modal-body">
+    <form class="row" [formGroup]="form">
+      <div class="col-12">
+        <div class="form-group">
+          <label>T&iacute;tulo
+            <span class="required">*</span>
+          </label>
+          <input type="text" class="form-control" formControlName="titulo">
+          <div class="invalidControl" *ngIf="form.get('titulo').invalid && form.get('titulo').dirty">
+            El campo es requerido.
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label>Imagen</label>
+          <input #fileInput type="file" class="form-control" (change)="handleImageChange($event)">
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label>Contenido
+            <span class="required">*</span>
+          </label>
+          <textarea type="text" class="form-control" formControlName="contenido"></textarea>
+          <div class="invalidControl" *ngIf="form.get('contenido').invalid && form.get('contenido').dirty">
+            El campo es requerido
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group mb-0 mt-2">
+          <input type="checkbox" id="esPrioritaria" class="styled-checkbox" formControlName="esPrioritaria"/>
+          <label class="custom-control-label" for="esPrioritaria">Es prioritaria</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-outline-porange mr-2" (click)="handleGuardar()">Guardar</button>
+    <button type="button" class="btn btn-outline-porange" (click)="onClose.emit(true)">Cerrar</button>
+  </div>
+</app-modal>

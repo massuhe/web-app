@@ -1,0 +1,42 @@
+<app-screen-loader *ngIf="showScreenLoader"></app-screen-loader>
+<div class="titleContainer p-5 pattern insetShadow mb-4">
+  <h2>Gesti&oacute;n de Novedades</h2>
+</div>
+<div class="container">
+  <button type="button" class="btn btn-outline-porange mb-4" (click)="agregarNovedad()" [permisos]="['CREAR_NOVEDAD']">
+    Agregar novedad
+  </button>
+  <app-content-loader *ngIf="showLoader"></app-content-loader>
+  <div *ngIf="novedades.length !== 0">
+    <app-search-input (inputDebounced)="filterData($event)"></app-search-input>
+    <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"
+      footerHeight="75" [rowHeight]="'auto'">
+    </ngx-datatable >
+  </div>
+  <div *ngIf="novedades.length === 0 && !showLoader" class="alert alert-warning">
+    No se encontraron novedades.
+  </div>
+</div>
+<app-agregar-novedad 
+  [novedad]="novedadSelected" 
+  [show]="showAddNovedad"
+  (onAddNovedad)="handleAddNovedad($event)"
+  (onClose)="closeModal()">
+</app-agregar-novedad>
+
+<ng-template #editTmpl let-row="row" let-value="value">
+  <app-edit-button (click)="editarNovedad(row)" [permisos]="['MODIFICAR_NOVEDAD']"></app-edit-button>
+  <app-delete-button (click)="borrarNovedad(row.id)" [permisos]="['ELIMINAR_NOVEDAD']"></app-delete-button>
+</ng-template>
+<ng-template #indexTmpl let-index="rowIndex">
+  {{index + 1}}
+</ng-template>
+<ng-template #importantTmpl let-value="value">
+  <svg class="star-icons-table">
+    <use *ngIf="!value" xlink:href="../../../assets/images/icons.svg#star-empty"></use>
+    <use *ngIf="value" xlink:href="../../../assets/images/icons.svg#star-filled"></use>
+  </svg>
+</ng-template>
+<ng-template #imageTmpl let-row="row" let-value="value">
+  <img [src]="row.image || imagePlaceholder" class="img-thumbnail rounded imgTable"/>
+</ng-template>

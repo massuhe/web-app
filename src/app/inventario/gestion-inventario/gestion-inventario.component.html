@@ -20,8 +20,8 @@
 <app-agregar-inventario [item]="item" [image]="item?.image" #modalForm (onAddItem)="handleAddItem($event)"></app-agregar-inventario>
 
 <ng-template #editTmpl let-row="row" let-value="value">
-  <app-edit-button [permisos]="['MODIFICAR_USUARIO']" (click)="editarItem(row)"></app-edit-button>
-  <app-delete-button [permisos]="['ELIMINAR_USUARIO']" (click)="borrarItem(row.id)"></app-delete-button>
+  <app-edit-button [permisos]="['MODIFICAR_ITEM_INVENTARIO']" (click)="editarItem(row)"></app-edit-button>
+  <app-delete-button [permisos]="['ELIMINAR_ITEM_INVENTARIO']" (click)="borrarItem(row.id)"></app-delete-button>
 </ng-template>
 <ng-template #indexTmpl let-index="rowIndex">
   {{index + 1}}

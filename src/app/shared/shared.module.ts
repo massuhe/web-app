@@ -32,6 +32,7 @@ import { SpanishMonthPipe } from './spanish-month/spanish-month.pipe';
 import { CapitalizePipe } from './capitalize/capitalize.pipe';
 import { CambiarContrasenaComponent } from './cambiar-contrasena/cambiar-contrasena.component';
 import { DateTimeFormatPipe } from './date-time-format/date-time-format.pipe';
+import { TruncatePipe } from './truncate/truncate.pipe';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { DateTimeFormatPipe } from './date-time-format/date-time-format.pipe';
     SpanishMonthPipe,
     CapitalizePipe,
     CambiarContrasenaComponent,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    TruncatePipe
   ],
   exports: [
     DeleteButtonComponent,
@@ -98,7 +100,8 @@ import { DateTimeFormatPipe } from './date-time-format/date-time-format.pipe';
     TodosIconComponent,
     SpanishMonthPipe,
     CapitalizePipe,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    TruncatePipe
   ]
 })
 export class SharedModule { }

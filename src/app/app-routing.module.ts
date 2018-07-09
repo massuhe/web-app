@@ -23,6 +23,7 @@ import { RegistrarPagoComponent } from './finanzas/registrar-pago/registrar-pago
 import { BalanceGeneralComponent } from './finanzas/balance-general/balance-general.component';
 import { ListadoPagosComponent } from './finanzas/listado-pagos/listado-pagos.component';
 import { GestionEjercicioComponent } from './ejercicios/gestion-ejercicio/gestion-ejercicio.component';
+import { GestionNovedadesComponent } from './novedades/gestion-novedades/gestion-novedades.component';
 
 const routes: Routes = [
   {
@@ -165,6 +166,12 @@ const routes: Routes = [
       {
         path: 'ejercicios',
         component: GestionEjercicioComponent
+      },
+      {
+        path: 'novedades',
+        component: GestionNovedadesComponent,
+        canActivate: [CanActivateAuthGuard],
+        data: {roles: ['VER_NOVEDADES']}
       }
     ]
   },

@@ -30,6 +30,16 @@ export class ImagesService {
       );
   }
 
+  getNovedadImage(nombre: string): Observable<any> {
+    if (!nombre) {
+      return of(null);
+    }
+    return this.http.get(`${environment.apiBaseUrl}/imagenes/novedades/${nombre}`, {responseType: 'blob'})
+      .pipe(
+        catchError(err => this.handleError(err))
+      );
+  }
+
   blobToString(file: Blob): Promise<any> {
       const reader = new FileReader();
       return new Promise((resolve) => {

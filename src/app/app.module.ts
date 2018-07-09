@@ -8,7 +8,6 @@ import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavModule } from './nav/nav.module';
 import { HomeModule } from './home/home.module';
-import { AlumnosModule } from './alumnos/alumnos.module';
 import { ClasesModule } from './clases/clases.module';
 import { ActividadesModule } from './actividades/actividades.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -22,9 +21,9 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { SeguridadModule } from './seguridad/seguridad.module';
 import { InventarioModule } from './inventario/inventario.module';
 import { FinanzasModule } from './finanzas/finanzas.module';
-import { RutinasModule } from './rutinas/rutinas.module';
 import { EjerciciosModule } from './ejercicios/ejercicios.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NovedadesModule } from './novedades/novedades.module';
 
 registerLocaleData(localeEsAr);
 
@@ -36,7 +35,7 @@ registerLocaleData(localeEsAr);
     LoginComponent,
     ForbiddenComponent
   ],
-  imports: [
+  imports: [ // TODO: Eliminar los imports de los modulos con lazy loading
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
@@ -51,6 +50,7 @@ registerLocaleData(localeEsAr);
     FinanzasModule,
     EjerciciosModule,
     FormsModule,
+    NovedadesModule,
     ReactiveFormsModule,
     SharedModule
   ],

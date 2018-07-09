@@ -101,5 +101,6 @@ export enum ENTIDADES {
   USUARIO = 'usuario',
   CONTRASENA = 'contraseña',
   EJERCICIO = 'ejercicio',
-  TIPO_EJERCICIO = 'tipo de ejercicio'
+  TIPO_EJERCICIO = 'tipo de ejercicio',
+  NOVEDAD = 'novedad'
 }
