@@ -5,18 +5,22 @@ import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
+import { IQueryParam } from '../../shared/_interfaces/IQueryParam';
+import { SerializeService } from '../../core/serialize.service';
 
 @Injectable()
 export class NovedadService {
 
-  getNovedades(): Observable<Novedad[]> {
-    const url = `${environment.apiBaseUrl}/novedades`;
+  constructor(private http: HttpClient, private serializeService: SerializeService) { }
+
+  getNovedades(queryParams?: IQueryParam): Observable<Novedad[]> {
+    const filters = queryParams ? this.serializeService.serialize(queryParams) : '';
+    const url = `${environment.apiBaseUrl}/novedades?${filters}`;
     return this.http.get(url).pipe(
       map((json: any) => json.map(j => this.toNovedad(j)))
     );
   }
 
-  constructor(private http: HttpClient) { }
 
   guardarNovedad(data): Observable<Novedad> {
     const url = `${environment.apiBaseUrl}/novedades`;

@@ -10,14 +10,14 @@
       [id]="tipo + '-gastos-gym'" 
       [checked]="showMovimientosGYM"
       (change)="handleCheckboxChange('showMovimientosGYM')">
-    <label class="custom-control-label" [for]="tipo + '-gastos-gym'">Mostrar {{tipo + 's'}} GYM</label>
+    <label class="custom-control-label" [for]="tipo + '-gastos-gym'">Mostrar {{tipo + 's'}} principales</label>
   </div>
   <div class="col-6">
     <input type="checkbox" class="styled-checkbox" 
       [id]="tipo + '-gastos-personales'"
       [checked]="showMovimientosPersonales"
       (change)="handleCheckboxChange('showMovimientosPersonales')">
-    <label class="custom-control-label" [for]="tipo + '-gastos-personales'">Mostrar {{tipo + 's'}} personales</label>
+    <label class="custom-control-label" [for]="tipo + '-gastos-personales'">Mostrar {{tipo + 's'}} secundarios</label>
   </div>
 </div>
 <ngx-datatable [rows]="rows" [columns]="columns" headerHeight="50" rowHeight="50" scrollbarH="true" columnMode="force" [limit]="10"

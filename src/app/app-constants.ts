@@ -89,6 +89,7 @@ export const HABILITAR = {
 
 export enum ENTIDADES {
   ACTIVIDAD = 'actividad',
+  ROL = 'rol',
   ALUMNO = 'alumno',
   CLASE = 'clase',
   CLASES = 'clases',

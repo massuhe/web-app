@@ -1,0 +1,22 @@
+.skeleton {
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-name: SkeletonLoad;
+  background: linear-gradient(to right, rgb(244, 244, 244) 0%, rgb(234, 234, 234) 50%, rgb(244, 244, 244) 100%) 0px 0px / 90% 100% no-repeat rgb(244, 244, 244);
+  transition: opacity 200ms ease 0s;
+}
+  
+@-webkit-keyframes SkeletonLoad {
+  0% { background-position: -1000% center; }
+  100% { background-position: 1000% center; }
+}
+@-moz-keyframes SkeletonLoad {
+  0% { background-position: -1000% center; }
+  100% { background-position: 1000% center; }
+}
+@keyframes SkeletonLoad { 
+  0% { background-position: -1000% center; }
+  100% { background-position: 1000% center; }
+}

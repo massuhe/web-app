@@ -4,19 +4,16 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SeguridadService } from '../_services/seguridad.service';
 import { ValidacionService } from '../../core/validacion.service';
 import { DialogService } from '../../core/dialog.service';
-import { GENERIC_ERROR_MESSAGE, GUARDAR, ACTUALIZAR } from '../../app-constants';
+import { GENERIC_ERROR_MESSAGE, GUARDAR, ACTUALIZAR, ENTIDADES } from '../../app-constants';
 import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { MENSAJES_AGREGAR_ROL, ESTRUCTURA_AGREGAR_ROL } from '../_constants/agregar-rol';
 import AppMessages from '../../_utils/AppMessages';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Rol } from '../_models/rol';
-import { empty } from 'rxjs/observable/empty';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-
-const ENTIDAD = 'El rol';
 
 @Component({
   selector: 'app-agregar-rol',
@@ -56,7 +53,7 @@ export class AgregarRolComponent implements OnInit, OnDestroy {
 
   handleSubmit(): void {
     if (this.form.valid) {
-      this.dialogService.confirm(AppMessages.confirm(ENTIDAD, GUARDAR)).then(
+      this.dialogService.confirm(AppMessages.confirm(ENTIDADES.ROL, GUARDAR)).then(
         ok => {
           this.showLoader = true;
           const value = {...this.form.value, permisos: this.permisosSeleccionados};
@@ -124,13 +121,13 @@ export class AgregarRolComponent implements OnInit, OnDestroy {
 
   private defineMode() {
     this.route.url.subscribe(url => {
-      this.editar = url[1].path === 'editar' ? true : false;
+      this.editar = url[2].path === 'editar' ? true : false;
     });
   }
 
   private onSuccess(res: any): any {
     const mensaje = this.editar ? ACTUALIZAR : GUARDAR;
-    this.dialogService.success(AppMessages.success(ENTIDAD, mensaje)).then(
+    this.dialogService.success(AppMessages.success(ENTIDADES.ROL, mensaje)).then(
       _ => this.editar ? undefined : this.router.navigate(['roles'])
     );
   }

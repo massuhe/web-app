@@ -1,0 +1,21 @@
+<div class="container mb-5">
+  <h1 class="font-weight-light my-5 font-naranja-primario">Novedades</h1>
+  <div class="row" *ngIf="novedades">
+    <app-noticia-card 
+      *ngFor="let novedadDestacada of novedadesDestacadas" 
+      [novedad]="novedadDestacada"
+      [destacar]="true">
+    </app-noticia-card>
+    <app-noticia-card 
+      *ngFor="let novedad of novedades" 
+      [novedad]="novedad"
+      [destacar]="false">
+    </app-noticia-card>
+  </div>
+  <div class="row" *ngIf="!novedadesDestacadas">
+    <app-noticia-skeleton-card [destacar]="true" *ngFor="let i of [0,0]"></app-noticia-skeleton-card>
+  </div>
+  <div class="row d-none d-md-flex" *ngIf="!novedades">
+    <app-noticia-skeleton-card [destacar]="false" *ngFor="let i of [0,0,0]"></app-noticia-skeleton-card>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="noticia-container w-100 h-100">
+    <span class="noticia-title d-block p-3 font-size-3">{{novedad.titulo}}</span>
+    <div class="noticia-image-container position-relative height-ratio-1-2">
+        <div class="cover-all pattern"></div>
+        <div class="noticia-card-image cover-all" 
+          [ngStyle]="{
+              'background': novedad.image ? 'url(' + novedad.image + ')' : 'gray',
+              'opacity': novedad.image ? 1 : 0
+          }">
+        </div>
+    </div>
+    <span class="d-block px-3 pt-3" [ngClass]="{'pb-5': novedad.contenido.length > 150, 'pb-3': novedad.contenido.length <= 150}">
+        {{novedad.contenido | truncate:150}}
+    </span>
+    <div class="ver-mas-link pb-3 pr-3 pointer" *ngIf="novedad.contenido.length > 150">Ver m&aacute;s</div>
+</div>
