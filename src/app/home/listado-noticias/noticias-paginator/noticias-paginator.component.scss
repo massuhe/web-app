@@ -1,0 +1,38 @@
+.paginator-container {
+  height: 3rem;
+}
+
+.paginator {
+  width: 3rem;
+  height: 3rem;
+  background: white;
+  position: absolute;
+  border-radius: 100%;
+  border: solid 1px lightgray;
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-top: solid 0.75rem transparent;
+    border-bottom: solid 0.75rem transparent;
+  }
+}
+
+.p-left {
+  left: 0;
+  &::after {
+    transform: translate(-65%, -50%);
+    border-right: solid 1rem lightgray;
+  }
+}
+
+.p-right {
+  right: 0;
+  &::after {
+    transform: translate(-35%, -50%);
+    border-left: solid 1rem lightgray;
+  }
+}

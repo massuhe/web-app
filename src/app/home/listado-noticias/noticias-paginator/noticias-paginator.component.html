@@ -1,0 +1,4 @@
+<div class="d-flex position-relative paginator-container" *ngIf="total > itemsPerPage">
+  <div class="paginator p-left pointer" *ngIf="!isFirstPage" (click)="onPageChange.emit(-1)"></div>
+  <div class="paginator p-right pointer" *ngIf="!isLastPage" (click)="onPageChange.emit(1)"></div>
+</div>

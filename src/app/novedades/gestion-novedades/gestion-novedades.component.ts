@@ -9,6 +9,7 @@ import { ENTIDADES, ELIMINAR } from '../../app-constants';
 import { from } from 'rxjs/observable/from';
 import { mergeMap, switchMap, takeUntil, share } from 'rxjs/operators';
 import { TruncatePipe } from '../../shared/truncate/truncate.pipe';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gestion-novedades',
@@ -120,7 +121,7 @@ export class GestionNovedadesComponent implements OnInit, OnDestroy {
 
   private fetchData(): void {
     this.showLoader = true;
-    const getNovedad$ = this.novedadService.getNovedades()
+    const getNovedad$: Observable<Novedad[]> = this.novedadService.getNovedades()
       .pipe(
         share(),
         takeUntil(this.destroy$)
