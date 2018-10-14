@@ -1,3 +1,103 @@
-.banner {
-    background-color: lightgray;
+$logo: '../../../assets/images/cohesionLogo.png';
+$slide1: '../../../assets/images/carrousel/carrousel1.jpg';
+$slide2: '../../../assets/images/carrousel/carrousel2.jpg';
+$slide3: '../../../assets/images/carrousel/carrousel3.jpg';
+$slide4: '../../../assets/images/carrousel/carrousel4.jpg';
+$slide5: '../../../assets/images/carrousel/carrousel5.jpg';
+$slide6: '../../../assets/images/carrousel/carrousel6.jpg';
+
+$slides-list: $slide1 $slide2 $slide3 $slide4 $slide5 $slide6;
+
+@media (min-width: 576px) { 
+  .logo {
+    top: 5% !important;
+    left: 5% !important;
+    width: 50% !important;
+    height: 50% !important;
+    transform: none !important;   
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo {
+    width: 40% !important;
+    height: 40% !important;
+  }
+}
+
+.logo {
+  background: url($logo);
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  width: 75%;
+  height: 75%;
+}
+
+.slides {
+  filter: hue-rotate(-20deg) contrast(.9) saturate(.85) brightness(1.2);
+}
+
+.slide {
+  background-color: lightgray;
+  background-image: url($slide1);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+}
+
+@for $i from 1 through length($slides-list) {
+  .slide-#{$i} {
+    background-image: url(nth($slides-list, $i));
+  }
+  .slide-time-#{$i} {
+    animation: slide-time-#{$i} 100s linear 1s infinite;
+  }
+}
+
+@keyframes slide-time-1 {
+  0% { opacity: 1; }
+  14% { opacity: 1; }
+  17% { opacity: 0; }
+  97% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide-time-2 {
+  14% { opacity: 0; }
+  17% { opacity: 1; }
+  31% { opacity: 1; }
+  34% { opacity: 0; }
+}
+
+@keyframes slide-time-3 {
+  31% { opacity: 0; }
+  34% { opacity: 1; }
+  48% { opacity: 1; }
+  51% { opacity: 0; }
+}
+
+@keyframes slide-time-4 {
+  48% { opacity: 0; }
+  51% { opacity: 1; }
+  65% { opacity: 1; }
+  68% { opacity: 0; }
+}
+
+@keyframes slide-time-5 {
+  65% { opacity: 0; }
+  68% { opacity: 1; }
+  82% { opacity: 1; }
+  85% { opacity: 0; }
+}
+
+@keyframes slide-time-6 {
+  82% { opacity: 0; }
+  85% { opacity: 1; }
+  97% { opacity: 1; }
+  100% { opacity: 0; }
 }
