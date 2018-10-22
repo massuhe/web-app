@@ -91,7 +91,7 @@ export class AgregarActividadComponent implements OnInit, OnDestroy {
 
   private defineMode() {
     this.route.url.subscribe(url => {
-      this.editar = url[1].path === 'editar' ? true : false;
+      this.editar = url[1].path === 'agregar' ? false : true;
     });
   }
 
