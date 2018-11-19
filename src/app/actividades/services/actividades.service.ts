@@ -13,7 +13,7 @@ export class ActividadesService {
   constructor(private http: HttpClient) { }
 
   get(selectAttributes: string[] = []): Observable<Actividad[]> {
-    const endPoint = `/actividades/${this.parseSelectAttributes(selectAttributes)}`;
+    const endPoint = `/actividades${this.parseSelectAttributes(selectAttributes)}`;
     return this.http
       .get(`${environment.apiBaseUrl}${endPoint}`)
       .pipe(

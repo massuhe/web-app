@@ -16,7 +16,7 @@ const errorMessages = {
 export class RangoHorarioInputComponent implements OnInit {
 
   @Input() item: FormGroup;
-  @Output() onDelete = new EventEmitter<number>();
+  @Output() onDelete = new EventEmitter<void>();
   get horaDesde() { return this.item.get('horaDesde'); }
   get horaHasta() { return this.item.get('horaHasta'); }
   errors;
@@ -33,9 +33,9 @@ export class RangoHorarioInputComponent implements OnInit {
     }));
   }
 
-  deleteItem(index) {
+  deleteItem() {
     this.subscriptions.forEach((s: Subscriber<any>) => s.unsubscribe());
-    this.onDelete.emit(index);
+    this.onDelete.emit();
   }
 
   private checkErrors(errors: ValidationErrors) {

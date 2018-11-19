@@ -9,7 +9,7 @@ import { ENTIDADES, ELIMINAR } from '../../app-constants';
 import { from } from 'rxjs/observable/from';
 import { mergeMap, switchMap, takeUntil, share } from 'rxjs/operators';
 import { TruncatePipe } from '../../shared/truncate/truncate.pipe';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-gestion-novedades',

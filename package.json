@@ -26,7 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@ngui/auto-complete": "^0.16.0",
     "@swimlane/ngx-charts": "^7.2.0",
-    "@swimlane/ngx-datatable": "^10.2.3",
+    "@swimlane/ngx-datatable": "11.0.4",
     "angular-2-dropdown-multiselect": "^1.6.3",
     "angular2-jwt": "^0.2.3",
     "bootstrap": "^4.0.0-beta.2",

@@ -1,7 +1,7 @@
 <app-modal #modal [noHeader]="true" (onVisibilityChange)="handleVisibilityChange($event)">
   <div class="app-modal-body">
     <app-content-loader *ngIf="showLoader"></app-content-loader>
-    <div *ngIf="!showLoader && actividades.length">
+    <div *ngIf="!showLoader && !!actividades.length">
       <app-tab-nav [items]="actividades" [active]="actividadSeleccionada.id" (onItemClick)="handleChangeActividad($event)" class="mb-4"></app-tab-nav>
       <div class="d-flex flex-column flex-sm-row">
         <div class="d-flex flex-column w-100 text-center" *ngFor="let dia of actividadSeleccionada.diasClases">

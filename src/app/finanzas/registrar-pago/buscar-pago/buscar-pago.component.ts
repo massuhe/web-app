@@ -71,6 +71,13 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
     }
   }
 
+  patchAlumnoSeleccionado(): void {
+    const alumnoValue = this.form.get('alumno').value;
+    if (alumnoValue && !(alumnoValue instanceof Object)) {
+      this.form.patchValue({alumno: this.alumnoSeleccionado});
+    }
+  }
+
   handleSubmit(): void {
     if (this.form.valid) {
       this.fetchPago();
@@ -168,13 +175,6 @@ export class BuscarPagoComponent implements OnInit, OnDestroy {
       this.form.get('alumno').disable();
     }
     this.alumnoInput.nativeElement.focus();
-  }
-
-  private patchAlumnoSeleccionado(): void {
-    const alumnoValue = this.form.get('alumno').value;
-    if (alumnoValue && !(alumnoValue instanceof Object)) {
-      this.form.patchValue({alumno: this.alumnoSeleccionado});
-    }
   }
 
   private handleError(res): void {
